@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 14 Dinner Plan</title>
+  <meta name="description" content="一周晚餐安排">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #f4f1ea;
+      --surface-background: rgba(255, 255, 255, 0.82);
+      --surface-border: rgba(178, 163, 138, 0.28);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-color: #0f6e56;
+      --shadow-soft: 0 18px 45px rgba(40, 35, 28, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page-background); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 30%), linear-gradient(180deg, #f7f3eb 0%, #f2efe8 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--surface-border);
+      border-radius: 22px;
+      background: var(--surface-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .nav-pill,
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(36, 48, 59, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--heading-color);
+    }
+
+    .nav-back {
+      color: var(--muted-color);
+      background: transparent;
+      padding-left: 0;
+      border: none;
+    }
+
+    .nav-link.is-active {
+      background: #24303b;
+      color: #fff;
+      border-color: #24303b;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .panel { padding: 14px; border-radius: 20px; }
+      .hero { padding-top: 12px; }
+    }
+  </style>
+<style>
+  .plan { padding: 1rem 0; font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif); color: var(--color-text-primary, #202327); }
+  .day-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); margin-bottom: 14px; overflow: hidden; }
+  .day-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .day-label { font-size: 15px; font-weight: 500; }
+  .theme-tag { font-size: 12px; padding: 2px 10px; border-radius: var(--border-radius-md, 999px); }
+  .theme-fish { background:#E1F5EE; color:#0F6E56; }
+  .theme-chicken { background:#FAEEDA; color:#854F0B; }
+  .theme-pork { background:#FAECE7; color:#993C1D; }
+  .theme-tofu { background:#E6F1FB; color:#185FA5; }
+  .theme-veg { background:#EAF3DE; color:#3B6D11; }
+  .dishes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .dish { padding: 10px 16px; border-right: 0.5px solid var(--color-border-tertiary, #d8dde6); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .dish:nth-child(even) { border-right: none; }
+  .dish-row-last .dish { border-bottom: none; }
+  .dish-name { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .dish-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 1px 7px; border-radius: var(--border-radius-md, 999px); }
+  .b-easy { background:#EAF3DE; color:#3B6D11; }
+  .b-mid { background:#FAEEDA; color:#854F0B; }
+  .b-kid { background:#EEEDFE; color:#3C3489; }
+  .b-prep { background:#E6F1FB; color:#185FA5; }
+  .b-soup { background:#FCEBEB; color:#A32D2D; }
+  .tip { padding: 8px 16px; font-size: 12px; color: var(--color-text-secondary, #4f5b67); border-top: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .reuse-bar { padding: 8px 16px 12px; }
+  .reuse-title { font-size: 12px; color: var(--color-text-secondary, #4f5b67); margin-bottom: 6px; }
+  .reuse-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .rtag { font-size: 11px; padding: 2px 9px; border-radius: var(--border-radius-md, 999px); background: var(--color-background-tertiary, #f2f4f7); color: var(--color-text-secondary, #4f5b67); border: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary, #4f5b67); margin: 0 0 10px; letter-spacing: 0.03em; text-transform: uppercase; }
+  .single-dish { padding: 10px 16px; border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .single-dish:last-child { border-bottom: none; }
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--color-text-secondary, #4f5b67); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <nav class="hero-nav" aria-label="Plans navigation">
+          <a class="nav-link is-active" href="./dinner.html">Dinner</a>
+          <a class="nav-link" href="./training.html">Training</a>
+        </nav>
+      </div>
+      <p class="hero-kicker">Week 14</p>
+      <h1>Week 14 Dinner Plan</h1>
+    </header>
+    <main class="panel">
+<div class="plan">
+  <div class="legend">
+    <div class="legend-item"><span class="badge b-easy">简单</span> 1星，新手可做</div>
+    <div class="legend-item"><span class="badge b-mid">中等</span> 2星，按步骤操作</div>
+    <div class="legend-item"><span class="badge b-kid">👧 儿童友好</span></div>
+    <div class="legend-item"><span class="badge b-prep">可提前备菜</span></div>
+  </div>
+
+  <!-- 周一 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-label">周一</span>
+      <span class="theme-tag theme-fish">清蒸鱼日</span>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish">
+        <div class="dish-name">清蒸鲈鱼</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+          <span class="badge b-prep">可提前腌</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鲈鱼 1条 + 姜丝 + 蒸鱼豉油</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">蒜蓉炒时蔬</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">青菜 / 菠菜 + 蒜末，快炒2分钟</div>
+      </div>
+    </div>
+    <div class="dishes-grid dish-row-last">
+      <div class="dish">
+        <div class="dish-name">番茄蛋花汤</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-soup">汤</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">番茄 + 鸡蛋，煮沸即可</div>
+      </div>
+      <div class="dish" style="display:flex;align-items:center;justify-content:center;">
+        <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">共 3 道</span>
+      </div>
+    </div>
+    <div class="tip">💡 鱼提前用盐 + 姜腌 15 分钟，下班直接上锅蒸，约 8 分钟出锅。</div>
+  </div>
+
+  <!-- 周二 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-label">周二</span>
+      <span class="theme-tag theme-chicken">鸡肉日</span>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish">
+        <div class="dish-name">可乐鸡翅</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鸡翅 + 可乐 + 生抽，焖煮收汁</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">醋溜土豆丝</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">土豆切丝过凉水，爆炒 + 白醋</div>
+      </div>
+    </div>
+    <div class="dishes-grid dish-row-last">
+      <div class="dish" style="grid-column:1/-1;">
+        <div class="dish-name">紫菜虾皮汤（可选）</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-soup">汤</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">干紫菜 + 虾皮 + 葱花，开水冲泡即可</div>
+      </div>
+    </div>
+    <div class="tip">💡 鸡翅可以前一天晚上提前腌好，冰箱隔夜，周二下班直接下锅。</div>
+  </div>
+
+  <!-- 周三 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-label">周三</span>
+      <span class="theme-tag theme-pork">猪肉日</span>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish">
+        <div class="dish-name">番茄炒蛋（经典版）</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鸡蛋先炒出锅，番茄再炒，最后合并</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">土豆炖排骨</div>
+        <div class="dish-meta">
+          <span class="badge b-mid">中等</span>
+          <span class="badge b-prep">可提前炖</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">排骨焯水 → 炒糖色 → 加土豆炖 40 分钟</div>
+      </div>
+    </div>
+    <div class="tip">💡 排骨可以午休前放入电饭锅煮，或前一天晚上炖好，周三直接热锅复热。</div>
+  </div>
+
+  <!-- 周四 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-label">周四</span>
+      <span class="theme-tag theme-tofu">豆腐日</span>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish">
+        <div class="dish-name">肉末豆腐</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">猪肉末 + 嫩豆腐 + 生抽 + 少量老抽</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">清炒西蓝花</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">焯水 30 秒 → 蒜末爆香 → 快炒</div>
+      </div>
+    </div>
+    <div class="dishes-grid dish-row-last">
+      <div class="dish" style="grid-column:1/-1;">
+        <div class="dish-name">玉米排骨汤（周三余汤）</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-soup">汤</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">周三排骨汤 + 玉米段续煮，复用食材</div>
+      </div>
+    </div>
+    <div class="tip">💡 周三多炖一些排骨汤，周四加入玉米延伸成另一道汤，无需额外备菜。</div>
+  </div>
+
+  <!-- 周五 -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-label">周五</span>
+      <span class="theme-tag theme-fish">鱼肉轻松日</span>
+    </div>
+    <div class="dishes-grid">
+      <div class="dish">
+        <div class="dish-name">红烧带鱼</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">带鱼煎两面 → 加酱油 + 糖 + 少量醋焖</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">蒜蓉粉丝娃娃菜</div>
+        <div class="dish-meta">
+          <span class="badge b-easy">简单</span>
+          <span class="badge b-kid">👧 儿童友好</span>
+          <span class="badge b-prep">可提前备</span>
+        </div>
+        <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">娃娃菜铺粉丝 + 蒜蓉，蒸 8 分钟后淋热油</div>
+      </div>
+    </div>
+    <div class="tip">💡 周五节奏轻松，两道菜均在 20 分钟内完成，用剩余的葱姜蒜收个尾。</div>
+  </div>
+
+  <!-- 食材复用总览 -->
+  <div class="day-card" style="margin-top:4px;">
+    <div class="day-header">
+      <span class="day-label" style="font-size:13px;">本周食材复用规划</span>
+    </div>
+    <div style="padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div class="reuse-title">跨天复用食材</div>
+        <div class="reuse-tags">
+          <span class="rtag">番茄（周一汤 + 周三炒蛋）</span>
+          <span class="rtag">鸡蛋（周一汤 + 周三主菜）</span>
+          <span class="rtag">排骨（周三炖 + 周四汤）</span>
+          <span class="rtag">葱姜蒜（全周通用）</span>
+          <span class="rtag">土豆（周二丝 + 周三炖）</span>
+        </div>
+      </div>
+      <div>
+        <div class="reuse-title">采购一次，用多天</div>
+        <div class="reuse-tags">
+          <span class="rtag">猪肉末（周四豆腐）</span>
+          <span class="rtag">姜（鱼 + 鸡翅 + 排骨）</span>
+          <span class="rtag">生抽老抽（全周调味）</span>
+          <span class="rtag">干紫菜虾皮（常备）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    </main>
+  </div>
+</body>
+</html>
