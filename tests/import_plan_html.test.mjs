@@ -57,6 +57,9 @@ assert.doesNotMatch(
   /面向手机查看的一周训练安排/i,
   "Generated training page should keep the header minimal without the old explanatory paragraph",
 );
+assert.match(trainingHtml, /周一 · 3月30日/i, "Training page should show Monday as March 30");
+assert.match(trainingHtml, /周二 · 3月31日/i, "Training page should show Tuesday as March 31");
+assert.match(trainingHtml, /周五 · 4月3日/i, "Training page should show Friday as April 3");
 assert.match(
   trainingHtml,
   /var\(--color-border-tertiary,\s*#d8dde6\)/i,
