@@ -41,9 +41,12 @@ When you import one of these source files, the script will:
 
 1. Detect the week number and plan type from the filename.
 2. Add CSS fallbacks so borders and text colors still render correctly as standalone HTML.
-3. Generate a polished publishable page under `static/plans/weeks/weekXX/`.
-4. Update `static/plans/latest/` to point at the newest imported week.
-5. Rebuild `static/plans/index.html` with the latest-first homepage and archive list.
+3. Turn every dish name and training move into a search link.
+4. Generate a polished publishable page under `static/plans/weeks/weekXX/`.
+5. Update `static/plans/latest/` to point at the newest imported week.
+6. Rebuild `static/plans/index.html` with the latest-first homepage and archive list.
+
+The search platform is controlled globally in `scripts/import_plan_html.mjs`. It defaults to YouTube, and can be switched later to another provider such as Bilibili without changing each item by hand.
 
 ## Import a New Week
 

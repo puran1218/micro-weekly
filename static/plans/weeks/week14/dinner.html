@@ -114,6 +114,23 @@
       overflow: hidden;
     }
 
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
     @media (max-width: 720px) {
       .page { padding: 14px 12px 28px; }
       .hero, .panel { padding: 14px; border-radius: 20px; }
@@ -185,7 +202,7 @@
     </div>
     <div class="dishes-grid">
       <div class="dish">
-        <div class="dish-name">清蒸鲈鱼</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E8%92%B8%E9%B2%88%E9%B1%BC" target="_blank" rel="noreferrer">清蒸鲈鱼</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -194,7 +211,7 @@
         <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鲈鱼 1条 + 姜丝 + 蒸鱼豉油</div>
       </div>
       <div class="dish">
-        <div class="dish-name">蒜蓉炒时蔬</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%92%9C%E8%93%89%E7%82%92%E6%97%B6%E8%94%AC" target="_blank" rel="noreferrer">蒜蓉炒时蔬</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -204,7 +221,7 @@
     </div>
     <div class="dishes-grid dish-row-last">
       <div class="dish">
-        <div class="dish-name">番茄蛋花汤</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%95%AA%E8%8C%84%E8%9B%8B%E8%8A%B1%E6%B1%A4" target="_blank" rel="noreferrer">番茄蛋花汤</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-soup">汤</span>
@@ -227,7 +244,7 @@
     </div>
     <div class="dishes-grid">
       <div class="dish">
-        <div class="dish-name">可乐鸡翅</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8F%AF%E4%B9%90%E9%B8%A1%E7%BF%85" target="_blank" rel="noreferrer">可乐鸡翅</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -235,7 +252,7 @@
         <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鸡翅 + 可乐 + 生抽，焖煮收汁</div>
       </div>
       <div class="dish">
-        <div class="dish-name">醋溜土豆丝</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E9%86%8B%E6%BA%9C%E5%9C%9F%E8%B1%86%E4%B8%9D" target="_blank" rel="noreferrer">醋溜土豆丝</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
         </div>
@@ -244,7 +261,7 @@
     </div>
     <div class="dishes-grid dish-row-last">
       <div class="dish" style="grid-column:1/-1;">
-        <div class="dish-name">紫菜虾皮汤（可选）</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%B4%AB%E8%8F%9C%E8%99%BE%E7%9A%AE%E6%B1%A4%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89" target="_blank" rel="noreferrer">紫菜虾皮汤（可选）</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-soup">汤</span>
@@ -263,7 +280,7 @@
     </div>
     <div class="dishes-grid">
       <div class="dish">
-        <div class="dish-name">番茄炒蛋（经典版）</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%95%AA%E8%8C%84%E7%82%92%E8%9B%8B%EF%BC%88%E7%BB%8F%E5%85%B8%E7%89%88%EF%BC%89" target="_blank" rel="noreferrer">番茄炒蛋（经典版）</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -271,7 +288,7 @@
         <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">鸡蛋先炒出锅，番茄再炒，最后合并</div>
       </div>
       <div class="dish">
-        <div class="dish-name">土豆炖排骨</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9C%9F%E8%B1%86%E7%82%96%E6%8E%92%E9%AA%A8" target="_blank" rel="noreferrer">土豆炖排骨</a></div>
         <div class="dish-meta">
           <span class="badge b-mid">中等</span>
           <span class="badge b-prep">可提前炖</span>
@@ -291,7 +308,7 @@
     </div>
     <div class="dishes-grid">
       <div class="dish">
-        <div class="dish-name">肉末豆腐</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%82%89%E6%9C%AB%E8%B1%86%E8%85%90" target="_blank" rel="noreferrer">肉末豆腐</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -299,7 +316,7 @@
         <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">猪肉末 + 嫩豆腐 + 生抽 + 少量老抽</div>
       </div>
       <div class="dish">
-        <div class="dish-name">清炒西蓝花</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E8%A5%BF%E8%93%9D%E8%8A%B1" target="_blank" rel="noreferrer">清炒西蓝花</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -309,7 +326,7 @@
     </div>
     <div class="dishes-grid dish-row-last">
       <div class="dish" style="grid-column:1/-1;">
-        <div class="dish-name">玉米排骨汤（周三余汤）</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%8E%89%E7%B1%B3%E6%8E%92%E9%AA%A8%E6%B1%A4%EF%BC%88%E5%91%A8%E4%B8%89%E4%BD%99%E6%B1%A4%EF%BC%89" target="_blank" rel="noreferrer">玉米排骨汤（周三余汤）</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-soup">汤</span>
@@ -328,7 +345,7 @@
     </div>
     <div class="dishes-grid">
       <div class="dish">
-        <div class="dish-name">红烧带鱼</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%BA%A2%E7%83%A7%E5%B8%A6%E9%B1%BC" target="_blank" rel="noreferrer">红烧带鱼</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>
@@ -336,7 +353,7 @@
         <div style="font-size:12px;color:var(--color-text-secondary, #4f5b67);margin-top:4px;">带鱼煎两面 → 加酱油 + 糖 + 少量醋焖</div>
       </div>
       <div class="dish">
-        <div class="dish-name">蒜蓉粉丝娃娃菜</div>
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%92%9C%E8%93%89%E7%B2%89%E4%B8%9D%E5%A8%83%E5%A8%83%E8%8F%9C" target="_blank" rel="noreferrer">蒜蓉粉丝娃娃菜</a></div>
         <div class="dish-meta">
           <span class="badge b-easy">简单</span>
           <span class="badge b-kid">👧 儿童友好</span>

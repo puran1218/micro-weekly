@@ -7,6 +7,13 @@ import {
 } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 
+const SEARCH_PROVIDERS = {
+  youtube: "https://www.youtube.com/results?search_query=",
+  bilibili: "https://search.bilibili.com/all?keyword=",
+};
+
+const ACTIVE_SEARCH_PROVIDER = resolveSearchProvider(process.env.PLAN_SEARCH_PROVIDER ?? "youtube");
+
 const TOKEN_FALLBACKS = {
   "--font-sans":
     '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif',
@@ -136,7 +143,7 @@ function addFallbacks(html) {
 function buildPlanPage({ rawFragment, weekNumber, weekSlug, kind }) {
   const config = PAGE_CONFIG[kind];
   const planStyles = extractStyleMarkup(rawFragment);
-  const planMarkup = extractPlanMarkup(rawFragment);
+  const planMarkup = addSearchLinks(extractPlanMarkup(rawFragment));
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -254,6 +261,23 @@ function buildPlanPage({ rawFragment, weekNumber, weekSlug, kind }) {
       overflow: hidden;
     }
 
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
     @media (max-width: 720px) {
       .page { padding: 14px 12px 28px; }
       .hero, .panel { padding: 14px; border-radius: 20px; }
@@ -284,14 +308,45 @@ ${planMarkup}
 `;
 }
 
+function resolveSearchProvider(providerName) {
+  if (!SEARCH_PROVIDERS[providerName]) {
+    throw new Error(
+      `Unknown search provider "${providerName}". Supported values: ${Object.keys(SEARCH_PROVIDERS).join(", ")}`,
+    );
+  }
+
+  return providerName;
+}
+
 function extractStyleMarkup(fragment) {
   const match = fragment.match(/<style>[\s\S]*?<\/style>/i);
   return match ? match[0] : "";
 }
 
+function addSearchLinks(markup) {
+  return markup
+    .replace(/<div class="dish-name">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
+      const query = buildSearchQuery(innerHtml);
+      return `<div class="dish-name">${wrapSearchLink(innerHtml, query)}</div>`;
+    })
+    .replace(/<div class="move">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
+      const query = buildSearchQuery(innerHtml.replace(/<span\b[\s\S]*?<\/span>/gi, ""));
+      return `<div class="move">${wrapSearchLink(innerHtml, query)}</div>`;
+    });
+}
+
 function extractPlanMarkup(fragment) {
   const startIndex = fragment.indexOf("<div class=\"plan\"");
   return startIndex >= 0 ? fragment.slice(startIndex).trim() : fragment.trim();
+}
+
+function buildSearchQuery(htmlFragment) {
+  return htmlFragment.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function wrapSearchLink(innerHtml, query) {
+  const href = `${SEARCH_PROVIDERS[ACTIVE_SEARCH_PROVIDER]}${encodeURIComponent(query)}`;
+  return `<a class="search-link" href="${href}" target="_blank" rel="noreferrer">${innerHtml}</a>`;
 }
 
 function writeLatestRedirect({ siteRoot, weekSlug, kind }) {

@@ -46,6 +46,11 @@ assert.match(
   /var\(--color-border-tertiary,\s*#d8dde6\)/i,
   "Generated dinner page should add a border fallback for standalone rendering",
 );
+assert.match(
+  dinnerHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E6%B8%85%E8%92%B8%E9%B2%88%E9%B1%BC"/i,
+  "Generated dinner page should turn dish names into YouTube search links",
+);
 
 const trainingHtml = readFileSync(trainingPage, "utf8");
 assert.match(trainingHtml, /Week 14 Training Plan/i, "Generated training page should include a descriptive hero heading");
@@ -64,6 +69,16 @@ assert.match(
   trainingHtml,
   /var\(--color-border-tertiary,\s*#d8dde6\)/i,
   "Generated training page should add a border fallback for standalone rendering",
+);
+assert.match(
+  trainingHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E5%9D%90%E5%A7%BF%E8%85%BF%E5%B1%88%E4%BC%B8"/i,
+  "Generated training page should turn move names into YouTube search links",
+);
+assert.doesNotMatch(
+  trainingHtml,
+  /search_query=.*%E8%B6%B3%E8%B8%9D/i,
+  "Generated training move links should ignore helper tag text like 足踝 in the search query",
 );
 
 const latestDinnerHtml = readFileSync(latestDinner, "utf8");
