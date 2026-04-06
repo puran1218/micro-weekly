@@ -12,6 +12,8 @@ const requiredPaths = [
   "tests/verify_plans_site.mjs",
   "source-html/week14_dinner_plan.html",
   "source-html/week14_training_plan.html",
+  "source-html/week15_dinner_plan.html",
+  "source-html/week15_training_plan.html",
   "static/plans/index.html",
 ];
 

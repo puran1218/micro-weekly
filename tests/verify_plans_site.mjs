@@ -8,6 +8,8 @@ const requiredFiles = [
   "index.html",
   "weeks/week14/dinner.html",
   "weeks/week14/training.html",
+  "weeks/week15/dinner.html",
+  "weeks/week15/training.html",
   "latest/dinner.html",
   "latest/training.html",
 ];
@@ -19,13 +21,14 @@ for (const file of requiredFiles) {
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.match(indexHtml, /Week 14/i, "Plans index should link to Week 14");
+assert.match(indexHtml, /Week 15/i, "Plans index should link to Week 15");
 assert.match(indexHtml, /latest\/dinner\.html/i, "Plans index should expose the latest dinner link");
 assert.match(indexHtml, /latest\/training\.html/i, "Plans index should expose the latest training link");
 
 const dinnerLatest = readFileSync(resolve(root, "latest", "dinner.html"), "utf8");
-assert.match(dinnerLatest, /week14\/dinner\.html/i, "Latest dinner page should redirect or link to Week 14 dinner");
+assert.match(dinnerLatest, /week15\/dinner\.html/i, "Latest dinner page should redirect or link to Week 15 dinner");
 
 const trainingLatest = readFileSync(resolve(root, "latest", "training.html"), "utf8");
-assert.match(trainingLatest, /week14\/training\.html/i, "Latest training page should redirect or link to Week 14 training");
+assert.match(trainingLatest, /week15\/training\.html/i, "Latest training page should redirect or link to Week 15 training");
 
 console.log("Plans site structure looks good.");

@@ -10,6 +10,8 @@ const siteRoot = resolve(tempRoot, "static", "plans");
 const scriptPath = resolve(workspace, "scripts", "import_plan_html.mjs");
 const dinnerSource = resolve(workspace, "source-html", "week14_dinner_plan.html");
 const trainingSource = resolve(workspace, "source-html", "week14_training_plan.html");
+const week15DinnerSource = resolve(workspace, "source-html", "week15_dinner_plan.html");
+const week15TrainingSource = resolve(workspace, "source-html", "week15_training_plan.html");
 
 execFileSync("node", [scriptPath, dinnerSource, "--site-root", siteRoot], {
   cwd: workspace,
@@ -21,13 +23,25 @@ execFileSync("node", [scriptPath, trainingSource, "--site-root", siteRoot], {
   stdio: "pipe",
 });
 
+execFileSync("node", [scriptPath, week15DinnerSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
+execFileSync("node", [scriptPath, week15TrainingSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
 const dinnerPage = resolve(siteRoot, "weeks", "week14", "dinner.html");
 const trainingPage = resolve(siteRoot, "weeks", "week14", "training.html");
+const week15DinnerPage = resolve(siteRoot, "weeks", "week15", "dinner.html");
+const week15TrainingPage = resolve(siteRoot, "weeks", "week15", "training.html");
 const latestDinner = resolve(siteRoot, "latest", "dinner.html");
 const latestTraining = resolve(siteRoot, "latest", "training.html");
 const indexPage = resolve(siteRoot, "index.html");
 
-for (const path of [dinnerPage, trainingPage, latestDinner, latestTraining, indexPage]) {
+for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, latestDinner, latestTraining, indexPage]) {
   assert.ok(existsSync(path), `Expected generated file to exist: ${path}`);
 }
 
@@ -82,10 +96,10 @@ assert.doesNotMatch(
 );
 
 const latestDinnerHtml = readFileSync(latestDinner, "utf8");
-assert.match(latestDinnerHtml, /week14\/dinner\.html/i, "Latest dinner redirect should point to the imported week");
+assert.match(latestDinnerHtml, /week15\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
 
 const latestTrainingHtml = readFileSync(latestTraining, "utf8");
-assert.match(latestTrainingHtml, /week14\/training\.html/i, "Latest training redirect should point to the imported week");
+assert.match(latestTrainingHtml, /week15\/training\.html/i, "Latest training redirect should point to the newest imported week");
 
 const indexHtml = readFileSync(indexPage, "utf8");
 assert.match(indexHtml, /Dinner \+ Training/i, "Index should have the new editorial homepage title");
@@ -93,5 +107,19 @@ assert.match(indexHtml, /Latest Dinner/i, "Index should keep the latest dinner f
 assert.match(indexHtml, /Latest Training/i, "Index should keep the latest training feature card");
 assert.match(indexHtml, /Weeks Archive/i, "Index should include the archive section");
 assert.match(indexHtml, /Week 14/i, "Index should include the imported week");
+assert.match(indexHtml, /Week 15/i, "Index should include the newest imported week");
+
+const week15DinnerHtml = readFileSync(week15DinnerPage, "utf8");
+assert.match(week15DinnerHtml, /Week 15 Dinner Plan/i, "Week 15 dinner page should include the correct heading");
+assert.match(
+  week15DinnerHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E8%82%89%E6%9C%AB%E8%B1%86%E8%85%90"/i,
+  "Week 15 dinner page should add search links for dishes",
+);
+assert.doesNotMatch(
+  week15DinnerHtml,
+  /<main class="panel">\s*<style>/i,
+  "Week 15 dinner page should not inject a stray style block into the page body",
+);
 
 console.log("Import plan HTML generator works.");

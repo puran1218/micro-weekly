@@ -1,0 +1,194 @@
+
+<style>
+* { box-sizing: border-box; }
+.wrap { padding: 1rem 0; font-family: var(--font-sans); color: var(--color-text-primary); }
+.day-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); margin-bottom: 14px; overflow: hidden; }
+.day-head { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
+.day-lbl { font-size: 15px; font-weight: 500; }
+.tag { font-size: 11px; padding: 2px 9px; border-radius: var(--border-radius-md); }
+.t-fish { background:#E1F5EE; color:#085041; }
+.t-pork { background:#FAECE7; color:#712B13; }
+.t-chicken { background:#FAEEDA; color:#633806; }
+.t-feast { background:#EEEDFE; color:#3C3489; }
+.dish-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.dish-row:last-of-type { border-bottom: none; }
+.dish-row.solo { grid-template-columns: 1fr; }
+.dish { padding: 10px 16px; }
+.dish + .dish { border-left: 0.5px solid var(--color-border-tertiary); }
+.dish-name { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+.badges { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 4px; }
+.b { font-size: 11px; padding: 1px 7px; border-radius: var(--border-radius-md); }
+.b-easy { background:#EAF3DE; color:#27500A; }
+.b-mid  { background:#FAEEDA; color:#633806; }
+.b-hard { background:#FCEBEB; color:#791F1F; }
+.b-kid  { background:#EEEDFE; color:#3C3489; }
+.b-prep { background:#E6F1FB; color:#0C447C; }
+.b-soup { background:#FCEBEB; color:#791F1F; }
+.desc { font-size: 12px; color: var(--color-text-secondary); }
+.tip { padding: 8px 16px; font-size: 12px; color: var(--color-text-secondary); border-top: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); }
+.reuse-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; margin-top: 4px; }
+.reuse-head { padding: 10px 16px; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; font-weight: 500; color: var(--color-text-secondary); }
+.reuse-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.reuse-col { padding: 12px 16px; }
+.reuse-col + .reuse-col { border-left: 0.5px solid var(--color-border-tertiary); }
+.reuse-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.rtags { display: flex; gap: 5px; flex-wrap: wrap; }
+.rtag { font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md); background: var(--color-background-tertiary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
+</style>
+
+<div class="wrap">
+
+  <!-- 周四 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周四</span>
+      <span class="tag t-pork">豆腐 + 猪肉</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--color-text-secondary)">工作日 · 快手</span>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">肉末豆腐</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">猪肉末炒香 → 嫩豆腐下锅 → 生抽 + 少量老抽收汁，约 15 分钟</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">醋溜白菜</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">白菜手撕 → 蒜末爆香 → 大火爆炒 + 白醋，脆嫩下饭</div>
+      </div>
+    </div>
+    <div class="dish-row solo">
+      <div class="dish">
+        <div class="dish-name">紫菜虾皮蛋花汤</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-soup">汤</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">开水冲泡紫菜虾皮 → 打入鸡蛋搅散 → 加盐葱花，5 分钟搞定</div>
+      </div>
+    </div>
+    <div class="tip">备菜提示：豆腐可提前切好备好；白菜撕块备用，下班到家 20 分钟内全部上桌。</div>
+  </div>
+
+  <!-- 周五 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周五</span>
+      <span class="tag t-chicken">鸡肉日</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--color-text-secondary)">工作日 · 快手</span>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">可乐鸡翅</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span><span class="b b-prep">可提前腌</span></div>
+        <div class="desc">鸡翅两面煎上色 → 倒可乐 + 生抽 → 中火焖 15 分钟收汁</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">清炒西蓝花</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">焯水 40 秒 → 蒜末爆香 → 大火翻炒 2 分钟，清脆不软烂</div>
+      </div>
+    </div>
+    <div class="dish-row solo">
+      <div class="dish">
+        <div class="dish-name">番茄蛋花汤</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-soup">汤</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">番茄炒出汤汁 → 加水烧开 → 打蛋花 + 盐，酸甜开胃</div>
+      </div>
+    </div>
+    <div class="tip">备菜提示：鸡翅周四晚用盐 + 生抽提前腌，冰箱隔夜入味更好；周五下班直接下锅。</div>
+  </div>
+
+  <!-- 周六 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周六</span>
+      <span class="tag t-pork">红烧 · 周末主菜</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--color-text-secondary)">周末 · 中等难度</span>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">红烧排骨</div>
+        <div class="badges"><span class="b b-mid">中等</span><span class="b b-kid">儿童友好</span><span class="b b-prep">可提前炖</span></div>
+        <div class="desc">排骨焯水 → 炒糖色上色 → 加姜 + 生抽 + 老抽 → 小火焖 40 分钟收汁</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">蒜蓉炒时蔬</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">上海青 / 菠菜任选 → 蒜末 + 大火快炒 2 分钟，解腻</div>
+      </div>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">土豆炖排骨（延伸）</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">红烧排骨留一半 → 加土豆块 + 水继续炖 20 分钟，变成另一道菜</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">拍黄瓜</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-prep">可提前备</span></div>
+        <div class="desc">黄瓜拍碎 → 蒜末 + 盐 + 香醋 + 少量香油，拌匀即可</div>
+      </div>
+    </div>
+    <div class="tip">周六主打一个「一次炖大锅排骨，变两道菜」：原味红烧排骨 + 土豆炖排骨，节省时间又不重复。</div>
+  </div>
+
+  <!-- 周日 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周日</span>
+      <span class="tag t-feast">周末压轴 · 鱼 + 虾</span>
+      <span style="margin-left:auto;font-size:12px;color:var(--color-text-secondary)">周末 · 可稍复杂</span>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">清蒸鲈鱼</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span><span class="b b-prep">提前腌 15 分钟</span></div>
+        <div class="desc">鲈鱼划刀 → 姜丝 + 盐腌 → 上锅蒸 8 分钟 → 淋蒸鱼豉油 + 浇热油</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">蒜蓉粉丝虾</div>
+        <div class="badges"><span class="b b-mid">中等</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">粉丝泡发铺底 → 虾开背去线摆放 → 蒜蓉 + 生抽调汁淋上 → 蒸 6 分钟 + 淋热油</div>
+      </div>
+    </div>
+    <div class="dish-row">
+      <div class="dish">
+        <div class="dish-name">麻婆豆腐</div>
+        <div class="badges"><span class="b b-mid">中等</span><span class="b b-kid">微辣可调</span></div>
+        <div class="desc">豆腐切块焯水 → 肉末炒香 + 豆瓣酱（少放）→ 加豆腐轻翻 → 水淀粉勾芡</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">番茄炒蛋</div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">鸡蛋炒出锅备用 → 番茄炒软出汁 → 回锅合炒 + 少量糖提鲜</div>
+      </div>
+    </div>
+    <div class="tip">麻婆豆腐豆瓣酱量减半，微辣不辛，孩子接受度高；鱼和虾同步蒸，节省灶台时间。</div>
+  </div>
+
+  <!-- 食材复用 -->
+  <div class="reuse-card">
+    <div class="reuse-head">本周食材复用一览</div>
+    <div class="reuse-body">
+      <div class="reuse-col">
+        <div class="reuse-label">跨天复用</div>
+        <div class="rtags">
+          <span class="rtag">排骨（周六红烧 → 土豆炖）</span>
+          <span class="rtag">豆腐（周四肉末豆腐 + 周日麻婆）</span>
+          <span class="rtag">番茄（周五汤 + 周日炒蛋）</span>
+          <span class="rtag">鸡蛋（周四汤 + 周日炒蛋）</span>
+          <span class="rtag">猪肉末（周四 + 周日麻婆）</span>
+        </div>
+      </div>
+      <div class="reuse-col">
+        <div class="reuse-label">全周常备调料</div>
+        <div class="rtags">
+          <span class="rtag">葱姜蒜（每天用）</span>
+          <span class="rtag">生抽 / 老抽</span>
+          <span class="rtag">盐 / 白醋 / 香醋</span>
+          <span class="rtag">淀粉（勾芡）</span>
+          <span class="rtag">蒸鱼豉油</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

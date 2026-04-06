@@ -336,8 +336,7 @@ function addSearchLinks(markup) {
 }
 
 function extractPlanMarkup(fragment) {
-  const startIndex = fragment.indexOf("<div class=\"plan\"");
-  return startIndex >= 0 ? fragment.slice(startIndex).trim() : fragment.trim();
+  return fragment.replace(/^\s*<style>[\s\S]*?<\/style>\s*/i, "").trim();
 }
 
 function buildSearchQuery(htmlFragment) {
