@@ -12,6 +12,8 @@ const dinnerSource = resolve(workspace, "source-html", "week14_dinner_plan.html"
 const trainingSource = resolve(workspace, "source-html", "week14_training_plan.html");
 const week15DinnerSource = resolve(workspace, "source-html", "week15_dinner_plan.html");
 const week15TrainingSource = resolve(workspace, "source-html", "week15_training_plan.html");
+const week16DinnerSource = resolve(workspace, "source-html", "week16_dinner_plan.html");
+const week16TrainingSource = resolve(workspace, "source-html", "week16_training_plan.html");
 
 execFileSync("node", [scriptPath, dinnerSource, "--site-root", siteRoot], {
   cwd: workspace,
@@ -33,15 +35,27 @@ execFileSync("node", [scriptPath, week15TrainingSource, "--site-root", siteRoot]
   stdio: "pipe",
 });
 
+execFileSync("node", [scriptPath, week16DinnerSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
+execFileSync("node", [scriptPath, week16TrainingSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
 const dinnerPage = resolve(siteRoot, "weeks", "week14", "dinner.html");
 const trainingPage = resolve(siteRoot, "weeks", "week14", "training.html");
 const week15DinnerPage = resolve(siteRoot, "weeks", "week15", "dinner.html");
 const week15TrainingPage = resolve(siteRoot, "weeks", "week15", "training.html");
+const week16DinnerPage = resolve(siteRoot, "weeks", "week16", "dinner.html");
+const week16TrainingPage = resolve(siteRoot, "weeks", "week16", "training.html");
 const latestDinner = resolve(siteRoot, "latest", "dinner.html");
 const latestTraining = resolve(siteRoot, "latest", "training.html");
 const indexPage = resolve(siteRoot, "index.html");
 
-for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, latestDinner, latestTraining, indexPage]) {
+for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, week16DinnerPage, week16TrainingPage, latestDinner, latestTraining, indexPage]) {
   assert.ok(existsSync(path), `Expected generated file to exist: ${path}`);
 }
 
@@ -96,10 +110,10 @@ assert.doesNotMatch(
 );
 
 const latestDinnerHtml = readFileSync(latestDinner, "utf8");
-assert.match(latestDinnerHtml, /week15\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
+assert.match(latestDinnerHtml, /week16\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
 
 const latestTrainingHtml = readFileSync(latestTraining, "utf8");
-assert.match(latestTrainingHtml, /week15\/training\.html/i, "Latest training redirect should point to the newest imported week");
+assert.match(latestTrainingHtml, /week16\/training\.html/i, "Latest training redirect should point to the newest imported week");
 
 const indexHtml = readFileSync(indexPage, "utf8");
 assert.match(indexHtml, /Dinner \+ Training/i, "Index should have the new editorial homepage title");
@@ -108,6 +122,7 @@ assert.match(indexHtml, /Latest Training/i, "Index should keep the latest traini
 assert.match(indexHtml, /Weeks Archive/i, "Index should include the archive section");
 assert.match(indexHtml, /Week 14/i, "Index should include the imported week");
 assert.match(indexHtml, /Week 15/i, "Index should include the newest imported week");
+assert.match(indexHtml, /Week 16/i, "Index should include the newest imported week");
 
 const week15DinnerHtml = readFileSync(week15DinnerPage, "utf8");
 assert.match(week15DinnerHtml, /Week 15 Dinner Plan/i, "Week 15 dinner page should include the correct heading");
@@ -120,6 +135,22 @@ assert.doesNotMatch(
   week15DinnerHtml,
   /<main class="panel">\s*<style>/i,
   "Week 15 dinner page should not inject a stray style block into the page body",
+);
+
+const week16DinnerHtml = readFileSync(week16DinnerPage, "utf8");
+assert.match(week16DinnerHtml, /Week 16 Dinner Plan/i, "Week 16 dinner page should include the correct heading");
+assert.match(
+  week16DinnerHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E6%B8%85%E8%92%B8%E9%B2%88%E9%B1%BC"/i,
+  "Week 16 dinner page should add search links for dishes",
+);
+
+const week16TrainingHtml = readFileSync(week16TrainingPage, "utf8");
+assert.match(week16TrainingHtml, /Week 16 Training Plan/i, "Week 16 training page should include the correct heading");
+assert.match(
+  week16TrainingHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E5%93%91%E9%93%83%E8%82%A9%E6%8E%A8"/i,
+  "Week 16 training page should add search links for moves",
 );
 
 console.log("Import plan HTML generator works.");

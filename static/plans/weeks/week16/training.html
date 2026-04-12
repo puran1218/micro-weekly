@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 16 Training Plan</title>
+  <meta name="description" content="一周训练安排">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #edf2f5;
+      --surface-background: rgba(255, 255, 255, 0.82);
+      --surface-border: rgba(95, 122, 145, 0.24);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-color: #3c3489;
+      --shadow-soft: 0 18px 45px rgba(25, 36, 46, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page-background); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.72), transparent 26%), linear-gradient(180deg, #f2f6f9 0%, #e8eef2 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--surface-border);
+      border-radius: 22px;
+      background: var(--surface-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .nav-pill,
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(36, 48, 59, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--heading-color);
+    }
+
+    .nav-back {
+      color: var(--muted-color);
+      background: transparent;
+      padding-left: 0;
+      border: none;
+    }
+
+    .nav-link.is-active {
+      background: #24303b;
+      color: #fff;
+      border-color: #24303b;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .panel { padding: 14px; border-radius: 20px; }
+      .hero { padding-top: 12px; }
+    }
+  </style>
+<style>
+  .plan { padding: 1rem 0; }
+  .day-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); margin-bottom: 14px; overflow: hidden; }
+  .day-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .day-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary, #202327); }
+  .day-sub { font-size: 12px; color: var(--color-text-tertiary, #6d7782); }
+  .focus-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 6px; margin-left: auto; white-space: nowrap; }
+  .badge-leg { background: #E1F5EE; color: #085041; }
+  .badge-upper { background: #EEEDFE; color: #3C3489; }
+  .badge-pull { background: #FAEEDA; color: #633806; }
+  .badge-office { background: #F1EFE8; color: #444441; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 16px; font-size: 11px; font-weight: 500; color: var(--color-text-tertiary, #6d7782); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  td { padding: 9px 16px; color: var(--color-text-primary, #202327); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .move { font-weight: 500; }
+  .note { font-size: 11px; color: var(--color-text-secondary, #4f5b67); margin-top: 2px; }
+  .ankle-tag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px; background: #E1F5EE; color: #085041; margin-left: 4px; vertical-align: middle; }
+  .up-tag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px; background: #FAEEDA; color: #633806; margin-left: 4px; vertical-align: middle; }
+  .time-row { display: flex; align-items: center; gap: 6px; padding: 8px 16px; font-size: 12px; color: var(--color-text-secondary, #4f5b67); border-top: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <nav class="hero-nav" aria-label="Plans navigation">
+          <a class="nav-link" href="./dinner.html">Dinner</a>
+          <a class="nav-link is-active" href="./training.html">Training</a>
+        </nav>
+      </div>
+      <p class="hero-kicker">Week 16</p>
+      <h1>Week 16 Training Plan</h1>
+    </header>
+    <main class="panel">
+<div class="plan">
+
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周一 — 办公室</div>
+        <div class="day-sub">徒手 + 弹力带 · 足踝 + 核心</div>
+      </div>
+      <span class="focus-badge badge-office">无器械</span>
+    </div>
+    <table>
+      <tr>
+        <th style="width:36%">动作</th>
+        <th style="width:22%">组 × 次/时</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%BC%B9%E5%8A%9B%E5%B8%A6%E8%B8%9D%E5%A4%96%E6%97%8B" target="_blank" rel="noreferrer">弹力带踝外旋 <span class="ankle-tag">足踝</span></a></div><div class="note">坐姿，阻力轻</div></td>
+        <td>3 × 15/侧</td>
+        <td>纠正内旋，热身兼康复</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E7%AB%99%E7%AB%8B%E5%B9%B3%E8%A1%A1" target="_blank" rel="noreferrer">单腿站立平衡 <span class="ankle-tag">足踝</span></a></div><div class="note">赤脚或薄底，靠墙备用</div></td>
+        <td>3 × 30s/侧</td>
+        <td>左脚专注足弓上拱感</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%BE%92%E6%89%8B%E6%B7%B1%E8%B9%B2" target="_blank" rel="noreferrer">徒手深蹲</a></div><div class="note">慢下2秒，膝盖对脚尖</div></td>
+        <td>3 × 15</td>
+        <td>腿部激活；左膝注意不内扣</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%B9%B3%E6%9D%BF%E6%94%AF%E6%92%91" target="_blank" rel="noreferrer">平板支撑</a></div><div class="note">前臂支撑</div></td>
+        <td>3 × 35s</td>
+        <td>核心基础；腰不塌，全程收腹</td>
+      </tr>
+    </table>
+    <div class="time-row">约 17 分钟</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周二 — 健身房</div>
+        <div class="day-sub">上肢推 + 肩部</div>
+      </div>
+      <span class="focus-badge badge-upper">上肢推</span>
+    </div>
+    <table>
+      <tr>
+        <th style="width:36%">动作</th>
+        <th style="width:22%">组 × 次</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E8%82%A9%E6%8E%A8" target="_blank" rel="noreferrer">哑铃肩推 <span class="up-tag">↑量</span></a></div><div class="note">站姿，较上周加重2-4磅</div></td>
+        <td>3 × 10</td>
+        <td>在上周基础上小幅加重</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E4%BE%A7%E5%B9%B3%E4%B8%BE" target="_blank" rel="noreferrer">哑铃侧平举</a></div><div class="note">轻重量，慢控制</div></td>
+        <td>3 × 12</td>
+        <td>下降2秒，不借力</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E5%89%8D%E5%B9%B3%E4%B8%BE" target="_blank" rel="noreferrer">哑铃前平举</a></div><div class="note">交替，中立握</div></td>
+        <td>3 × 10/侧</td>
+        <td>新增；与侧平举配合覆盖全肩</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E4%BF%AF%E8%BA%AB%E5%93%91%E9%93%83%E5%88%92%E8%88%B9" target="_blank" rel="noreferrer">俯身哑铃划船</a></div><div class="note">单臂，膝盖支撑</div></td>
+        <td>3 × 10/侧</td>
+        <td>背部拮抗，防圆肩</td>
+      </tr>
+    </table>
+    <div class="time-row">约 18 分钟</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周三 — 健身房</div>
+        <div class="day-sub">下肢力量 + 足踝稳定</div>
+      </div>
+      <span class="focus-badge badge-leg">腿部</span>
+    </div>
+    <table>
+      <tr>
+        <th style="width:36%">动作</th>
+        <th style="width:22%">组 × 次</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E8%85%BF%E5%B1%88%E4%BC%B8" target="_blank" rel="noreferrer">坐姿腿屈伸 <span class="up-tag">↑量</span></a></div><div class="note">器械，较上周加重</div></td>
+        <td>3 × 12</td>
+        <td>上周顺利完成则加一档</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E6%8F%90%E8%B8%B5" target="_blank" rel="noreferrer">单腿提踵 <span class="ankle-tag">足踝</span></a></div><div class="note">扶墙，慢速下降3秒</div></td>
+        <td>3 × 15/侧</td>
+        <td>左脚感受足弓发力，膝不内扣</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E7%BD%97%E9%A9%AC%E5%B0%BC%E4%BA%9A%E7%A1%AC%E6%8B%89" target="_blank" rel="noreferrer">单腿罗马尼亚硬拉 <span class="ankle-tag">足踝</span></a></div><div class="note">轻哑铃，控制重心</div></td>
+        <td>3 × 10/侧</td>
+        <td>较上周加2次；左脚站立时足弓上拱</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E8%85%BF%E5%BC%AF%E4%B8%BE" target="_blank" rel="noreferrer">坐姿腿弯举</a></div><div class="note">器械，轻-中重量</div></td>
+        <td>3 × 12</td>
+        <td>新增；腘绳肌补强，前后平衡减少抽筋风险</td>
+      </tr>
+    </table>
+    <div class="time-row">约 19 分钟</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周四 — 健身房</div>
+        <div class="day-sub">上肢拉 + 核心</div>
+      </div>
+      <span class="focus-badge badge-pull">上肢拉</span>
+    </div>
+    <table>
+      <tr>
+        <th style="width:36%">动作</th>
+        <th style="width:22%">组 × 次</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E7%BB%B3%E7%B4%A2%E4%B8%8B%E6%8B%89" target="_blank" rel="noreferrer">坐姿绳索下拉</a></div><div class="note">宽握或中握</div></td>
+        <td>3 × 10</td>
+        <td>背阔肌；下拉至锁骨，控制上升</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E5%BC%AF%E4%B8%BE" target="_blank" rel="noreferrer">哑铃弯举</a></div><div class="note">交替，慢速</div></td>
+        <td>3 × 12</td>
+        <td>肱二头肌；与周二推配合</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%AF%9B%E5%B7%BE%2F%E8%84%9A%E8%B6%BE%E6%8A%93%E5%9C%B0" target="_blank" rel="noreferrer">毛巾/脚趾抓地 <span class="ankle-tag">足踝</span></a></div><div class="note">赤脚，地毯或毛巾</div></td>
+        <td>3 × 20/侧</td>
+        <td>足底肌群，改善足弓支撑</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%B7%E8%85%B9" target="_blank" rel="noreferrer">卷腹</a></div><div class="note">慢速，感受腹部收缩</div></td>
+        <td>3 × 15</td>
+        <td>新增；与平板支撑互补，腹部前侧激活</td>
+      </tr>
+    </table>
+    <div class="time-row">约 18 分钟</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周五 — 健身房</div>
+        <div class="day-sub">全身轻量 + 足踝综合</div>
+      </div>
+      <span class="focus-badge badge-leg">全身</span>
+    </div>
+    <table>
+      <tr>
+        <th style="width:36%">动作</th>
+        <th style="width:22%">组 × 次</th>
+        <th>说明</th>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E7%9B%B8%E6%89%91%E6%B7%B1%E8%B9%B2" target="_blank" rel="noreferrer">哑铃相扑深蹲</a></div><div class="note">宽站距，脚尖略外</div></td>
+        <td>3 × 12</td>
+        <td>内收肌 + 股四头肌；注意左膝不内扣</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E6%8F%90%E8%B8%B5" target="_blank" rel="noreferrer">单腿提踵 <span class="ankle-tag">足踝</span></a></div><div class="note">扶架，慢速</div></td>
+        <td>2 × 15/侧</td>
+        <td>一周第二次提踵，维持足弓激活</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%93%91%E9%93%83%E9%94%A4%E5%BC%8F%E5%BC%AF%E4%B8%BE" target="_blank" rel="noreferrer">哑铃锤式弯举</a></div><div class="note">中立握</div></td>
+        <td>3 × 10</td>
+        <td>肱肌 + 前臂；与周四弯举形成互补</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E7%AB%99%E7%AB%8B%E5%B9%B3%E8%A1%A1" target="_blank" rel="noreferrer">单腿站立平衡 <span class="ankle-tag">足踝</span></a></div><div class="note">赤脚，闭眼进阶可选</div></td>
+        <td>3 × 30s/侧</td>
+        <td>本周收尾，闭眼做难度更高，量力而行</td>
+      </tr>
+    </table>
+    <div class="time-row">约 17 分钟</div>
+  </div>
+
+</div>
+    </main>
+  </div>
+</body>
+</html>

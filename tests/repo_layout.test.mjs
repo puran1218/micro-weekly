@@ -14,6 +14,8 @@ const requiredPaths = [
   "source-html/week14_training_plan.html",
   "source-html/week15_dinner_plan.html",
   "source-html/week15_training_plan.html",
+  "source-html/week16_dinner_plan.html",
+  "source-html/week16_training_plan.html",
   "static/plans/index.html",
 ];
 

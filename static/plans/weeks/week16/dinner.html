@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 16 Dinner Plan</title>
+  <meta name="description" content="一周晚餐安排">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #f4f1ea;
+      --surface-background: rgba(255, 255, 255, 0.82);
+      --surface-border: rgba(178, 163, 138, 0.28);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-color: #0f6e56;
+      --shadow-soft: 0 18px 45px rgba(40, 35, 28, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page-background); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 30%), linear-gradient(180deg, #f7f3eb 0%, #f2efe8 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--surface-border);
+      border-radius: 22px;
+      background: var(--surface-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .nav-pill,
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(36, 48, 59, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--heading-color);
+    }
+
+    .nav-back {
+      color: var(--muted-color);
+      background: transparent;
+      padding-left: 0;
+      border: none;
+    }
+
+    .nav-link.is-active {
+      background: #24303b;
+      color: #fff;
+      border-color: #24303b;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .panel { padding: 14px; border-radius: 20px; }
+      .hero { padding-top: 12px; }
+    }
+  </style>
+<style>
+* { box-sizing: border-box; }
+.wrap { padding: 1rem 0; font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif); color: var(--color-text-primary, #202327); }
+.notice { background: #E1F5EE; border: 0.5px solid #9FE1CB; border-radius: var(--border-radius-md, 999px); padding: 10px 14px; font-size: 13px; color: #085041; margin-bottom: 16px; }
+.day-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); margin-bottom: 12px; overflow: hidden; }
+.day-head { display: flex; align-items: center; gap: 10px; padding: 9px 15px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+.day-lbl { font-size: 15px; font-weight: 500; min-width: 36px; }
+.theme { font-size: 11px; padding: 2px 9px; border-radius: var(--border-radius-md, 999px); background: #E1F5EE; color: #085041; }
+.day-note { margin-left: auto; font-size: 12px; color: var(--color-text-secondary, #4f5b67); }
+.dishes { display: grid; grid-template-columns: 1fr 1fr; }
+.dish { padding: 10px 14px; border-right: 0.5px solid var(--color-border-tertiary, #d8dde6); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+.dish:last-child { border-right: none; }
+.dishes .dish:nth-last-child(-n+2) { border-bottom: none; }
+.dish-full { padding: 10px 14px; border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+.dish-full:last-child { border-bottom: none; }
+.dish-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; }
+.badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 4px; }
+.b { font-size: 11px; padding: 1px 7px; border-radius: var(--border-radius-md, 999px); }
+.b-easy { background: #EAF3DE; color: #27500A; }
+.b-kid  { background: #EEEDFE; color: #3C3489; }
+.b-prep { background: #E6F1FB; color: #0C447C; }
+.b-soup { background: #FCEBEB; color: #791F1F; }
+.desc { font-size: 12px; color: var(--color-text-secondary, #4f5b67); line-height: 1.5; }
+.tip { padding: 7px 15px; font-size: 12px; color: #085041; background: #E1F5EE; border-top: 0.5px solid #9FE1CB; }
+.reuse-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); overflow: hidden; margin-top: 4px; }
+.reuse-head { padding: 9px 15px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); font-size: 13px; font-weight: 500; color: var(--color-text-secondary, #4f5b67); }
+.reuse-body { display: grid; grid-template-columns: 1fr 1fr; }
+.reuse-col { padding: 12px 15px; }
+.reuse-col + .reuse-col { border-left: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+.rlabel { font-size: 11px; color: var(--color-text-secondary, #4f5b67); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+.rtags { display: flex; gap: 5px; flex-wrap: wrap; }
+.rtag { font-size: 11px; padding: 2px 8px; border-radius: var(--border-radius-md, 999px); background: var(--color-background-tertiary, #f2f4f7); color: var(--color-text-secondary, #4f5b67); border: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <nav class="hero-nav" aria-label="Plans navigation">
+          <a class="nav-link is-active" href="./dinner.html">Dinner</a>
+          <a class="nav-link" href="./training.html">Training</a>
+        </nav>
+      </div>
+      <p class="hero-kicker">Week 16</p>
+      <h1>Week 16 Dinner Plan</h1>
+    </header>
+    <main class="panel">
+<div class="wrap">
+  <div class="notice">第16周 · 清淡易消化，蒸煮为主，不放辣，孩子生病调养期。</div>
+
+  <!-- 周一 4/13 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周一</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月13日</span>
+      <span class="theme">清蒸 · 开周轻松</span>
+      <span class="day-note">时间充裕</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E8%92%B8%E9%B2%88%E9%B1%BC" target="_blank" rel="noreferrer">清蒸鲈鱼</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span><span class="b b-prep">提前腌 15 分</span></div>
+        <div class="desc">姜丝铺底 → 蒸 8 分钟 → 淋蒸鱼豉油 + 浇热油，鱼肉嫩滑易消化</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E4%B8%8A%E6%B5%B7%E9%9D%92" target="_blank" rel="noreferrer">清炒上海青</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">蒜末爆香 → 大火翻炒 2 分钟 → 少许盐，清爽不油腻</div>
+      </div>
+    </div>
+    <div class="tip">鱼是生病期间最好的蛋白质来源，清蒸零难度，孩子也喜欢。</div>
+  </div>
+
+  <!-- 周二 4/14 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周二</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月14日</span>
+      <span class="theme">蒸蛋 · 快手</span>
+      <span class="day-note">工作日 · 20 分钟</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%92%B8%E6%B0%B4%E8%9B%8B" target="_blank" rel="noreferrer">蒸水蛋</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">鸡蛋 + 1.5 倍温水打散过筛 → 盖保鲜膜蒸 10 分钟 → 淋生抽 + 香油</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%95%AA%E8%8C%84%E7%82%92%E8%9B%8B" target="_blank" rel="noreferrer">番茄炒蛋</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">鸡蛋先炒出锅 → 番茄炒软出汁 → 合炒 + 少许糖，酸甜开胃</div>
+      </div>
+    </div>
+    <div class="dish-full">
+      <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%86%AC%E7%93%9C%E6%8E%92%E9%AA%A8%E6%B1%A4" target="_blank" rel="noreferrer">冬瓜排骨汤</a></div>
+      <div class="badges"><span class="b b-easy">简单</span><span class="b b-soup">汤</span><span class="b b-kid">儿童友好</span><span class="b b-prep">可提前炖</span></div>
+      <div class="desc">排骨焯水 → 冷水入锅 + 姜片 → 烧开转小火炖 40 分钟 → 加冬瓜再炖 10 分钟，清甜去火</div>
+    </div>
+    <div class="tip">冬瓜清热利水，汤炖好后撇去浮油，给孩子喝汤就很好。可以周一晚上提前炖好。</div>
+  </div>
+
+  <!-- 周三 4/15 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周三</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月15日</span>
+      <span class="theme">豆腐 · 易消化</span>
+      <span class="day-note">工作日 · 20 分钟</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%82%89%E6%B2%AB%E8%B1%86%E8%85%90" target="_blank" rel="noreferrer">肉沫豆腐</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">猪肉沫炒香 → 嫩豆腐下锅 → 生抽 + 少量老抽轻翻收汁，不放豆瓣酱</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E9%86%8B%E6%BA%9C%E7%99%BD%E8%8F%9C" target="_blank" rel="noreferrer">醋溜白菜</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">白菜手撕 → 蒜末爆香 → 大火快炒 + 白醋，脆嫩清口</div>
+      </div>
+    </div>
+    <div class="tip">周二排骨汤如有剩余，今天热一热继续喝，不用另备汤。</div>
+  </div>
+
+  <!-- 周四 4/16 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周四</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月16日</span>
+      <span class="theme">鸡肉 · 补充体力</span>
+      <span class="day-note">工作日 · 20 分钟</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%99%BD%E5%88%87%E9%B8%A1" target="_blank" rel="noreferrer">白切鸡</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span><span class="b b-prep">可提前煮</span></div>
+        <div class="desc">鸡腿冷水入锅 + 姜片煮开 → 转小火 20 分钟 → 冰水过一下切片，蘸姜葱油</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E8%A5%BF%E8%93%9D%E8%8A%B1" target="_blank" rel="noreferrer">清炒西蓝花</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">焯水 40 秒 → 蒜末爆香 → 快炒 2 分钟，翠绿不软烂</div>
+      </div>
+    </div>
+    <div class="dish-full">
+      <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E9%B8%A1%E6%B1%A4%E6%8C%82%E9%9D%A2%EF%BC%88%E7%85%AE%E9%B8%A1%E4%BD%99%E6%B1%A4%EF%BC%89" target="_blank" rel="noreferrer">鸡汤挂面（煮鸡余汤）</a></div>
+      <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+      <div class="desc">煮鸡的清汤留用 → 加盐调味 → 下细挂面煮熟，孩子生病最滋补的一碗</div>
+    </div>
+    <div class="tip">煮鸡余汤别倒，直接下面条，孩子吃一碗暖胃补体力，比任何药膳都实在。</div>
+  </div>
+
+  <!-- 周五 4/17 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周五</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月17日</span>
+      <span class="theme">蒸虾 · 换口味</span>
+      <span class="day-note">工作日 · 20 分钟</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%92%9C%E8%93%89%E8%92%B8%E8%99%BE" target="_blank" rel="noreferrer">蒜蓉蒸虾</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">虾开背去线 → 蒜蓉 + 少量生抽调汁淋上 → 蒸 5 分钟，鲜甜无腥味</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E5%9C%9F%E8%B1%86%E4%B8%9D" target="_blank" rel="noreferrer">清炒土豆丝</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">土豆切丝过凉水去淀粉 → 大火爆炒 + 少许白醋，清爽脆口</div>
+      </div>
+    </div>
+    <div class="tip">虾蛋白质高且易消化，孩子还在恢复期，蒸虾比炒肉更温和。</div>
+  </div>
+
+  <!-- 周六 4/18 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周六</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月18日</span>
+      <span class="theme">暖胃 · 收尾</span>
+      <span class="day-note">周末 · 轻松</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%95%AA%E8%8C%84%E7%82%92%E8%9B%8B" target="_blank" rel="noreferrer">番茄炒蛋</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">经典做法，孩子爱吃，食欲恢复期最合适</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E5%A8%83%E5%A8%83%E8%8F%9C" target="_blank" rel="noreferrer">清炒娃娃菜</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">娃娃菜手撕 → 蒜末爆香 + 快炒 2 分钟，清甜软嫩</div>
+      </div>
+    </div>
+    <div class="dish-full">
+      <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%B1%86%E8%85%90%E8%9B%8B%E8%8A%B1%E6%B1%A4" target="_blank" rel="noreferrer">豆腐蛋花汤</a></div>
+      <div class="badges"><span class="b b-easy">简单</span><span class="b b-soup">汤</span><span class="b b-kid">儿童友好</span></div>
+      <div class="desc">嫩豆腐切块入清水 → 烧开打蛋花 → 盐 + 葱花，10 分钟，清淡养胃</div>
+    </div>
+    <div class="tip">周六轻松，全部 20 分钟内完成。孩子若已好转，周日可以加回荤菜。</div>
+  </div>
+
+  <!-- 周日 4/19 -->
+  <div class="day-card">
+    <div class="day-head">
+      <span class="day-lbl">周日</span>
+      <span style="font-size:12px;color:var(--color-text-secondary, #4f5b67)">4月19日</span>
+      <span class="theme">鸡汤 · 周末调养</span>
+      <span class="day-note">周末 · 时间充裕</span>
+    </div>
+    <div class="dishes">
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%8E%89%E7%B1%B3%E5%B1%B1%E8%8D%AF%E9%B8%A1%E6%B1%A4" target="_blank" rel="noreferrer">玉米山药鸡汤</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-soup">汤</span><span class="b b-kid">儿童友好</span><span class="b b-prep">慢炖 1 小时</span></div>
+        <div class="desc">鸡块焯水 → 加玉米段 + 山药 + 姜片 → 炖 1 小时，汤清味甜，健脾补气</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E8%92%B8%E9%B8%A1%E8%9B%8B%E7%BE%B9" target="_blank" rel="noreferrer">清蒸鸡蛋羹</a></div>
+        <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+        <div class="desc">2 个蛋 + 200ml 温水打散 → 过筛去泡 → 盖保鲜膜蒸 10 分钟，滑嫩零难度</div>
+      </div>
+    </div>
+    <div class="dish-full">
+      <div class="dish-name"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B8%85%E7%82%92%E6%97%B6%E8%94%AC%EF%BC%88%E4%BB%BB%E9%80%89%EF%BC%89" target="_blank" rel="noreferrer">清炒时蔬（任选）</a></div>
+      <div class="badges"><span class="b b-easy">简单</span><span class="b b-kid">儿童友好</span></div>
+      <div class="desc">上海青 / 菠菜 / 西蓝花任选一 → 蒜末爆香快炒，配汤喝刚好</div>
+    </div>
+    <div class="tip">山药健脾，玉米清甜，孩子快好了但肠胃还嫩，这锅汤是最好的过渡。</div>
+  </div>
+
+  <!-- 食材复用 -->
+  <div class="reuse-card">
+    <div class="reuse-head">本周食材复用一览</div>
+    <div class="reuse-body">
+      <div class="reuse-col">
+        <div class="rlabel">跨天复用</div>
+        <div class="rtags">
+          <span class="rtag">鸡蛋（周二蒸蛋 + 周二炒蛋 + 周六炒蛋 + 周日蛋羹）</span>
+          <span class="rtag">番茄（周二炒蛋 + 周六炒蛋）</span>
+          <span class="rtag">嫩豆腐（周三肉沫豆腐 + 周六汤）</span>
+          <span class="rtag">鸡汤（周四煮鸡余汤 → 直接下面条）</span>
+          <span class="rtag">蒜末（全周通用）</span>
+        </div>
+      </div>
+      <div class="reuse-col">
+        <div class="rlabel">一次采购用多天</div>
+        <div class="rtags">
+          <span class="rtag">生姜（鱼 / 鸡 / 汤均用）</span>
+          <span class="rtag">猪肉沫（周三豆腐）</span>
+          <span class="rtag">排骨（周二汤）</span>
+          <span class="rtag">时蔬（上海青 / 西蓝花 / 娃娃菜选 2 种）</span>
+          <span class="rtag">细挂面（周四应急主食）</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+    </main>
+  </div>
+</body>
+</html>
