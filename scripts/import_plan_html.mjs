@@ -1,4 +1,5 @@
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   readdirSync,
@@ -13,6 +14,8 @@ const SEARCH_PROVIDERS = {
 };
 
 const ACTIVE_SEARCH_PROVIDER = resolveSearchProvider(process.env.PLAN_SEARCH_PROVIDER ?? "youtube");
+const FAVICON_FILENAME = "puran_blog_avator.jpg";
+const FAVICON_SOURCE_PATH = resolve(process.cwd(), FAVICON_FILENAME);
 
 const TOKEN_FALLBACKS = {
   "--font-sans":
@@ -76,12 +79,11 @@ const rawHtml = readFileSync(sourcePath, "utf8");
 const hydratedFragment = addFallbacks(rawHtml);
 
 mkdirSync(siteRoot, { recursive: true });
+ensureSiteAssets(siteRoot);
 
 const pageHtml = buildPlanPage({
   rawFragment: hydratedFragment,
-  siteRoot,
   weekNumber: parsed.weekNumber,
-  weekSlug: parsed.weekSlug,
   kind: parsed.kind,
 });
 
@@ -95,6 +97,7 @@ writeLatestRedirect({
   kind: parsed.kind,
 });
 
+writeWeekIndexes(siteRoot);
 writeIndex(siteRoot);
 
 console.log(`Imported ${basename(sourcePath)} -> ${outputPath}`);
@@ -140,10 +143,15 @@ function addFallbacks(html) {
   });
 }
 
-function buildPlanPage({ rawFragment, weekNumber, weekSlug, kind }) {
+function buildPlanPage({ rawFragment, weekNumber, kind }) {
   const config = PAGE_CONFIG[kind];
-  const planStyles = extractStyleMarkup(rawFragment);
-  const planMarkup = addSearchLinks(extractPlanMarkup(rawFragment));
+  const dinnerMode = kind === "dinner" ? detectDinnerMode(rawFragment) : "classic";
+  const planStyles = `${extractStyleMarkup(rawFragment)}${buildModeStyles({ kind, dinnerMode })}`;
+  const planMarkup = transformPlanMarkup({
+    markup: extractPlanMarkup(rawFragment),
+    kind,
+    dinnerMode,
+  });
 
   return `<!doctype html>
 <html lang="zh-CN">
@@ -152,6 +160,7 @@ function buildPlanPage({ rawFragment, weekNumber, weekSlug, kind }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${config.heroTitle(weekNumber)}</title>
   <meta name="description" content="${escapeHtmlAttribute(config.sectionSummary)}">
+  ${buildFaviconMarkup("../../assets")}
   <style>
     :root {
       color-scheme: light;
@@ -318,21 +327,149 @@ function resolveSearchProvider(providerName) {
   return providerName;
 }
 
+function ensureSiteAssets(siteRoot) {
+  const assetsRoot = resolve(siteRoot, "assets");
+  mkdirSync(assetsRoot, { recursive: true });
+
+  if (existsSync(FAVICON_SOURCE_PATH)) {
+    copyFileSync(FAVICON_SOURCE_PATH, resolve(assetsRoot, FAVICON_FILENAME));
+  }
+}
+
 function extractStyleMarkup(fragment) {
   const match = fragment.match(/<style>[\s\S]*?<\/style>/i);
   return match ? match[0] : "";
 }
 
-function addSearchLinks(markup) {
+function detectDinnerMode(fragment) {
+  return /class="pool-wrap"|id="surprise-area"|id="btn-pick"/i.test(fragment) ? "pool" : "classic";
+}
+
+function transformPlanMarkup({ markup, kind, dinnerMode }) {
+  if (kind === "training") {
+    return addMoveSearchLinks(markup);
+  }
+
+  if (dinnerMode === "pool") {
+    return enhancePoolDinnerMarkup(markup);
+  }
+
+  return addDinnerSearchLinks(markup);
+}
+
+function addDinnerSearchLinks(markup) {
+  return markup.replace(/<div class="dish-name">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
+    const query = buildSearchQuery(innerHtml);
+    return `<div class="dish-name">${wrapSearchLink(innerHtml, query)}</div>`;
+  });
+}
+
+function addMoveSearchLinks(markup) {
+  return markup.replace(/<div class="move">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
+    const query = buildSearchQuery(innerHtml.replace(/<span\b[\s\S]*?<\/span>/gi, ""));
+    return `<div class="move">${wrapSearchLink(innerHtml, query)}</div>`;
+  });
+}
+
+function enhancePoolDinnerMarkup(markup) {
+  const helperBlock = `function buildPoolSearchUrl(name) {
+  const query = encodeURIComponent(name + ' 做法 家常菜');
+  return '${SEARCH_PROVIDERS[ACTIVE_SEARCH_PROVIDER]}' + query;
+}
+
+function renderPoolItem(d) {
+  return \`<a class="pool-item-link" href="\${buildPoolSearchUrl(d.name)}" target="_blank" rel="noreferrer"><div class="pool-item"><span class="pool-item-name">\${d.name}</span><span class="pool-item-cat">\${d.cat}</span></div></a>\`;
+}
+
+${/function openLink\(/i.test(markup) ? "" : `function openLink(url) {
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+`}`;
+
   return markup
-    .replace(/<div class="dish-name">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
-      const query = buildSearchQuery(innerHtml);
-      return `<div class="dish-name">${wrapSearchLink(innerHtml, query)}</div>`;
-    })
-    .replace(/<div class="move">([\s\S]*?)<\/div>/g, (_full, innerHtml) => {
-      const query = buildSearchQuery(innerHtml.replace(/<span\b[\s\S]*?<\/span>/gi, ""));
-      return `<div class="move">${wrapSearchLink(innerHtml, query)}</div>`;
-    });
+    .replace(
+      /function renderPool\(\) \{/i,
+      `${helperBlock}function renderPool() {`,
+    )
+    .replace(
+      /grid\.innerHTML = pool\.map\(d => `<div class="pool-item"><span class="pool-item-name">\$\{d\.name\}<\/span><span class="pool-item-cat">\$\{d\.cat\}<\/span><\/div>`\)\.join\(''\);/i,
+      `grid.innerHTML = pool.map(d => renderPoolItem(d)).join('');`,
+    );
+}
+
+function buildModeStyles({ kind, dinnerMode }) {
+  if (!(kind === "dinner" && dinnerMode === "pool")) {
+    return "";
+  }
+
+  return `
+<style>
+.btn-row button {
+  appearance: none;
+  border: 1px solid rgba(36, 48, 59, 0.12);
+  background: rgba(255, 255, 255, 0.88);
+  color: #24303b;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: 0 8px 18px rgba(38, 33, 24, 0.06);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.btn-row button:hover,
+.btn-row button:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(15, 110, 86, 0.22);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 24px rgba(38, 33, 24, 0.08);
+  outline: none;
+}
+
+.btn-row button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(38, 33, 24, 0.06);
+}
+
+#btn-pick,
+#btn-pick-meat,
+#btn-pick-veg {
+  background: rgba(15, 110, 86, 0.1);
+  color: #0f6e56;
+  border-color: rgba(15, 110, 86, 0.12);
+}
+
+#btn-video {
+  background: rgba(60, 52, 137, 0.1);
+  color: #3c3489;
+  border-color: rgba(60, 52, 137, 0.12);
+}
+
+.pool-item-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pool-item-link:hover .pool-item,
+.pool-item-link:focus-visible .pool-item {
+  transform: translateY(-1px);
+  border-color: rgba(15, 110, 86, 0.22);
+  box-shadow: 0 12px 24px rgba(38, 33, 24, 0.08);
+}
+
+.pool-item-link:focus-visible {
+  outline: none;
+}
+
+.pool-item {
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+</style>`;
 }
 
 function extractPlanMarkup(fragment) {
@@ -346,6 +483,12 @@ function buildSearchQuery(htmlFragment) {
 function wrapSearchLink(innerHtml, query) {
   const href = `${SEARCH_PROVIDERS[ACTIVE_SEARCH_PROVIDER]}${encodeURIComponent(query)}`;
   return `<a class="search-link" href="${href}" target="_blank" rel="noreferrer">${innerHtml}</a>`;
+}
+
+function buildFaviconMarkup(relativeAssetsPath) {
+  const href = `${relativeAssetsPath}/${FAVICON_FILENAME}`;
+  return `<link rel="icon" type="image/jpeg" href="${href}">
+  <link rel="apple-touch-icon" href="${href}">`;
 }
 
 function writeLatestRedirect({ siteRoot, weekSlug, kind }) {
@@ -362,6 +505,7 @@ function writeLatestRedirect({ siteRoot, weekSlug, kind }) {
   <title>Latest ${capitalize(kind)} Plan</title>
   <meta http-equiv="refresh" content="0; url=${targetHref}">
   <link rel="canonical" href="${targetHref}">
+  ${buildFaviconMarkup("../assets")}
 </head>
 <body>
   <p>Redirecting to the latest ${kind} plan: <a href="${targetHref}">${weekSlug}/${kind}.html</a></p>
@@ -369,6 +513,224 @@ function writeLatestRedirect({ siteRoot, weekSlug, kind }) {
 </html>
 `,
   );
+}
+
+function writeWeekIndexes(siteRoot) {
+  const weeksRoot = resolve(siteRoot, "weeks");
+
+  if (!existsSync(weeksRoot)) {
+    return;
+  }
+
+  const weeks = readdirSync(weeksRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && /^week\d+$/i.test(entry.name))
+    .map((entry) => buildWeekRecord(siteRoot, entry.name));
+
+  for (const week of weeks) {
+    const weekIndexPath = resolve(weeksRoot, week.weekSlug, "index.html");
+    writeFileSync(weekIndexPath, buildWeekIndexPage(week));
+  }
+}
+
+function buildWeekIndexPage(week) {
+  const dinnerCard = week.hasDinner
+    ? `<article class="card dinner">
+        <h2>Dinner</h2>
+        <p>${week.hasPoolDinner ? "本周晚餐使用可随机抽取的菜池页面。" : "查看本周晚餐安排，饭前快速打开就行。"}</p>
+        <div class="actions">
+          <a class="button green" href="./dinner.html">Open dinner</a>
+        </div>
+      </article>`
+    : `<article class="card dinner muted">
+        <h2>Dinner</h2>
+        <p>这一周还没有发布 dinner 页面。</p>
+      </article>`;
+
+  const trainingCard = week.hasTraining
+    ? `<article class="card training">
+        <h2>Training</h2>
+        <p>查看本周训练安排，去健身房前直接打开即可。</p>
+        <div class="actions">
+          <a class="button indigo" href="./training.html">Open training</a>
+        </div>
+      </article>`
+    : `<article class="card training muted">
+        <h2>Training</h2>
+        <p>这一周还没有发布 training 页面。</p>
+      </article>`;
+
+  return `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week ${week.weekNumber}</title>
+  <meta name="description" content="Week ${week.weekNumber} dinner and training overview">
+  ${buildFaviconMarkup("../../assets")}
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #f2efe8;
+      --card-background: rgba(255, 255, 255, 0.84);
+      --card-border: rgba(164, 150, 126, 0.24);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-green: #0f6e56;
+      --accent-indigo: #3c3489;
+      --shadow-soft: 0 24px 55px rgba(38, 33, 24, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.72), transparent 28%),
+        linear-gradient(180deg, #f7f3eb 0%, #ecf1f4 100%);
+    }
+
+    .page {
+      width: min(100%, 960px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero,
+    .card {
+      border-radius: 26px;
+      border: 1px solid var(--card-border);
+      background: var(--card-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 14px;
+      color: var(--muted-color);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 7vw, 42px);
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-copy {
+      margin: 10px 0 0;
+      max-width: 38rem;
+      color: var(--muted-color);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(36, 48, 59, 0.08);
+      color: var(--muted-color);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      padding: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted-color);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      border: 1px solid rgba(36, 48, 59, 0.1);
+      color: var(--heading-color);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .button.green {
+      background: rgba(15, 110, 86, 0.1);
+      color: var(--accent-green);
+      border-color: rgba(15, 110, 86, 0.12);
+    }
+
+    .button.indigo {
+      background: rgba(60, 52, 137, 0.1);
+      color: var(--accent-indigo);
+      border-color: rgba(60, 52, 137, 0.12);
+    }
+
+    .muted {
+      opacity: 0.84;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .card { border-radius: 22px; }
+      .hero, .card { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <a class="back-link" href="../../index.html">← Plans Home</a>
+      <div class="hero-kicker">Week ${week.weekNumber}</div>
+      <h1>Week ${week.weekNumber}</h1>
+      <p class="hero-copy">先进入这一周，再决定是看训练还是晚餐。历史 detail 页面继续保留，新的周入口也更适合手机上快速浏览。</p>
+    </section>
+
+    <section class="grid" aria-label="Week sections">
+      ${dinnerCard}
+      ${trainingCard}
+    </section>
+  </div>
+</body>
+</html>
+`;
 }
 
 function writeIndex(siteRoot) {
@@ -400,10 +762,11 @@ function writeIndex(siteRoot) {
 
       return `        <div class="week-item">
         <div class="week-copy">
-          <strong>Week ${week.weekNumber}</strong>
+          <strong><a class="week-entry-link" href="./weeks/${week.weekSlug}/index.html">Week ${week.weekNumber}</a></strong>
           <span>${statusLabel}</span>
         </div>
         <div class="week-links">
+          <a class="button" href="./weeks/${week.weekSlug}/index.html">Open week</a>
 ${actionLinks.join("\n")}
         </div>
       </div>`;
@@ -417,6 +780,7 @@ ${actionLinks.join("\n")}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weekly Plans</title>
   <meta name="description" content="Shareable dinner and training plans, optimized for quick mobile viewing.">
+  ${buildFaviconMarkup("./assets")}
   <style>
     :root {
       color-scheme: light;
@@ -603,6 +967,17 @@ ${actionLinks.join("\n")}
       font-size: 18px;
     }
 
+    .week-entry-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .week-entry-link:hover,
+    .week-entry-link:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 0.14em;
+    }
+
     .week-copy span {
       color: var(--muted-color);
       font-size: 13px;
@@ -671,6 +1046,9 @@ function buildWeekRecord(siteRoot, weekSlug) {
     weekNumber,
     hasDinner: existsSync(resolve(weekDir, "dinner.html")),
     hasTraining: existsSync(resolve(weekDir, "training.html")),
+    hasPoolDinner:
+      existsSync(resolve(weekDir, "dinner.html")) &&
+      /surprise-area|pool-wrap|btn-pick/i.test(readFileSync(resolve(weekDir, "dinner.html"), "utf8")),
   };
 }
 

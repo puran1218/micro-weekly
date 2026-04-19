@@ -1,0 +1,136 @@
+
+<style>
+.pool-wrap { padding: 1.5rem 0; font-family: var(--font-sans); color: var(--color-text-primary); }
+.surprise-area { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); padding: 24px 20px; text-align: center; margin-bottom: 16px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.empty-hint { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 14px; }
+.dish-card-lg { width: 100%; max-width: 360px; }
+.dish-title { font-size: 20px; font-weight: 500; margin-bottom: 10px; }
+.dish-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 10px; }
+.tag { font-size: 11px; padding: 2px 9px; border-radius: var(--border-radius-md); }
+.tag-meat { background: #FAECE7; color: #712B13; }
+.tag-fish { background: #E1F5EE; color: #085041; }
+.tag-egg  { background: #FAEEDA; color: #633806; }
+.tag-tofu { background: #E6F1FB; color: #0C447C; }
+.tag-veg  { background: #EAF3DE; color: #27500A; }
+.tag-soup { background: #FCEBEB; color: #791F1F; }
+.tag-easy { background: #EAF3DE; color: #27500A; }
+.tag-safe { background: #EEEDFE; color: #3C3489; }
+.tag-kid  { background: #FBEAF0; color: #72243E; }
+.dish-desc { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 6px; }
+.safety-note { font-size: 12px; color: #085041; background: #E1F5EE; padding: 6px 12px; border-radius: var(--border-radius-md); margin-top: 8px; display: inline-block; }
+.btn-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+.section-label { font-size: 12px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px; }
+.pool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
+.pool-item { padding: 10px 12px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+.pool-item-name { font-weight: 400; }
+.pool-item-cat { font-size: 11px; color: var(--color-text-tertiary); }
+.meta-row { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+</style>
+
+<h2 class="sr-only">家常菜随机池，28 道新手友好的清淡家常菜，点击按钮抽取今晚做什么</h2>
+
+<div class="pool-wrap">
+
+  <div class="surprise-area" id="surprise-area">
+    <div class="empty-hint" id="empty-hint">点下面的按钮，今晚就做这道</div>
+    <div class="dish-card-lg" id="dish-card" style="display:none;">
+      <div class="dish-title" id="dish-title"></div>
+      <div class="dish-tags" id="dish-tags"></div>
+      <div class="dish-desc" id="dish-desc"></div>
+      <div class="safety-note" id="safety-note" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button id="btn-pick">抽一道菜</button>
+    <button id="btn-pick-meat">只抽荤菜</button>
+    <button id="btn-pick-veg">只抽素菜</button>
+    <button id="btn-video" style="display:none;" onclick="openVideo()">看视频教程 ↗</button>
+  </div>
+
+  <div class="section-label">完整池子（28 道 · 新手友好版）</div>
+  <div class="pool-grid" id="pool-grid"></div>
+
+</div>
+
+<script>
+const pool = [
+  { name: "清蒸鲈鱼", cat: "鱼", method: "蒸", tags: [["tag-fish","鱼"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "姜丝铺底蒸 8 分钟，淋蒸鱼豉油浇热油", safety: "全程蒸制，完全不会糊锅" },
+  { name: "清蒸多宝鱼", cat: "鱼", method: "蒸", tags: [["tag-fish","鱼"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "比鲈鱼更嫩，蒸 10 分钟，同样淋豉油热油", safety: "全程蒸制，完全不会糊锅" },
+  { name: "豆豉蒸排骨", cat: "排骨", method: "蒸", tags: [["tag-meat","荤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "排骨腌 20 分钟，铺豆豉蒸 30 分钟", safety: "蒸制为主，不需要盯火" },
+  { name: "蒜蓉蒸虾", cat: "虾", method: "蒸", tags: [["tag-fish","虾"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "虾开背去线，蒜蓉生抽调汁淋上蒸 5 分钟", safety: "全程蒸制，完全不会糊锅" },
+  { name: "蒜蓉粉丝娃娃菜", cat: "蔬菜", method: "蒸", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "娃娃菜铺粉丝加蒜蓉，蒸 8 分钟淋热油", safety: "蒸制，不糊锅" },
+  { name: "蒸水蛋", cat: "蛋", method: "蒸", tags: [["tag-egg","蛋"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "蛋液加 1.5 倍温水过筛，盖保鲜膜蒸 10 分钟", safety: "蒸制，不糊锅" },
+  { name: "肉沫蒸蛋", cat: "蛋", method: "蒸", tags: [["tag-egg","蛋"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "蒸水蛋基础上铺炒香的肉沫，蒸 12 分钟", safety: "蒸制为主，肉沫简单炒熟即可" },
+  { name: "白切鸡", cat: "鸡", method: "煮", tags: [["tag-meat","荤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "冷水入锅加姜煮 20 分钟，冰水激一下切片，蘸姜葱油", safety: "水煮，不需要担心火候" },
+  { name: "白灼虾", cat: "虾", method: "煮", tags: [["tag-fish","虾"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "水烧开加姜片，下虾煮 2 分钟，蘸生抽", safety: "水煮，最不容易出错" },
+  { name: "冬瓜排骨汤", cat: "汤", method: "炖", tags: [["tag-soup","汤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "排骨焯水加姜炖 40 分钟，加冬瓜再炖 10 分钟", safety: "水多慢炖，不会糊" },
+  { name: "玉米排骨汤", cat: "汤", method: "炖", tags: [["tag-soup","汤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "排骨焯水加玉米段姜片炖 1 小时", safety: "水多慢炖，不会糊" },
+  { name: "番茄鸡蛋汤", cat: "汤", method: "煮", tags: [["tag-soup","汤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "番茄炒出汁加水烧开，打蛋花加盐", safety: "水多，不糊锅" },
+  { name: "紫菜虾皮汤", cat: "汤", method: "煮", tags: [["tag-soup","汤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "开水冲紫菜虾皮，加盐葱花香油", safety: "冲泡即成，5 分钟" },
+  { name: "豆腐蛋花汤", cat: "汤", method: "煮", tags: [["tag-soup","汤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "嫩豆腐切块烧开，打蛋花加盐葱花", safety: "水煮，不糊锅" },
+  { name: "番茄炒蛋", cat: "蛋", method: "快炒", tags: [["tag-egg","蛋"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "鸡蛋先炒出锅，番茄炒软出汁后合炒，加少许糖", safety: "番茄水分多，只要别加太多糖就不糊" },
+  { name: "青椒炒蛋", cat: "蛋", method: "快炒", tags: [["tag-egg","蛋"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "青椒切丝先炒断生，打入鸡蛋同炒", safety: "快炒 3 分钟内出锅" },
+  { name: "清炒上海青", cat: "蔬菜", method: "快炒", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "蒜末爆香大火炒 2 分钟，少许盐", safety: "蔬菜水分足，快炒不糊" },
+  { name: "清炒西蓝花", cat: "蔬菜", method: "焯炒", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "焯水 40 秒，蒜末爆香快炒 2 分钟", safety: "焯过水的菜，炒时更安全" },
+  { name: "清炒荷兰豆", cat: "蔬菜", method: "快炒", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "撕掉两头老筋，蒜末爆香炒 2 分钟", safety: "水分足，快炒不糊" },
+  { name: "清炒芦笋", cat: "蔬菜", method: "快炒", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "芦笋斜切段，蒜末爆香炒 2-3 分钟", safety: "水分足，快炒不糊" },
+  { name: "蒜炒丝瓜", cat: "蔬菜", method: "快炒", tags: [["tag-veg","素"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "丝瓜去皮切滚刀块，蒜末爆香炒 3 分钟", safety: "丝瓜自带大量水分，最不容易糊" },
+  { name: "醋溜土豆丝", cat: "蔬菜", method: "快炒", tags: [["tag-veg","素"],["tag-easy","简单"]], desc: "土豆切丝过凉水去淀粉，大火爆炒加白醋", safety: "过凉水后淀粉少，不易糊" },
+  { name: "肉沫豆腐", cat: "豆腐", method: "快煮", tags: [["tag-tofu","豆腐"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "肉沫炒香，嫩豆腐加水加生抽煮 5 分钟", safety: "加水煮，不会糊锅" },
+  { name: "家常豆腐（红烧）", cat: "豆腐", method: "快煮", tags: [["tag-tofu","豆腐"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "豆腐煎两面（或不煎），加水酱油煮 5 分钟", safety: "水多煮制，不糊" },
+  { name: "青椒炒肉丝", cat: "猪肉", method: "快炒", tags: [["tag-meat","荤"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "肉丝腌好滑炒出锅，青椒炒断生后合炒", safety: "快炒 5 分钟，不涉及糖和老抽" },
+  { name: "冬瓜虾仁", cat: "虾", method: "快煮", tags: [["tag-fish","虾"],["tag-easy","简单"],["tag-kid","儿童友好"]], desc: "冬瓜切薄片加水煮软，下虾仁煮 2 分钟", safety: "水煮，不糊锅" },
+  { name: "西红柿牛腩", cat: "牛肉", method: "炖", tags: [["tag-meat","荤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "牛腩焯水，加番茄洋葱炖 1.5 小时", safety: "水多慢炖，放着不用管" },
+  { name: "土豆炖鸡块", cat: "鸡", method: "炖", tags: [["tag-meat","荤"],["tag-easy","简单"],["tag-safe","不糊锅"],["tag-kid","儿童友好"]], desc: "鸡块焯水，加土豆姜片生抽加水炖 30 分钟", safety: "水多炖制，不用收汁收太干" },
+];
+
+let currentDish = null;
+
+function renderPool() {
+  const grid = document.getElementById('pool-grid');
+  grid.innerHTML = pool.map(d => `<div class="pool-item"><span class="pool-item-name">${d.name}</span><span class="pool-item-cat">${d.cat}</span></div>`).join('');
+}
+
+function pickRandom(filter) {
+  const candidates = filter ? pool.filter(filter) : pool;
+  const pool2 = currentDish ? candidates.filter(d => d.name !== currentDish.name) : candidates;
+  const source = pool2.length > 0 ? pool2 : candidates;
+  const picked = source[Math.floor(Math.random() * source.length)];
+  currentDish = picked;
+  showDish(picked);
+}
+
+function showDish(d) {
+  document.getElementById('empty-hint').style.display = 'none';
+  const card = document.getElementById('dish-card');
+  card.style.display = 'block';
+  document.getElementById('dish-title').textContent = d.name;
+  document.getElementById('dish-tags').innerHTML = d.tags.map(t => `<span class="tag ${t[0]}">${t[1]}</span>`).join('');
+  document.getElementById('dish-desc').textContent = d.desc;
+  const note = document.getElementById('safety-note');
+  if (d.safety) {
+    note.textContent = '安全提示：' + d.safety;
+    note.style.display = 'inline-block';
+  } else {
+    note.style.display = 'none';
+  }
+  document.getElementById('btn-video').style.display = 'inline-block';
+}
+
+function openVideo() {
+  if (currentDish) {
+    const query = encodeURIComponent(currentDish.name + ' 做法 家常菜');
+    openLink('https://www.youtube.com/results?search_query=' + query);
+  }
+}
+
+const isMeat = d => ["鱼","虾","鸡","排骨","猪肉","牛肉"].includes(d.cat);
+const isVeg = d => d.cat === "蔬菜";
+
+document.getElementById('btn-pick').addEventListener('click', () => pickRandom(null));
+document.getElementById('btn-pick-meat').addEventListener('click', () => pickRandom(isMeat));
+document.getElementById('btn-pick-veg').addEventListener('click', () => pickRandom(isVeg));
+
+renderPool();
+</script>

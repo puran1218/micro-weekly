@@ -14,6 +14,8 @@ const week15DinnerSource = resolve(workspace, "source-html", "week15_dinner_plan
 const week15TrainingSource = resolve(workspace, "source-html", "week15_training_plan.html");
 const week16DinnerSource = resolve(workspace, "source-html", "week16_dinner_plan.html");
 const week16TrainingSource = resolve(workspace, "source-html", "week16_training_plan.html");
+const week17DinnerSource = resolve(workspace, "source-html", "week17_dinner_plan.html");
+const week17TrainingSource = resolve(workspace, "source-html", "week17_training_plan.html");
 
 execFileSync("node", [scriptPath, dinnerSource, "--site-root", siteRoot], {
   cwd: workspace,
@@ -45,17 +47,31 @@ execFileSync("node", [scriptPath, week16TrainingSource, "--site-root", siteRoot]
   stdio: "pipe",
 });
 
+execFileSync("node", [scriptPath, week17DinnerSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
+execFileSync("node", [scriptPath, week17TrainingSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
 const dinnerPage = resolve(siteRoot, "weeks", "week14", "dinner.html");
 const trainingPage = resolve(siteRoot, "weeks", "week14", "training.html");
 const week15DinnerPage = resolve(siteRoot, "weeks", "week15", "dinner.html");
 const week15TrainingPage = resolve(siteRoot, "weeks", "week15", "training.html");
 const week16DinnerPage = resolve(siteRoot, "weeks", "week16", "dinner.html");
 const week16TrainingPage = resolve(siteRoot, "weeks", "week16", "training.html");
+const week17IndexPage = resolve(siteRoot, "weeks", "week17", "index.html");
+const week17DinnerPage = resolve(siteRoot, "weeks", "week17", "dinner.html");
+const week17TrainingPage = resolve(siteRoot, "weeks", "week17", "training.html");
 const latestDinner = resolve(siteRoot, "latest", "dinner.html");
 const latestTraining = resolve(siteRoot, "latest", "training.html");
 const indexPage = resolve(siteRoot, "index.html");
+const faviconAsset = resolve(siteRoot, "assets", "puran_blog_avator.jpg");
 
-for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, week16DinnerPage, week16TrainingPage, latestDinner, latestTraining, indexPage]) {
+for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, week16DinnerPage, week16TrainingPage, week17IndexPage, week17DinnerPage, week17TrainingPage, latestDinner, latestTraining, indexPage, faviconAsset]) {
   assert.ok(existsSync(path), `Expected generated file to exist: ${path}`);
 }
 
@@ -110,10 +126,12 @@ assert.doesNotMatch(
 );
 
 const latestDinnerHtml = readFileSync(latestDinner, "utf8");
-assert.match(latestDinnerHtml, /week16\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
+assert.match(latestDinnerHtml, /week17\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
+assert.match(latestDinnerHtml, /rel="icon"/i, "Latest dinner redirect should include favicon metadata");
 
 const latestTrainingHtml = readFileSync(latestTraining, "utf8");
-assert.match(latestTrainingHtml, /week16\/training\.html/i, "Latest training redirect should point to the newest imported week");
+assert.match(latestTrainingHtml, /week17\/training\.html/i, "Latest training redirect should point to the newest imported week");
+assert.match(latestTrainingHtml, /rel="icon"/i, "Latest training redirect should include favicon metadata");
 
 const indexHtml = readFileSync(indexPage, "utf8");
 assert.match(indexHtml, /Dinner \+ Training/i, "Index should have the new editorial homepage title");
@@ -123,6 +141,9 @@ assert.match(indexHtml, /Weeks Archive/i, "Index should include the archive sect
 assert.match(indexHtml, /Week 14/i, "Index should include the imported week");
 assert.match(indexHtml, /Week 15/i, "Index should include the newest imported week");
 assert.match(indexHtml, /Week 16/i, "Index should include the newest imported week");
+assert.match(indexHtml, /Week 17/i, "Index should include the newest imported week");
+assert.match(indexHtml, /href="\.\/weeks\/week17\/index\.html"/i, "Index should link each week to the week landing page");
+assert.match(indexHtml, /rel="icon"/i, "Index should include favicon metadata");
 
 const week15DinnerHtml = readFileSync(week15DinnerPage, "utf8");
 assert.match(week15DinnerHtml, /Week 15 Dinner Plan/i, "Week 15 dinner page should include the correct heading");
@@ -152,5 +173,53 @@ assert.match(
   /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E5%93%91%E9%93%83%E8%82%A9%E6%8E%A8"/i,
   "Week 16 training page should add search links for moves",
 );
+
+const week17IndexHtml = readFileSync(week17IndexPage, "utf8");
+assert.match(week17IndexHtml, /Week 17/i, "Week 17 landing page should include the correct heading");
+assert.match(week17IndexHtml, /href="\.\/dinner\.html"/i, "Week landing page should link to dinner detail");
+assert.match(week17IndexHtml, /href="\.\/training\.html"/i, "Week landing page should link to training detail");
+assert.match(week17IndexHtml, /rel="icon"/i, "Week landing page should include favicon metadata");
+
+const week17DinnerHtml = readFileSync(week17DinnerPage, "utf8");
+assert.match(week17DinnerHtml, /Week 17 Dinner Plan/i, "Week 17 dinner page should include the correct heading");
+assert.match(week17DinnerHtml, /surprise-area/i, "Week 17 dinner page should preserve the surprise-me pool markup");
+assert.match(week17DinnerHtml, /btn-pick/i, "Week 17 dinner page should preserve the random pick interaction");
+assert.match(week17DinnerHtml, /btn-video/i, "Pool-style dinner pages should preserve the source video button");
+assert.match(week17DinnerHtml, /function openVideo\(\)/i, "Pool-style dinner pages should preserve the source video action");
+assert.match(
+  week17DinnerHtml,
+  /\.btn-row button\s*\{/i,
+  "Pool-style dinner pages should receive shared rounded button styling",
+);
+assert.match(
+  week17DinnerHtml,
+  /function renderPoolItem\(d\)\s*\{\s*return `\<a class="pool-item-link" href="\$\{buildPoolSearchUrl\(d\.name\)\}"/i,
+  "Pool-style dinner pages should make each pool item a clickable video search link",
+);
+assert.match(
+  week17DinnerHtml,
+  /function buildPoolSearchUrl\(name\)\s*\{[\s\S]*做法 家常菜/i,
+  "Pool-style dinner pages should use the dish name as the video search query",
+);
+assert.match(
+  week17DinnerHtml,
+  /function buildPoolSearchUrl\(name\)[\s\S]*function renderPoolItem\(d\)[\s\S]*function renderPool\(\)[\s\S]*renderPool\(\);/i,
+  "Pool-style dinner helper functions should be defined before renderPool runs",
+);
+assert.doesNotMatch(
+  week17DinnerHtml,
+  /<a class="search-link"[^>]*>\s*清蒸鲈鱼/i,
+  "Pool-style dinner pages should not force search links onto dish names",
+);
+assert.match(week17DinnerHtml, /rel="icon"/i, "Week 17 dinner page should include favicon metadata");
+
+const week17TrainingHtml = readFileSync(week17TrainingPage, "utf8");
+assert.match(week17TrainingHtml, /Week 17 Training Plan/i, "Week 17 training page should include the correct heading");
+assert.match(
+  week17TrainingHtml,
+  /<a class="search-link"[^>]*href="https:\/\/www\.youtube\.com\/results\?search_query=%E5%93%91%E9%93%83%E8%82%A9%E6%8E%A8"/i,
+  "Week 17 training page should keep move search links",
+);
+assert.match(week17TrainingHtml, /rel="icon"/i, "Week 17 training page should include favicon metadata");
 
 console.log("Import plan HTML generator works.");

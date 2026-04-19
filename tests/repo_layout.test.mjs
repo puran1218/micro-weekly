@@ -16,6 +16,9 @@ const requiredPaths = [
   "source-html/week15_training_plan.html",
   "source-html/week16_dinner_plan.html",
   "source-html/week16_training_plan.html",
+  "source-html/week17_dinner_plan.html",
+  "source-html/week17_training_plan.html",
+  "puran_blog_avator.jpg",
   "static/plans/index.html",
 ];
 
