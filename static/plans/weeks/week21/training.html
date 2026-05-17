@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 21 Training Plan</title>
+  <meta name="description" content="一周训练安排">
+  <link rel="icon" type="image/jpeg" href="../../assets/puran_blog_avator.jpg">
+  <link rel="apple-touch-icon" href="../../assets/puran_blog_avator.jpg">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #edf2f5;
+      --surface-background: rgba(255, 255, 255, 0.82);
+      --surface-border: rgba(95, 122, 145, 0.24);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-color: #3c3489;
+      --shadow-soft: 0 18px 45px rgba(25, 36, 46, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page-background); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.72), transparent 26%), linear-gradient(180deg, #f2f6f9 0%, #e8eef2 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--surface-border);
+      border-radius: 22px;
+      background: var(--surface-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .nav-pill,
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(36, 48, 59, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--heading-color);
+    }
+
+    .nav-back {
+      color: var(--muted-color);
+      background: transparent;
+      padding-left: 0;
+      border: none;
+    }
+
+    .nav-link.is-active {
+      background: #24303b;
+      color: #fff;
+      border-color: #24303b;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .panel { padding: 14px; border-radius: 20px; }
+      .hero { padding-top: 12px; }
+    }
+  </style>
+<style>
+  .plan { padding: 1rem 0; }
+  .banner { background: #F0F7F4; border: 0.5px solid #6AAA8E; color: #2A5544; padding: 12px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 16px; line-height: 1.6; }
+  .banner strong { color: #1A3A2C; }
+  .day-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); margin-bottom: 14px; overflow: hidden; }
+  .day-header { padding: 12px 16px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .day-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary, #202327); }
+  .day-sub { font-size: 12px; color: var(--color-text-tertiary, #6d7782); margin-top: 2px; }
+  .day-body { padding: 12px 16px; font-size: 13px; color: var(--color-text-primary, #202327); line-height: 1.6; }
+  .day-body p { margin: 0 0 6px 0; }
+  .options-row { padding: 0 16px 12px 16px; }
+  .opt { display: flex; gap: 10px; padding: 8px 0; font-size: 12.5px; color: var(--color-text-primary, #202327); border-bottom: 0.5px dashed var(--color-border-tertiary, #d8dde6); }
+  .opt:last-child { border-bottom: none; }
+  .opt-icon { color: var(--color-text-tertiary, #6d7782); font-size: 11px; flex-shrink: 0; padding-top: 2px; }
+  .principle { background: var(--color-background-secondary, #f8f5ee); padding: 14px 16px; border-radius: 8px; margin-top: 12px; font-size: 12px; color: var(--color-text-secondary, #4f5b67); line-height: 1.6; }
+  .principle strong { color: var(--color-text-primary, #202327); display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <nav class="hero-nav" aria-label="Plans navigation">
+          <a class="nav-link" href="./dinner.html">Dinner</a>
+          <a class="nav-link is-active" href="./training.html">Training</a>
+        </nav>
+      </div>
+      <p class="hero-kicker">Week 21</p>
+      <h1>Week 21 Training Plan</h1>
+    </header>
+    <main class="panel">
+<div class="plan">
+
+  <div class="banner">
+    <strong>本周不是训练计划，是一个最低框架</strong><br>
+    目标：保持运动习惯，每天动一下。<strong>不追求强度，不计较组数。</strong> 状态好的那天可以多做一点，状态差的那天做最少的那个选项就够了。
+  </div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <div class="day-label">周一 至 周五 · 每天选一种</div>
+      <div class="day-sub">三个选项，按当天感觉选一个</div>
+    </div>
+    <div class="options-row">
+      <div class="opt">
+        <span class="opt-icon">A</span>
+        <div>
+          <strong>状态好的那天：</strong>常规力量训练，但只做你最喜欢的3个动作，每个2组。<br>
+          <span style="color:var(--color-text-tertiary, #6d7782)">不要担心覆盖全身，只做你今天愿意做的</span>
+        </div>
+      </div>
+      <div class="opt">
+        <span class="opt-icon">B</span>
+        <div>
+          <strong>状态一般的那天：</strong>泡沫轴放松10分钟 + 单腿平衡 + 弹力带踝外旋。<br>
+          <span style="color:var(--color-text-tertiary, #6d7782)">这天就是来"动一动"的，不是来练的</span>
+        </div>
+      </div>
+      <div class="opt">
+        <span class="opt-icon">C</span>
+        <div>
+          <strong>状态差的那天：</strong>去健身房，但只做15分钟的散步或走跑步机。<br>
+          <span style="color:var(--color-text-tertiary, #6d7782)">出门、换个空间，比"练什么"重要</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <strong>本周原则</strong>
+    <strong>1. 不缺席比练得好重要。</strong>哪怕只是去健身房散步15分钟也算完成。<br>
+    <strong>2. 不和上周比、不和正常时比。</strong>今天能做的就是今天该做的。<br>
+    <strong>3. 训练完小睡20分钟，继续做。</strong>这是你自己发现的有效组合，保留它。<br>
+    <strong>4. 不加任何饮食限制。</strong>低潮期再叠加饮食控制，是给自己加负担。先稳情绪，饮食以后再说。<br>
+    <strong>5. 每天观察一下自己的情绪。</strong>不用记录，就是稍微留意。一周后告诉我哪天好、哪天差，我们一起看。
+  </div>
+
+</div>
+    </main>
+  </div>
+</body>
+</html>
