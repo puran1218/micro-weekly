@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Week 22 Training Plan</title>
+  <meta name="description" content="一周训练安排">
+  <link rel="icon" type="image/jpeg" href="../../assets/puran_blog_avator.jpg">
+  <link rel="apple-touch-icon" href="../../assets/puran_blog_avator.jpg">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-background: #edf2f5;
+      --surface-background: rgba(255, 255, 255, 0.82);
+      --surface-border: rgba(95, 122, 145, 0.24);
+      --heading-color: #24303b;
+      --muted-color: #667281;
+      --accent-color: #3c3489;
+      --shadow-soft: 0 18px 45px rgba(25, 36, 46, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--page-background); }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--heading-color);
+      background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.72), transparent 26%), linear-gradient(180deg, #f2f6f9 0%, #e8eef2 100%);
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero {
+      margin-bottom: 18px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--surface-border);
+      border-radius: 22px;
+      background: var(--surface-background);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .hero-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .nav-pill,
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 11px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      border: 1px solid rgba(36, 48, 59, 0.12);
+      background: rgba(255, 255, 255, 0.68);
+      color: var(--heading-color);
+    }
+
+    .nav-back {
+      color: var(--muted-color);
+      background: transparent;
+      padding-left: 0;
+      border: none;
+    }
+
+    .nav-link.is-active {
+      background: #24303b;
+      color: #fff;
+      border-color: #24303b;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: var(--muted-color);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid var(--surface-border);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .search-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 160ms ease, opacity 160ms ease;
+    }
+
+    .search-link:hover,
+    .search-link:focus-visible {
+      color: var(--accent-color);
+      opacity: 0.92;
+      outline: none;
+    }
+
+    .search-link:active {
+      opacity: 0.78;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero, .panel { padding: 14px; border-radius: 20px; }
+      .hero { padding-top: 12px; }
+    }
+  </style>
+<style>
+  .plan { padding: 1rem 0; }
+  .banner { background: #F0F7F4; border: 0.5px solid #6AAA8E; color: #2A5544; padding: 12px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 8px; line-height: 1.6; }
+  .banner strong { color: #1A3A2C; }
+  .layer-note { background: var(--color-background-secondary, #f8f5ee); border-radius: 8px; padding: 11px 14px; font-size: 11.5px; color: var(--color-text-secondary, #4f5b67); margin-bottom: 16px; line-height: 1.6; }
+  .layer-note b { color: var(--color-text-primary, #202327); }
+  .day-card { background: var(--color-background-primary, #ffffff); border: 0.5px solid var(--color-border-tertiary, #d8dde6); border-radius: var(--border-radius-lg, 18px); margin-bottom: 14px; overflow: hidden; }
+  .day-card.optional { border-style: dashed; opacity: 0.92; }
+  .day-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--color-background-secondary, #f8f5ee); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  .day-label { font-size: 13px; font-weight: 500; color: var(--color-text-primary, #202327); }
+  .day-sub { font-size: 12px; color: var(--color-text-tertiary, #6d7782); margin-top: 1px; }
+  .focus-badge { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 6px; margin-left: auto; white-space: nowrap; }
+  .badge-foot { background: #E1F5EE; color: #085041; }
+  .badge-leg { background: #DCEFE6; color: #0A4836; }
+  .badge-push { background: #EEEDFE; color: #3C3489; }
+  .badge-pull { background: #FAEEDA; color: #633806; }
+  .badge-opt { background: #F1EFE8; color: #555; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 8px 16px; font-size: 11px; font-weight: 500; color: var(--color-text-tertiary, #6d7782); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+  td { padding: 9px 16px; color: var(--color-text-primary, #202327); border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .move { font-weight: 500; }
+  .note { font-size: 11px; color: var(--color-text-secondary, #4f5b67); margin-top: 2px; }
+  .foot-tag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px; background: #E1F5EE; color: #085041; margin-left: 4px; vertical-align: middle; }
+  .cp-tag { display: inline-block; font-size: 10px; padding: 1px 5px; border-radius: 4px; background: #EEEDFE; color: #3C3489; margin-left: 4px; vertical-align: middle; }
+  .warm-row { padding: 8px 16px; background: #F0F7F4; font-size: 11.5px; color: #2A5544; border-bottom: 0.5px solid var(--color-border-tertiary, #d8dde6); line-height: 1.5; }
+  .warm-row b { color: #1A3A2C; }
+  .time-row { display: flex; align-items: center; gap: 6px; padding: 8px 16px; font-size: 12px; color: var(--color-text-secondary, #4f5b67); border-top: 0.5px solid var(--color-border-tertiary, #d8dde6); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-top">
+        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <nav class="hero-nav" aria-label="Plans navigation">
+          <a class="nav-link" href="./dinner.html">Dinner</a>
+          <a class="nav-link is-active" href="./training.html">Training</a>
+        </nav>
+      </div>
+      <p class="hero-kicker">Week 22</p>
+      <h1>Week 22 Training Plan</h1>
+    </header>
+    <main class="panel">
+<div class="plan">
+
+  <div class="banner">
+    <strong>长期固定模板 · 足踝康复为锚 + 高CP值复合动作</strong><br>
+    周一至周五为主循环,周六/日为可选补充。无特殊情况不必每周调整,照着走即可。
+  </div>
+
+  <div class="layer-note">
+    <b>三层结构:</b> ① 每天开头 5 分钟<b>足踝地基</b>(雷打不动,这是你和普通人训练的根本区别) → ② 当天<b>主干动作</b>(高CP值复合动作,下肢一律优先单腿/分腿) → ③ 收尾。<br>
+    <b>下肢原则:</b> 凡涉及站立/单腿,左脚都专注"足弓轻微上拱、膝盖对准脚尖不内扣"。
+  </div>
+
+  <!-- 周一 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周一 — 下肢 + 足踝(重点日)</div>
+        <div class="day-sub">大腿 · 臀 · 小腿,功能性优先</div>
+      </div>
+      <span class="focus-badge badge-leg">下肢</span>
+    </div>
+    <div class="warm-row"><b>足踝地基(5分钟):</b> 弹力带踝外旋 2×15/侧 · 单腿站立平衡 2×30s/侧</div>
+    <table>
+      <tr><th style="width:38%">动作</th><th style="width:20%">组 × 次</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%90%8E%E8%84%9A%E6%8A%AC%E9%AB%98%E8%B9%B2(%E4%BF%9D%E5%8A%A0%E5%88%A9%E4%BA%9A%E5%88%86%E8%85%BF%E8%B9%B2)" target="_blank" rel="noreferrer">后脚抬高蹲(保加利亚分腿蹲) <span class="foot-tag">足踝</span> <span class="cp-tag">CP</span></a></div><div class="note">哑铃或徒手,后脚搭凳</div></td>
+        <td>3 × 10/侧</td>
+        <td>替代双腿深蹲,强制左右独立发力,暴露并纠正左侧代偿</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%87%80%E6%8E%A8" target="_blank" rel="noreferrer">臀推 <span class="cp-tag">CP</span></a></div><div class="note">肩靠凳,杠铃或哑铃</div></td>
+        <td>3 × 12</td>
+        <td>清单首选,臀大肌刺激直接</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E6%8F%90%E8%B8%B5" target="_blank" rel="noreferrer">单腿提踵 <span class="foot-tag">足踝</span></a></div><div class="note">扶架,3秒慢下</div></td>
+        <td>3 × 15/侧</td>
+        <td>小腿 + 足弓,离心强调防抽筋</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%9A%8C%E5%BC%8F%20%2F%20%E4%BE%A7%E5%90%91%E5%BC%B9%E5%8A%9B%E5%B8%A6%E8%B5%B0" target="_blank" rel="noreferrer">蚌式 / 侧向弹力带走 <span class="foot-tag">足踝</span></a></div><div class="note">带绕膝上</div></td>
+        <td>2 × 12/侧</td>
+        <td>臀中肌——稳定骨盆、抗内旋的关键,清单没有但你必做</td>
+      </tr>
+    </table>
+    <div class="time-row">约 28 分钟</div>
+  </div>
+
+  <!-- 周二 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周二 — 上肢推</div>
+        <div class="day-sub">胸 · 肩 · 三头</div>
+      </div>
+      <span class="focus-badge badge-push">上肢推</span>
+    </div>
+    <div class="warm-row"><b>足踝地基(5分钟):</b> 弹力带踝外旋 2×15/侧 · 单腿平衡 2×30s/侧(坐姿动作多,更要补站立平衡)</div>
+    <table>
+      <tr><th style="width:38%">动作</th><th style="width:20%">组 × 次</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E4%B8%8A%E6%96%9C%E5%93%91%E9%93%83%E5%8D%A7%E6%8E%A8" target="_blank" rel="noreferrer">上斜哑铃卧推 <span class="cp-tag">CP</span></a></div><div class="note">凳约30-45°</div></td>
+        <td>3 × 10</td>
+        <td>清单首选,上胸难练、轨迹自由</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E5%93%91%E9%93%83%E8%82%A9%E6%8E%A8" target="_blank" rel="noreferrer">坐姿哑铃肩推 <span class="cp-tag">CP</span></a></div><div class="note">靠背支撑</div></td>
+        <td>3 × 10</td>
+        <td>清单首选,前束中束都能练到</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E7%BB%B3%E7%B4%A2%E4%B8%8B%E5%8E%8B" target="_blank" rel="noreferrer">绳索下压 <span class="cp-tag">CP</span></a></div><div class="note">绳索或V把</div></td>
+        <td>3 × 12</td>
+        <td>清单首选,三头简单稳定刺激强</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E4%BE%A7%E5%B9%B3%E4%B8%BE" target="_blank" rel="noreferrer">侧平举</a></div><div class="note">轻重量慢控制</div></td>
+        <td>2 × 15</td>
+        <td>肩中束补充,塑形</td>
+      </tr>
+    </table>
+    <div class="time-row">约 26 分钟</div>
+  </div>
+
+  <!-- 周三 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周三 — 足踝专项 + 核心(轻日)</div>
+        <div class="day-sub">一周中段,主动恢复定位</div>
+      </div>
+      <span class="focus-badge badge-foot">足踝 + 核心</span>
+    </div>
+    <table>
+      <tr><th style="width:38%">动作</th><th style="width:20%">组 × 次</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E7%BD%97%E9%A9%AC%E5%B0%BC%E4%BA%9A%E7%A1%AC%E6%8B%89" target="_blank" rel="noreferrer">单腿罗马尼亚硬拉 <span class="foot-tag">足踝</span> <span class="cp-tag">CP</span></a></div><div class="note">轻哑铃,控制重心</div></td>
+        <td>3 × 10/侧</td>
+        <td>后链 + 踝稳定,功能性极高</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%AF%9B%E5%B7%BE%2F%E8%84%9A%E8%B6%BE%E6%8A%93%E5%9C%B0" target="_blank" rel="noreferrer">毛巾/脚趾抓地 <span class="foot-tag">足踝</span></a></div><div class="note">赤脚</div></td>
+        <td>3 × 20/侧</td>
+        <td>足底内在肌,直接改善足弓支撑</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%82%AC%E5%90%8A%E4%B8%BE%E8%85%BF%20%2F%20%E5%B1%88%E8%86%9D%E6%8A%AC%E8%85%BF" target="_blank" rel="noreferrer">悬吊举腿 / 屈膝抬腿 <span class="cp-tag">CP</span></a></div><div class="note">够不到吊杠则平躺抬腿</div></td>
+        <td>3 × 12</td>
+        <td>清单首选,上下腹一起练</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%B9%B3%E6%9D%BF%E6%94%AF%E6%92%91" target="_blank" rel="noreferrer">平板支撑</a></div><div class="note">前臂</div></td>
+        <td>2 × 40s</td>
+        <td>核心稳定收尾</td>
+      </tr>
+    </table>
+    <div class="time-row">约 24 分钟 · 中段轻日,缓解疲劳累积</div>
+  </div>
+
+  <!-- 周四 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周四 — 上肢拉</div>
+        <div class="day-sub">背 · 二头</div>
+      </div>
+      <span class="focus-badge badge-pull">上肢拉</span>
+    </div>
+    <div class="warm-row"><b>足踝地基(5分钟):</b> 弹力带踝外旋 2×15/侧 · 单腿平衡 2×30s/侧</div>
+    <table>
+      <tr><th style="width:38%">动作</th><th style="width:20%">组 × 次</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%BC%95%E4%BD%93%E5%90%91%E4%B8%8A%20%2F%20%E5%9D%90%E5%A7%BF%E7%BB%B3%E7%B4%A2%E4%B8%8B%E6%8B%89" target="_blank" rel="noreferrer">引体向上 / 坐姿绳索下拉 <span class="cp-tag">CP</span></a></div><div class="note">力量够做引体则首选,不够用下拉</div></td>
+        <td>3 × 8-10</td>
+        <td>清单首选,背部几乎无可替代</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E5%88%92%E8%88%B9" target="_blank" rel="noreferrer">坐姿划船</a></div><div class="note">器械或绳索</div></td>
+        <td>3 × 10</td>
+        <td>中背厚度,与下拉形成宽厚互补</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E4%B8%8A%E6%96%9C%E5%93%91%E9%93%83%E5%BC%AF%E4%B8%BE" target="_blank" rel="noreferrer">上斜哑铃弯举 <span class="cp-tag">CP</span></a></div><div class="note">凳后倾,手臂自然下垂</div></td>
+        <td>3 × 12</td>
+        <td>清单首选,同时刺激二头+肱桡肌</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E6%8F%90%E8%B8%B5" target="_blank" rel="noreferrer">单腿提踵 <span class="foot-tag">足踝</span></a></div><div class="note">扶架</div></td>
+        <td>2 × 15/侧</td>
+        <td>一周第二次提踵,维持足弓激活</td>
+      </tr>
+    </table>
+    <div class="time-row">约 27 分钟</div>
+  </div>
+
+  <!-- 周五 -->
+  <div class="day-card">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周五 — 下肢力量 + 足踝(第二腿日)</div>
+        <div class="day-sub">与周一互补,侧重股四与耐力</div>
+      </div>
+      <span class="focus-badge badge-leg">下肢</span>
+    </div>
+    <div class="warm-row"><b>足踝地基(5分钟):</b> 弹力带踝外旋 2×15/侧 · 单腿平衡 2×30s/侧</div>
+    <table>
+      <tr><th style="width:38%">动作</th><th style="width:20%">组 × 次</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E9%AB%98%E8%84%9A%E6%9D%AF%E6%B7%B1%E8%B9%B2" target="_blank" rel="noreferrer">高脚杯深蹲 <span class="cp-tag">CP</span></a></div><div class="note">哑铃抱胸前,膝对脚尖</div></td>
+        <td>3 × 12</td>
+        <td>双腿深蹲变式,前负重自然减少内扣,比高杠深蹲对你更友好</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%9D%90%E5%A7%BF%E8%85%BF%E5%BC%AF%E4%B8%BE" target="_blank" rel="noreferrer">坐姿腿弯举</a></div><div class="note">器械</div></td>
+        <td>3 × 12</td>
+        <td>腘绳肌,与深蹲前后平衡,防抽筋</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E9%AB%98%E6%AC%A1%E6%95%B0%E6%8F%90%E8%B8%B5" target="_blank" rel="noreferrer">高次数提踵 <span class="foot-tag">足踝</span></a></div><div class="note">双脚</div></td>
+        <td>3 × 25</td>
+        <td>小腿耐力,为跳绳进阶打基础</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E5%8D%95%E8%85%BF%E7%AB%99%E7%AB%8B%E5%B9%B3%E8%A1%A1(%E8%BF%9B%E9%98%B6)" target="_blank" rel="noreferrer">单腿站立平衡(进阶) <span class="foot-tag">足踝</span></a></div><div class="note">闭眼或软垫</div></td>
+        <td>2 × 30s/侧</td>
+        <td>周末前提升踝本体感觉</td>
+      </tr>
+    </table>
+    <div class="time-row">约 28 分钟</div>
+  </div>
+
+  <!-- 周六 可选 -->
+  <div class="day-card optional">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周六 — 有氧 / 跳绳进阶(可选)</div>
+        <div class="day-sub">有时间才做,没时间跳过不影响</div>
+      </div>
+      <span class="focus-badge badge-opt">可选</span>
+    </div>
+    <table>
+      <tr><th style="width:38%">内容</th><th style="width:20%">时长/量</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%85%A2%E8%B7%91%20%2F%20%E5%BF%AB%E8%B5%B0" target="_blank" rel="noreferrer">慢跑 / 快走</a></div><div class="note">中等强度</div></td>
+        <td>20-30 分钟</td>
+        <td>恢复跑步习惯,兼顾减脂有氧需求</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%B7%B3%E7%BB%B3(%E8%BF%9B%E9%98%B6%E5%90%8E)" target="_blank" rel="noreferrer">跳绳(进阶后) <span class="foot-tag">足踝</span></a></div><div class="note">足弓能稳定控制落地后再引入</div></td>
+        <td>3-5 组 × 30s</td>
+        <td>清单的小腿首选;足踝+协调+心肺四合一,但需前置条件</td>
+      </tr>
+    </table>
+    <div class="time-row">约 20-30 分钟 · 没时间则跳过</div>
+  </div>
+
+  <!-- 周日 可选 -->
+  <div class="day-card optional">
+    <div class="day-header">
+      <div>
+        <div class="day-label">周日 — 主动恢复(可选)</div>
+        <div class="day-sub">有时间才做</div>
+      </div>
+      <span class="focus-badge badge-opt">可选</span>
+    </div>
+    <table>
+      <tr><th style="width:38%">内容</th><th style="width:20%">时长</th><th>说明</th></tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E6%B3%A1%E6%B2%AB%E8%BD%B4%20%2B%20%E9%9D%99%E6%80%81%E6%8B%89%E4%BC%B8" target="_blank" rel="noreferrer">泡沫轴 + 静态拉伸</a></div><div class="note">小腿、腘绳肌、髋、髂胫束</div></td>
+        <td>10-15 分钟</td>
+        <td>松解一周累积,为下周地基做准备</td>
+      </tr>
+      <tr>
+        <td><div class="move"><a class="search-link" href="https://www.youtube.com/results?search_query=%E8%B6%B3%E8%B8%9D%E7%BB%BC%E5%90%88" target="_blank" rel="noreferrer">足踝综合 <span class="foot-tag">足踝</span></a></div><div class="note">外旋 + 平衡 + 抓地</div></td>
+        <td>各 2 组</td>
+        <td>把康复动作集中补一次</td>
+      </tr>
+    </table>
+    <div class="time-row">约 15 分钟 · 没时间则跳过</div>
+  </div>
+
+</div>
+    </main>
+  </div>
+</body>
+</html>

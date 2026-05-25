@@ -16,6 +16,8 @@ const SEARCH_PROVIDERS = {
 const ACTIVE_SEARCH_PROVIDER = resolveSearchProvider(process.env.PLAN_SEARCH_PROVIDER ?? "youtube");
 const FAVICON_FILENAME = "puran_blog_avator.jpg";
 const FAVICON_SOURCE_PATH = resolve(process.cwd(), FAVICON_FILENAME);
+const TRAINING_REFERENCE_FILENAME = "one-exercise-per-muscle-group-guide.png";
+const TRAINING_REFERENCE_SOURCE_PATH = resolve(process.cwd(), "source-assets", TRAINING_REFERENCE_FILENAME);
 
 const TOKEN_FALLBACKS = {
   "--font-sans":
@@ -83,20 +85,20 @@ ensureSiteAssets(siteRoot);
 
 const pageHtml = buildPlanPage({
   rawFragment: hydratedFragment,
-  weekNumber: parsed.weekNumber,
+  parsed,
   kind: parsed.kind,
 });
 
-const outputPath = resolve(siteRoot, "weeks", parsed.weekSlug, `${parsed.kind}.html`);
+const outputPath =
+  parsed.scope === "current"
+    ? resolve(siteRoot, "current", `${parsed.kind}.html`)
+    : resolve(siteRoot, "weeks", parsed.weekSlug, `${parsed.kind}.html`);
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, pageHtml);
 
-writeLatestRedirect({
-  siteRoot,
-  weekSlug: parsed.weekSlug,
-  kind: parsed.kind,
-});
+writeLatestRedirect({ siteRoot, parsed });
 
+writeCurrentReferencePage(siteRoot);
 writeWeekIndexes(siteRoot);
 writeIndex(siteRoot);
 
@@ -118,11 +120,20 @@ function parseArgs(args) {
 }
 
 function parseSourceFilename(filename) {
+  const currentMatch = filename.match(/^current_(dinner|training)_template\.html$/i);
+
+  if (currentMatch) {
+    return {
+      scope: "current",
+      kind: currentMatch[1].toLowerCase(),
+    };
+  }
+
   const match = filename.match(/^week(\d+)_(dinner|training)_plan\.html$/i);
 
   if (!match) {
     throw new Error(
-      `Filename must look like week14_training_plan.html or week14_dinner_plan.html. Received: ${filename}`,
+      `Filename must look like week14_training_plan.html, week14_dinner_plan.html, current_training_template.html, or current_dinner_template.html. Received: ${filename}`,
     );
   }
 
@@ -130,6 +141,7 @@ function parseSourceFilename(filename) {
   const kind = match[2].toLowerCase();
 
   return {
+    scope: "week",
     weekNumber,
     weekSlug: `week${weekNumber}`,
     kind,
@@ -143,8 +155,18 @@ function addFallbacks(html) {
   });
 }
 
-function buildPlanPage({ rawFragment, weekNumber, kind }) {
+function buildPlanPage({ rawFragment, parsed, kind }) {
   const config = PAGE_CONFIG[kind];
+  const isCurrent = parsed.scope === "current";
+  const title = isCurrent ? `Current ${capitalize(kind)} Template` : config.heroTitle(parsed.weekNumber);
+  const kicker = isCurrent ? "Current Template" : `Week ${parsed.weekNumber}`;
+  const homeHref = isCurrent ? "../index.html" : "../../index.html";
+  const assetsHref = isCurrent ? "../assets" : "../../assets";
+  const description = isCurrent
+    ? kind === "dinner"
+      ? "长期固定晚餐菜池模板"
+      : "长期固定训练模板"
+    : config.sectionSummary;
   const dinnerMode = kind === "dinner" ? detectDinnerMode(rawFragment) : "classic";
   const planStyles = `${extractStyleMarkup(rawFragment)}${buildModeStyles({ kind, dinnerMode })}`;
   const planMarkup = transformPlanMarkup({
@@ -158,9 +180,9 @@ function buildPlanPage({ rawFragment, weekNumber, kind }) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${config.heroTitle(weekNumber)}</title>
-  <meta name="description" content="${escapeHtmlAttribute(config.sectionSummary)}">
-  ${buildFaviconMarkup("../../assets")}
+  <title>${title}</title>
+  <meta name="description" content="${escapeHtmlAttribute(description)}">
+  ${buildFaviconMarkup(assetsHref)}
   <style>
     :root {
       color-scheme: light;
@@ -287,6 +309,10 @@ function buildPlanPage({ rawFragment, weekNumber, kind }) {
       opacity: 0.78;
     }
 
+    .reference-row {
+      margin: 14px 0 0;
+    }
+
     @media (max-width: 720px) {
       .page { padding: 14px 12px 28px; }
       .hero, .panel { padding: 14px; border-radius: 20px; }
@@ -299,18 +325,20 @@ ${planStyles}
   <div class="page">
     <header class="hero">
       <div class="hero-top">
-        <a class="nav-back" href="../../index.html">← Plans Home</a>
+        <a class="nav-back" href="${homeHref}">← Plans Home</a>
         <nav class="hero-nav" aria-label="Plans navigation">
           <a class="nav-link${kind === "dinner" ? " is-active" : ""}" href="./dinner.html">Dinner</a>
           <a class="nav-link${kind === "training" ? " is-active" : ""}" href="./training.html">Training</a>
+          ${isCurrent && kind === "training" ? '<a class="nav-link" href="./training-reference.html">Reference</a>' : ""}
         </nav>
       </div>
-      <p class="hero-kicker">Week ${weekNumber}</p>
-      <h1>${config.heroTitle(weekNumber)}</h1>
+      <p class="hero-kicker">${kicker}</p>
+      <h1>${title}</h1>
     </header>
     <main class="panel">
 ${planMarkup}
     </main>
+    ${isCurrent && kind === "training" ? '<p class="reference-row"><a class="nav-pill" href="./training-reference.html">Open Reference Guide</a></p>' : ""}
   </div>
 </body>
 </html>
@@ -333,6 +361,10 @@ function ensureSiteAssets(siteRoot) {
 
   if (existsSync(FAVICON_SOURCE_PATH)) {
     copyFileSync(FAVICON_SOURCE_PATH, resolve(assetsRoot, FAVICON_FILENAME));
+  }
+
+  if (existsSync(TRAINING_REFERENCE_SOURCE_PATH)) {
+    copyFileSync(TRAINING_REFERENCE_SOURCE_PATH, resolve(assetsRoot, TRAINING_REFERENCE_FILENAME));
   }
 }
 
@@ -491,8 +523,116 @@ function buildFaviconMarkup(relativeAssetsPath) {
   <link rel="apple-touch-icon" href="${href}">`;
 }
 
-function writeLatestRedirect({ siteRoot, weekSlug, kind }) {
-  const targetHref = `../weeks/${weekSlug}/${kind}.html`;
+function writeCurrentReferencePage(siteRoot) {
+  if (!existsSync(TRAINING_REFERENCE_SOURCE_PATH)) {
+    return;
+  }
+
+  const outputPath = resolve(siteRoot, "current", "training-reference.html");
+  mkdirSync(dirname(outputPath), { recursive: true });
+  writeFileSync(
+    outputPath,
+    `<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>One Exercise Per Muscle Group Guide</title>
+  <meta name="description" content="训练固定模板的动作参考附件">
+  ${buildFaviconMarkup("../assets")}
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: #24303b;
+      background: linear-gradient(180deg, #f2f6f9 0%, #e8eef2 100%);
+    }
+
+    .page {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .hero,
+    .image-panel {
+      border: 1px solid rgba(95, 122, 145, 0.24);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 18px 45px rgba(25, 36, 46, 0.08);
+    }
+
+    .hero {
+      padding: 14px 16px 16px;
+      margin-bottom: 18px;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      margin-bottom: 12px;
+      color: #667281;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .hero-kicker {
+      margin: 0;
+      color: #667281;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 6px 0 0;
+      font-size: clamp(28px, 6vw, 34px);
+      line-height: 1.06;
+    }
+
+    .image-panel {
+      padding: 10px;
+      overflow: auto;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 14px 12px 28px; }
+      .hero { padding: 14px; border-radius: 20px; }
+      .image-panel { padding: 6px; border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <a class="nav-back" href="./training.html">← Current Training</a>
+      <p class="hero-kicker">Reference Guide</p>
+      <h1>One Exercise Per Muscle Group Guide</h1>
+    </header>
+    <main class="image-panel">
+      <img src="../assets/${TRAINING_REFERENCE_FILENAME}" alt="One exercise per muscle group guide">
+    </main>
+  </div>
+</body>
+</html>
+`,
+  );
+}
+
+function writeLatestRedirect({ siteRoot, parsed }) {
+  const { kind } = parsed;
+  const targetHref =
+    parsed.scope === "current" ? `../current/${kind}.html` : `../weeks/${parsed.weekSlug}/${kind}.html`;
   const latestPath = resolve(siteRoot, "latest", `${kind}.html`);
   mkdirSync(dirname(latestPath), { recursive: true });
   writeFileSync(
@@ -508,7 +648,7 @@ function writeLatestRedirect({ siteRoot, weekSlug, kind }) {
   ${buildFaviconMarkup("../assets")}
 </head>
 <body>
-  <p>Redirecting to the latest ${kind} plan: <a href="${targetHref}">${weekSlug}/${kind}.html</a></p>
+  <p>Redirecting to the latest ${kind} plan: <a href="${targetHref}">${targetHref}</a></p>
 </body>
 </html>
 `,
@@ -778,8 +918,8 @@ ${actionLinks.join("\n")}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Weekly Plans</title>
-  <meta name="description" content="Shareable dinner and training plans, optimized for quick mobile viewing.">
+  <title>Home Plans</title>
+  <meta name="description" content="Current dinner and training templates with archived weekly plan history.">
   ${buildFaviconMarkup("./assets")}
   <style>
     :root {
@@ -997,28 +1137,31 @@ ${actionLinks.join("\n")}
     <section class="hero">
       <div class="hero-top">
         <div>
-          <span class="hero-label">Weekly Plans</span>
-          <p class="hero-kicker">Latest first, archive below</p>
+          <span class="hero-label">Home Plans</span>
+          <p class="hero-kicker">Current templates, archive below</p>
           <h1>Dinner + Training</h1>
-          <p class="hero-copy">先看本周，再继续翻历史周。首页像目录页一样清楚，但依旧能一键直达最新内容。</p>
+          <p class="hero-copy">从 Week 22 开始不再新增周计划，日常只维护固定晚餐和训练模板。以前的每周页面保留在归档里，方便回看。</p>
         </div>
-        <div class="eyebrow">Archive</div>
+        <div class="eyebrow">Current</div>
       </div>
     </section>
 
-    <section class="grid" aria-label="Latest links">
+    <section class="grid" aria-label="Current templates">
       <article class="card">
-        <h2>Latest Dinner</h2>
-        <p>优先查看当前周的晚餐安排，适合饭前快速打开。</p>
+        <h2>Current Dinner</h2>
+        <p>固定晚餐菜池，从 Week 17 起沿用，饭前直接随机抽取即可。</p>
         <div class="actions">
-          <a class="button green" href="./latest/dinner.html">Open latest dinner</a>
+          <a class="button green" href="./current/dinner.html">Open dinner</a>
+          <a class="button" href="./latest/dinner.html">Latest alias</a>
         </div>
       </article>
       <article class="card">
-        <h2>Latest Training</h2>
-        <p>优先查看当前周的训练安排，去健身房前直接打开就行。</p>
+        <h2>Current Training</h2>
+        <p>固定训练模板，从 Week 22 开始长期照着走；动作图放在参考附件里。</p>
         <div class="actions">
-          <a class="button indigo" href="./latest/training.html">Open latest training</a>
+          <a class="button indigo" href="./current/training.html">Open training</a>
+          <a class="button" href="./current/training-reference.html">Reference Guide</a>
+          <a class="button" href="./latest/training.html">Latest alias</a>
         </div>
       </article>
     </section>

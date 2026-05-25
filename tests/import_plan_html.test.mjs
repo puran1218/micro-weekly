@@ -16,6 +16,8 @@ const week16DinnerSource = resolve(workspace, "source-html", "week16_dinner_plan
 const week16TrainingSource = resolve(workspace, "source-html", "week16_training_plan.html");
 const week17DinnerSource = resolve(workspace, "source-html", "week17_dinner_plan.html");
 const week17TrainingSource = resolve(workspace, "source-html", "week17_training_plan.html");
+const currentDinnerSource = resolve(workspace, "source-html", "current_dinner_template.html");
+const currentTrainingSource = resolve(workspace, "source-html", "current_training_template.html");
 
 execFileSync("node", [scriptPath, dinnerSource, "--site-root", siteRoot], {
   cwd: workspace,
@@ -57,6 +59,16 @@ execFileSync("node", [scriptPath, week17TrainingSource, "--site-root", siteRoot]
   stdio: "pipe",
 });
 
+execFileSync("node", [scriptPath, currentDinnerSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
+execFileSync("node", [scriptPath, currentTrainingSource, "--site-root", siteRoot], {
+  cwd: workspace,
+  stdio: "pipe",
+});
+
 const dinnerPage = resolve(siteRoot, "weeks", "week14", "dinner.html");
 const trainingPage = resolve(siteRoot, "weeks", "week14", "training.html");
 const week15DinnerPage = resolve(siteRoot, "weeks", "week15", "dinner.html");
@@ -66,12 +78,16 @@ const week16TrainingPage = resolve(siteRoot, "weeks", "week16", "training.html")
 const week17IndexPage = resolve(siteRoot, "weeks", "week17", "index.html");
 const week17DinnerPage = resolve(siteRoot, "weeks", "week17", "dinner.html");
 const week17TrainingPage = resolve(siteRoot, "weeks", "week17", "training.html");
+const currentDinnerPage = resolve(siteRoot, "current", "dinner.html");
+const currentTrainingPage = resolve(siteRoot, "current", "training.html");
+const currentReferencePage = resolve(siteRoot, "current", "training-reference.html");
 const latestDinner = resolve(siteRoot, "latest", "dinner.html");
 const latestTraining = resolve(siteRoot, "latest", "training.html");
 const indexPage = resolve(siteRoot, "index.html");
 const faviconAsset = resolve(siteRoot, "assets", "puran_blog_avator.jpg");
+const referenceAsset = resolve(siteRoot, "assets", "one-exercise-per-muscle-group-guide.png");
 
-for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, week16DinnerPage, week16TrainingPage, week17IndexPage, week17DinnerPage, week17TrainingPage, latestDinner, latestTraining, indexPage, faviconAsset]) {
+for (const path of [dinnerPage, trainingPage, week15DinnerPage, week15TrainingPage, week16DinnerPage, week16TrainingPage, week17IndexPage, week17DinnerPage, week17TrainingPage, currentDinnerPage, currentTrainingPage, currentReferencePage, latestDinner, latestTraining, indexPage, faviconAsset, referenceAsset]) {
   assert.ok(existsSync(path), `Expected generated file to exist: ${path}`);
 }
 
@@ -126,22 +142,26 @@ assert.doesNotMatch(
 );
 
 const latestDinnerHtml = readFileSync(latestDinner, "utf8");
-assert.match(latestDinnerHtml, /week17\/dinner\.html/i, "Latest dinner redirect should point to the newest imported week");
+assert.match(latestDinnerHtml, /current\/dinner\.html/i, "Latest dinner redirect should point to the current dinner template");
 assert.match(latestDinnerHtml, /rel="icon"/i, "Latest dinner redirect should include favicon metadata");
 
 const latestTrainingHtml = readFileSync(latestTraining, "utf8");
-assert.match(latestTrainingHtml, /week17\/training\.html/i, "Latest training redirect should point to the newest imported week");
+assert.match(latestTrainingHtml, /current\/training\.html/i, "Latest training redirect should point to the current training template");
 assert.match(latestTrainingHtml, /rel="icon"/i, "Latest training redirect should include favicon metadata");
 
 const indexHtml = readFileSync(indexPage, "utf8");
 assert.match(indexHtml, /Dinner \+ Training/i, "Index should have the new editorial homepage title");
-assert.match(indexHtml, /Latest Dinner/i, "Index should keep the latest dinner feature card");
-assert.match(indexHtml, /Latest Training/i, "Index should keep the latest training feature card");
+assert.match(indexHtml, /Current Dinner/i, "Index should feature the current dinner template");
+assert.match(indexHtml, /Current Training/i, "Index should feature the current training template");
+assert.match(indexHtml, /Reference Guide/i, "Index should link to the training reference guide");
 assert.match(indexHtml, /Weeks Archive/i, "Index should include the archive section");
 assert.match(indexHtml, /Week 14/i, "Index should include the imported week");
 assert.match(indexHtml, /Week 15/i, "Index should include the newest imported week");
 assert.match(indexHtml, /Week 16/i, "Index should include the newest imported week");
 assert.match(indexHtml, /Week 17/i, "Index should include the newest imported week");
+assert.match(indexHtml, /href="\.\/current\/dinner\.html"/i, "Index should link to current dinner");
+assert.match(indexHtml, /href="\.\/current\/training\.html"/i, "Index should link to current training");
+assert.match(indexHtml, /href="\.\/current\/training-reference\.html"/i, "Index should link to current training reference");
 assert.match(indexHtml, /href="\.\/weeks\/week17\/index\.html"/i, "Index should link each week to the week landing page");
 assert.match(indexHtml, /rel="icon"/i, "Index should include favicon metadata");
 
@@ -221,5 +241,18 @@ assert.match(
   "Week 17 training page should keep move search links",
 );
 assert.match(week17TrainingHtml, /rel="icon"/i, "Week 17 training page should include favicon metadata");
+
+const currentDinnerHtml = readFileSync(currentDinnerPage, "utf8");
+assert.match(currentDinnerHtml, /Current Dinner Template/i, "Current dinner page should use a fixed-template heading");
+assert.match(currentDinnerHtml, /surprise-area/i, "Current dinner should preserve the dinner pool interaction");
+
+const currentTrainingHtml = readFileSync(currentTrainingPage, "utf8");
+assert.match(currentTrainingHtml, /Current Training Template/i, "Current training page should use a fixed-template heading");
+assert.match(currentTrainingHtml, /training-reference\.html/i, "Current training page should link to the reference guide");
+assert.match(currentTrainingHtml, /长期固定模板/i, "Current training should preserve the fixed-template source content");
+
+const currentReferenceHtml = readFileSync(currentReferencePage, "utf8");
+assert.match(currentReferenceHtml, /One Exercise Per Muscle Group Guide/i, "Reference page should have a clear title");
+assert.match(currentReferenceHtml, /one-exercise-per-muscle-group-guide\.png/i, "Reference page should display the copied guide image");
 
 console.log("Import plan HTML generator works.");
