@@ -7,9 +7,13 @@ const root = process.cwd();
 const requiredPaths = [
   "README.md",
   ".gitignore",
+  "package.json",
   "scripts/import_plan_html.mjs",
+  "scripts/import_campaign_md.mjs",
   "tests/import_plan_html.test.mjs",
+  "tests/import_campaign_md.test.mjs",
   "tests/verify_plans_site.mjs",
+  "campaigns/tj-2026.md",
   "source-assets/one-exercise-per-muscle-group-guide.png",
   "source-html/current_dinner_template.html",
   "source-html/current_training_template.html",
@@ -27,6 +31,8 @@ const requiredPaths = [
   "static/plans/current/dinner.html",
   "static/plans/current/training.html",
   "static/plans/current/training-reference.html",
+  "static/plans/campaigns/index.html",
+  "static/plans/campaigns/tj-2026/index.html",
 ];
 
 for (const path of requiredPaths) {

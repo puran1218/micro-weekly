@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tianjin Marathon 2026</title>
+  <meta name="description" content="Healthy start → stable finish → structurally stable after 30 km.">
+  <link rel="icon" type="image/jpeg" href="../../../assets/puran_blog_avator.jpg">
+  <link rel="apple-touch-icon" href="../../../assets/puran_blog_avator.jpg">
+  <style>
+:root {
+  --paper: #f6f3ed;
+  --ink: #171717;
+  --muted: #72706b;
+  --line: #b9b5ad;
+  --accent: #c43b2e;
+  --page: 760px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(25, 25, 25, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 25, 25, .035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 24px 24px;
+  font-family: "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main { width: min(var(--page), calc(100% - 80px)); margin: 0 auto; padding: 40px 0 56px; }
+
+h1, h2 { font-family: "Nimbus Roman", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; letter-spacing: -.045em; }
+h1 { margin: 14px 0 22px; font-size: clamp(3.35rem, 8.5vw, 6.6rem); line-height: .88; max-width: 700px; }
+h2 { margin: 2px 0 4px; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .95; }
+h2 em { color: var(--accent); font-style: normal; }
+h3 { text-transform: uppercase; letter-spacing: .08em; }
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.2em; }
+li { margin: 5px 0; }
+a { color: inherit; }
+
+.eyebrow, .section-kicker { margin: 0; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+.campaign-nav { display: flex; gap: 22px; margin: 0 0 34px; }
+.campaign-nav a { color: var(--muted); text-decoration: none; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-nav a:hover, .campaign-nav a:focus-visible { color: var(--accent); }
+
+.campaign-header { padding-bottom: 70px; }
+.race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
+.race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
+.race-facts strong { color: var(--accent); font-weight: 600; }
+
+.campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
+.campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
+.campaign-progress li::before { content: ""; position: absolute; z-index: 2; top: 0; left: 50%; width: 10px; height: 10px; transform: translateX(-50%); border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); }
+.campaign-progress li::after { content: ""; position: absolute; top: 5px; left: -50%; width: 100%; border-top: 1px solid var(--ink); }
+.campaign-progress li:first-child::after { display: none; }
+.campaign-progress .done::before { background: var(--ink); }
+.campaign-progress .active { color: var(--accent); }
+.campaign-progress .active::before { border-color: var(--accent); background: var(--accent); }
+.campaign-progress .race { flex: .75; color: var(--ink); }
+.campaign-progress .race::before { border-radius: 0; }
+
+section { padding: 64px 0; border-top: 1px solid var(--ink); }
+
+.campaign-current .section-body > p:first-of-type { margin: 12px 0 20px; font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase; }
+.campaign-current .section-body > p:nth-of-type(2) { margin: 0 0 26px; padding: 15px 6px; border-block: 1px solid var(--line); font-size: 1.12rem; }
+.campaign-current table { width: 100%; border-collapse: collapse; font-size: 1.15rem; }
+.campaign-current th, .campaign-current td { padding: 15px 8px; text-align: left; }
+.campaign-current thead th { border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-current tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-current tbody td:first-child { width: 120px; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; }
+.campaign-current tbody tr:last-child { border-bottom: 1px solid var(--ink); color: var(--accent); }
+
+.campaign-roadmap table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 1.02rem; }
+.campaign-roadmap thead th { padding: 10px 6px; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: left; }
+.campaign-roadmap tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-roadmap tbody td { padding: 13px 6px; text-align: left; vertical-align: baseline; }
+.campaign-roadmap tbody td:first-child { letter-spacing: .09em; }
+.campaign-roadmap tbody td:last-child { text-align: right; }
+.campaign-roadmap tr.is-active { color: var(--accent); }
+.campaign-roadmap h3 { margin: 42px 0 4px; }
+
+.campaign-reviews article { margin-top: 32px; padding: 22px 0; border-block: 1px solid var(--line); }
+.campaign-reviews article h3 { margin: 0; }
+
+.reference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 50px; margin-top: 34px; }
+.reference-grid article { border-top: 1px solid var(--line); }
+.reference-grid h3 { margin: 0; font-size: .88rem; }
+.reference-grid ul { margin: 8px 0; padding-left: 1.1em; }
+.reference-grid li { margin: 7px 0; }
+
+.campaign-group { padding-top: 54px; border-top: 1px solid var(--ink); }
+.campaign-list { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--ink); }
+.campaign-row { border-top: 1px solid var(--line); }
+.campaign-row a { display: block; padding: 26px 0; text-decoration: none; }
+.campaign-row h2 { margin: 0 0 8px; font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1; }
+.campaign-row a:hover h2, .campaign-row a:focus-visible h2 { color: var(--accent); }
+.row-facts { margin: 0; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
+.row-summary { margin: 10px 0 0; max-width: 560px; color: #45433f; }
+
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+
+.course { position: fixed; top: 0; left: max(18px, calc(50vw - 510px)); width: 82px; height: 100vh; color: #65635e; font: .68rem/1.35 "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif; }
+.course-line { position: absolute; top: 98px; bottom: 92px; left: 30px; width: 1px; background: var(--ink); }
+.course-line span { position: absolute; top: calc(var(--p) * 1%); left: 0; display: flex; align-items: center; gap: 9px; transform: translate(-4px, -50%); }
+.course-line span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); flex: none; }
+.course-line small { display: block; font-size: .58rem; }
+
+@media (max-width: 960px) {
+  .course { display: none; }
+}
+
+@media (max-width: 620px) {
+  main { width: min(100% - 34px, var(--page)); padding-top: 24px; }
+  h1 { font-size: clamp(3rem, 17vw, 5rem); }
+  h2 { font-size: clamp(2.7rem, 15vw, 4rem); }
+  .campaign-header { padding-bottom: 48px; }
+  .race-facts { gap: 9px; font-size: .9rem; }
+  .campaign-progress { margin-top: 40px; }
+  .campaign-progress li span { font-size: .62rem; }
+  section { padding: 48px 0; }
+  .campaign-current table { font-size: 1rem; }
+  .campaign-current tbody td:first-child { width: 66px; }
+  .campaign-current th, .campaign-current td { padding: 14px 4px; }
+  .campaign-roadmap tbody td { padding: 11px 4px; }
+  .reference-grid { grid-template-columns: 1fr; gap: 28px; }
+  footer { flex-direction: column; }
+}
+
+@media print {
+  body { background: #fff; }
+  main { width: 100%; padding: 24px 30px; }
+  .course { display: none; }
+  section { break-inside: avoid; }
+}
+  </style>
+</head>
+<body>
+<div class="course" aria-hidden="true">
+  <div class="course-line">
+      <span style="--p:0">0<small>KM</small></span>
+      <span style="--p:23.7">10<small>KM</small></span>
+      <span style="--p:47.4">20<small>KM</small></span>
+      <span style="--p:71.1">30<small>KM</small></span>
+      <span style="--p:94.8">40<small>KM</small></span>
+  </div>
+</div>
+  <main>
+    <nav class="campaign-nav" aria-label="Site navigation">
+      <a href="../../index.html">← Plans</a>
+      <a href="../index.html">All campaigns</a>
+    </nav>
+    <header class="campaign-header">
+      <p class="eyebrow">Training Campaign</p>
+      <h1>Tianjin Marathon 2026</h1>
+      <div class="race-facts" aria-label="Race information">
+        <span>Oct 25, 2026</span><i></i><span>42.195 km</span><i></i><span>Week 1 of 8</span><i></i><strong id="countdown" data-race-date="2026-10-25">54 days</strong>
+      </div>
+      <ol class="campaign-progress" aria-label="Campaign progress">
+        <li class="active"><span>W1</span></li><li><span>W2</span></li><li><span>W3</span></li><li><span>W4</span></li><li><span>W5</span></li><li><span>W6</span></li><li><span>W7</span></li><li><span>W8</span></li><li class="race"><span>Race</span></li>
+      </ol>
+    </header>
+    <section class="campaign-current" id="this-week">
+      <p class="section-kicker">Current plan</p>
+      <h2>This Week <em>· W1</em></h2>
+      <div class="section-body">
+      <p>Aug 31 – Sep 6, 2026</p>
+<p>Target: 30–35 km<br>Focus: Run easy. Observe the left arch.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Training</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mon</td>
+<td>Rest</td>
+</tr>
+<tr>
+<td>Tue</td>
+<td>7–8 km Easy + 4 × 20s strides</td>
+</tr>
+<tr>
+<td>Wed</td>
+<td>6 km Easy + Strength A</td>
+</tr>
+<tr>
+<td>Thu</td>
+<td>Rest / 5 km Recovery</td>
+</tr>
+<tr>
+<td>Fri</td>
+<td>8 km Easy</td>
+</tr>
+<tr>
+<td>Sat</td>
+<td>Rest</td>
+</tr>
+<tr>
+<td>Sun</td>
+<td>14–16 km LDR Easy</td>
+</tr>
+</tbody></table>
+
+      </div>
+    </section>
+    <section class="campaign-roadmap" id="roadmap">
+      <p class="section-kicker">The road ahead</p>
+      <h2>8-Week Roadmap</h2>
+      <div class="section-body">
+      <table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Dates</th>
+<th>Phase</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody><tr class="is-active">
+<td>W1</td>
+<td>Aug 31 – Sep 6</td>
+<td>Foundation</td>
+<td>30–35 km</td>
+</tr>
+<tr>
+<td>W2</td>
+<td>Sep 7 – Sep 13</td>
+<td>Build</td>
+<td>35–40 km</td>
+</tr>
+<tr>
+<td>W3</td>
+<td>Sep 14 – Sep 20</td>
+<td>Endurance</td>
+<td>40–45 km</td>
+</tr>
+<tr>
+<td>W4</td>
+<td>Sep 21 – Sep 27</td>
+<td>Mid-Autumn LDR</td>
+<td>42–48 km</td>
+</tr>
+<tr>
+<td>W5</td>
+<td>Sep 28 – Oct 4</td>
+<td>Absorb + MP</td>
+<td>38–45 km</td>
+</tr>
+<tr>
+<td>W6</td>
+<td>Oct 5 – Oct 11</td>
+<td>Peak simulation</td>
+<td>45–52 km</td>
+</tr>
+<tr>
+<td>W7</td>
+<td>Oct 12 – Oct 18</td>
+<td>Taper</td>
+<td>30–38 km</td>
+</tr>
+<tr>
+<td>W8</td>
+<td>Oct 19 – Oct 25</td>
+<td>Race week</td>
+<td>Race</td>
+</tr>
+</tbody></table>
+<h3>W2 · Build</h3>
+<ul>
+<li>Tempo: 2 km warm-up + 3 × 8 min tempo / 3 min jog + 1–2 km cool-down</li>
+<li>Easy: 6–8 km + main strength</li>
+<li>Recovery: 5–6 km</li>
+<li>Easy: 8–10 km</li>
+<li>LDR: 18 km Easy</li>
+<li>Begin fueling every 30–40 minutes</li>
+</ul>
+<h3>W3 · Endurance</h3>
+<ul>
+<li>Quality: 5 × 1 km controlled-fast / 2 min jog</li>
+<li>Easy: 6–8 km + main strength</li>
+<li>Easy: 6 km</li>
+<li>Easy: 10 km</li>
+<li>LDR: 20–22 km</li>
+<li>Check left arch, left calf and right quad at 10 / 15 / 20 km</li>
+</ul>
+<h3>W4 · Mid-Autumn Key Week</h3>
+<ul>
+<li>Tempo: 20–25 min, 8–10 km total</li>
+<li>Easy: 6–8 km + light strength</li>
+<li>Recovery: 5–6 km</li>
+<li>LDR: 24–26 km Easy</li>
+<li>Stop if pain becomes persistent, changes form or keeps increasing</li>
+</ul>
+<h3>W5 · Absorb + Marathon Effort</h3>
+<ul>
+<li>Easy: 6–8 km</li>
+<li>Light strength + foot routine</li>
+<li>Recovery: 5 km or rest</li>
+<li>12–14 km including 6–8 km at controlled marathon effort</li>
+<li>LDR: 16–18 km Easy</li>
+</ul>
+<h3>W6 · Peak Simulation</h3>
+<ul>
+<li>Easy: 6–8 km + strides</li>
+<li>Easy: 6 km + final normal strength session</li>
+<li>Recovery: 5 km or rest</li>
+<li>Marathon simulation: 28–32 km</li>
+<li>Rehearse shoes, socks, breakfast, fueling and hydration</li>
+<li>Check at 10 / 20 / 25 / 30 km; 28 km is enough if structure is deteriorating</li>
+</ul>
+<h3>W7 · Taper</h3>
+<ul>
+<li>8 km including 3 × 2 km at marathon effort</li>
+<li>Easy: 6 km + light foot routine</li>
+<li>Recovery: 5–6 km</li>
+<li>Easy: 4–5 km</li>
+<li>LDR: 18–20 km Easy</li>
+</ul>
+<h3>W8 · Race Week</h3>
+<ul>
+<li>Tue: 6 km Easy + 4 × 20s strides</li>
+<li>Wed: 5 km Easy</li>
+<li>Fri: 4–5 km Easy</li>
+<li>Sun: Tianjin Marathon · 42.195 km</li>
+</ul>
+
+      </div>
+    </section>
+    <section class="campaign-reviews" id="reviews">
+      <p class="section-kicker">Review & adapt</p>
+      <h2>Weekly Reviews</h2>
+      <div class="section-body">
+      <article>
+<h3>Week 1 · Aug 31 – Sep 6</h3>
+<ul>
+<li>Actual distance:</li>
+<li>LDR:</li>
+<li>Quality: ✓ / ✗</li>
+<li>Strength sessions:</li>
+<li>Left arch / 10:</li>
+<li>Left calf / 10:</li>
+<li>Right quad / 10:</li>
+<li>Overall: Fresh / Normal / Tired / Very tired</li>
+<li>Review:</li>
+<li>Next adjustment: increase / hold / reduce</li>
+</ul>
+</article>
+      </div>
+    </section>
+    <section class="campaign-reference" id="reference">
+      <p class="section-kicker">Keep close</p>
+      <h2>Reference</h2>
+      <div class="section-body">
+      <div class="reference-grid">
+<article>
+<h3>Effort</h3>
+<ul>
+<li>Recovery: RPE 2–3</li>
+<li>Easy / LDR: RPE 3–4</li>
+<li>Tempo / Threshold: RPE 6–7</li>
+<li>MP: controlled marathon effort; able to keep going at the finish</li>
+<li>Strides: 4–6 × 20 seconds, fast but relaxed, fully recover between reps</li>
+</ul>
+</article>
+<article>
+<h3>Strength A</h3>
+<p>2–3 sets, always leave 2–3 reps in reserve.</p>
+<ul>
+<li>Bulgarian split squat · 8–10 / side</li>
+<li>Single-leg RDL · 8–10 / side</li>
+<li>Glute bridge or hip thrust · 10–15</li>
+<li>Single-leg calf raise · 12–15 / side</li>
+<li>Lateral band walk · 10–15 / side</li>
+<li>Plank or dead bug · 30–45 seconds</li>
+</ul>
+</article>
+<article>
+<h3>Foot and Ankle Routine</h3>
+<ul>
+<li>Short foot / arch activation</li>
+<li>Single-leg balance</li>
+<li>Straight-knee and bent-knee calf raises</li>
+<li>Toe yoga</li>
+<li>Light glute medius work</li>
+</ul>
+</article>
+<article>
+<h3>LDR Checklist</h3>
+<ul>
+<li>Normal familiar breakfast; do not start 20–30 km fasted</li>
+<li>First 5 km should feel too slow</li>
+<li>Fuel every 30–40 minutes and drink water</li>
+<li>Check left arch → left calf → right quad</li>
+<li>Stop if pain changes form or keeps escalating</li>
+</ul>
+</article>
+<article>
+<h3>Pain Signal</h3>
+<ul>
+<li>Green · 0–2/10: continue</li>
+<li>Yellow · 3–4/10: reduce or replace the next quality session</li>
+<li>Red · 5+/10: stop; the plan never overrides pain</li>
+</ul>
+<p>Easy really easy. One quality run is enough. LDR is the priority. Arrive healthy on Oct 25.</p>
+</article>
+</div>
+      </div>
+    </section>
+    <footer><span>Plan → Train → Review → Adapt → Race</span><span>Race day · Oct 25, 2026</span></footer>
+  </main>
+  <script>
+  (function () {
+    var el = document.getElementById("countdown");
+    if (!el) return;
+    var parts = (el.getAttribute("data-race-date") || "").split("-");
+    if (parts.length !== 3) return;
+    var race = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = Math.round((race.getTime() - today.getTime()) / 864e5);
+    el.textContent = days > 1 ? days + " days" : days === 1 ? "1 day" : days === 0 ? "Race day" : "Finished";
+  })();
+</script>
+</body>
+</html>

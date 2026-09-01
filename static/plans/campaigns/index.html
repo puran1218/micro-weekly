@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Training Campaigns</title>
+  <meta name="description" content="Long-term race preparation pages: current week, roadmap, weekly reviews, and reference.">
+  <link rel="icon" type="image/jpeg" href="../../assets/puran_blog_avator.jpg">
+  <link rel="apple-touch-icon" href="../../assets/puran_blog_avator.jpg">
+  <style>
+:root {
+  --paper: #f6f3ed;
+  --ink: #171717;
+  --muted: #72706b;
+  --line: #b9b5ad;
+  --accent: #c43b2e;
+  --page: 760px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(25, 25, 25, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 25, 25, .035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 24px 24px;
+  font-family: "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main { width: min(var(--page), calc(100% - 80px)); margin: 0 auto; padding: 40px 0 56px; }
+
+h1, h2 { font-family: "Nimbus Roman", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; letter-spacing: -.045em; }
+h1 { margin: 14px 0 22px; font-size: clamp(3.35rem, 8.5vw, 6.6rem); line-height: .88; max-width: 700px; }
+h2 { margin: 2px 0 4px; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .95; }
+h2 em { color: var(--accent); font-style: normal; }
+h3 { text-transform: uppercase; letter-spacing: .08em; }
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.2em; }
+li { margin: 5px 0; }
+a { color: inherit; }
+
+.eyebrow, .section-kicker { margin: 0; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+.campaign-nav { display: flex; gap: 22px; margin: 0 0 34px; }
+.campaign-nav a { color: var(--muted); text-decoration: none; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-nav a:hover, .campaign-nav a:focus-visible { color: var(--accent); }
+
+.campaign-header { padding-bottom: 70px; }
+.race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
+.race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
+.race-facts strong { color: var(--accent); font-weight: 600; }
+
+.campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
+.campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
+.campaign-progress li::before { content: ""; position: absolute; z-index: 2; top: 0; left: 50%; width: 10px; height: 10px; transform: translateX(-50%); border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); }
+.campaign-progress li::after { content: ""; position: absolute; top: 5px; left: -50%; width: 100%; border-top: 1px solid var(--ink); }
+.campaign-progress li:first-child::after { display: none; }
+.campaign-progress .done::before { background: var(--ink); }
+.campaign-progress .active { color: var(--accent); }
+.campaign-progress .active::before { border-color: var(--accent); background: var(--accent); }
+.campaign-progress .race { flex: .75; color: var(--ink); }
+.campaign-progress .race::before { border-radius: 0; }
+
+section { padding: 64px 0; border-top: 1px solid var(--ink); }
+
+.campaign-current .section-body > p:first-of-type { margin: 12px 0 20px; font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase; }
+.campaign-current .section-body > p:nth-of-type(2) { margin: 0 0 26px; padding: 15px 6px; border-block: 1px solid var(--line); font-size: 1.12rem; }
+.campaign-current table { width: 100%; border-collapse: collapse; font-size: 1.15rem; }
+.campaign-current th, .campaign-current td { padding: 15px 8px; text-align: left; }
+.campaign-current thead th { border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-current tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-current tbody td:first-child { width: 120px; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; }
+.campaign-current tbody tr:last-child { border-bottom: 1px solid var(--ink); color: var(--accent); }
+
+.campaign-roadmap table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 1.02rem; }
+.campaign-roadmap thead th { padding: 10px 6px; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: left; }
+.campaign-roadmap tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-roadmap tbody td { padding: 13px 6px; text-align: left; vertical-align: baseline; }
+.campaign-roadmap tbody td:first-child { letter-spacing: .09em; }
+.campaign-roadmap tbody td:last-child { text-align: right; }
+.campaign-roadmap tr.is-active { color: var(--accent); }
+.campaign-roadmap h3 { margin: 42px 0 4px; }
+
+.campaign-reviews article { margin-top: 32px; padding: 22px 0; border-block: 1px solid var(--line); }
+.campaign-reviews article h3 { margin: 0; }
+
+.reference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 50px; margin-top: 34px; }
+.reference-grid article { border-top: 1px solid var(--line); }
+.reference-grid h3 { margin: 0; font-size: .88rem; }
+.reference-grid ul { margin: 8px 0; padding-left: 1.1em; }
+.reference-grid li { margin: 7px 0; }
+
+.campaign-group { padding-top: 54px; border-top: 1px solid var(--ink); }
+.campaign-list { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--ink); }
+.campaign-row { border-top: 1px solid var(--line); }
+.campaign-row a { display: block; padding: 26px 0; text-decoration: none; }
+.campaign-row h2 { margin: 0 0 8px; font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1; }
+.campaign-row a:hover h2, .campaign-row a:focus-visible h2 { color: var(--accent); }
+.row-facts { margin: 0; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
+.row-summary { margin: 10px 0 0; max-width: 560px; color: #45433f; }
+
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+
+.course { position: fixed; top: 0; left: max(18px, calc(50vw - 510px)); width: 82px; height: 100vh; color: #65635e; font: .68rem/1.35 "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif; }
+.course-line { position: absolute; top: 98px; bottom: 92px; left: 30px; width: 1px; background: var(--ink); }
+.course-line span { position: absolute; top: calc(var(--p) * 1%); left: 0; display: flex; align-items: center; gap: 9px; transform: translate(-4px, -50%); }
+.course-line span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); flex: none; }
+.course-line small { display: block; font-size: .58rem; }
+
+@media (max-width: 960px) {
+  .course { display: none; }
+}
+
+@media (max-width: 620px) {
+  main { width: min(100% - 34px, var(--page)); padding-top: 24px; }
+  h1 { font-size: clamp(3rem, 17vw, 5rem); }
+  h2 { font-size: clamp(2.7rem, 15vw, 4rem); }
+  .campaign-header { padding-bottom: 48px; }
+  .race-facts { gap: 9px; font-size: .9rem; }
+  .campaign-progress { margin-top: 40px; }
+  .campaign-progress li span { font-size: .62rem; }
+  section { padding: 48px 0; }
+  .campaign-current table { font-size: 1rem; }
+  .campaign-current tbody td:first-child { width: 66px; }
+  .campaign-current th, .campaign-current td { padding: 14px 4px; }
+  .campaign-roadmap tbody td { padding: 11px 4px; }
+  .reference-grid { grid-template-columns: 1fr; gap: 28px; }
+  footer { flex-direction: column; }
+}
+
+@media print {
+  body { background: #fff; }
+  main { width: 100%; padding: 24px 30px; }
+  .course { display: none; }
+  section { break-inside: avoid; }
+}
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="campaign-nav" aria-label="Site navigation">
+      <a href="../index.html">← Plans</a>
+    </nav>
+    <header class="campaign-header">
+      <p class="eyebrow">Plan → Train → Review → Adapt → Race</p>
+      <h1>Training Campaigns</h1>
+    </header>
+    <section class="campaign-group">
+      <p class="section-kicker">Active</p>
+      <ul class="campaign-list">
+        <li class="campaign-row">
+          <a href="./tj-2026/">
+            <h2>Tianjin Marathon 2026</h2>
+            <p class="row-facts">Oct 25, 2026 · 42.195 km · Week 1 of 8</p>
+            <p class="row-summary">Healthy start → stable finish → structurally stable after 30 km.</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
