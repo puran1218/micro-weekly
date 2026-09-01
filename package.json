@@ -1,0 +1,14 @@
+{
+  "name": "home-plans",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Static publishing workflow for dinner, training, and race campaign pages.",
+  "scripts": {
+    "build:campaigns": "node scripts/import_campaign_md.mjs --all",
+    "test": "node tests/import_campaign_md.test.mjs && node tests/import_plan_html.test.mjs && node tests/repo_layout.test.mjs && node tests/verify_plans_site.mjs"
+  },
+  "dependencies": {
+    "marked": "^18.0.11"
+  }
+}
