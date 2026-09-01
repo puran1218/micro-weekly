@@ -1,0 +1,109 @@
+:root {
+  --paper: #f6f3ed;
+  --ink: #171717;
+  --muted: #72706b;
+  --line: #b9b5ad;
+  --accent: #c43b2e;
+  --page: 760px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(25,25,25,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25,25,25,.035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 24px 24px;
+  font-family: "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main { width: min(var(--page), calc(100% - 80px)); margin: 0 auto; padding: 86px 0 56px; }
+h1, h2 { font-family: "Nimbus Roman", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; letter-spacing: -.045em; }
+h1 { margin: 14px 0 22px; font-size: clamp(3.35rem, 8.5vw, 6.6rem); line-height: .88; max-width: 700px; }
+h2 { margin: 2px 0 4px; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .95; }
+h2 em { color: var(--accent); font-style: normal; }
+h3 { text-transform: uppercase; letter-spacing: .08em; }
+.eyebrow, .section-kicker { margin: 0; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.campaign-header { padding-bottom: 70px; }
+.race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
+.race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
+.race-facts strong { color: var(--accent); font-weight: 600; }
+.campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
+.campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
+.campaign-progress li::before { content: ""; position: absolute; z-index: 2; top: 0; left: 50%; width: 10px; height: 10px; transform: translateX(-50%); border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); }
+.campaign-progress li::after { content: ""; position: absolute; top: 5px; left: -50%; width: 100%; border-top: 1px solid var(--ink); }
+.campaign-progress li:first-child::after { display: none; }
+.campaign-progress .active { color: var(--accent); }
+.campaign-progress .active::before { border-color: var(--accent); background: var(--accent); }
+.campaign-progress .race { flex: .75; color: var(--ink); }
+.campaign-progress .race::before { border-radius: 0; }
+section { padding: 64px 0; border-top: 1px solid var(--ink); }
+.date { margin: 12px 0 34px; font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase; }
+.week-summary { margin: 0 0 24px; border-block: 1px solid var(--line); }
+.week-summary div { display: grid; grid-template-columns: 120px 1fr; align-items: baseline; padding: 15px 6px; }
+.week-summary div + div { border-top: 1px solid var(--line); }
+.week-summary dt { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; }
+.week-summary dd { margin: 0; font-size: 1.18rem; }
+.week-summary div:first-child dd { font-size: 1.5rem; font-weight: 700; }
+.schedule { width: 100%; border-collapse: collapse; font-size: 1.22rem; }
+.schedule tr { border-bottom: 1px solid var(--line); }
+.schedule th, .schedule td { padding: 17px 8px; text-align: left; }
+.schedule th { width: 120px; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; }
+.schedule .key { color: var(--accent); border-bottom-color: var(--ink); }
+.intro { max-width: 560px; color: #45433f; }
+.roadmap ol { margin: 36px 0 0; padding: 0; list-style: none; }
+.roadmap li { display: grid; grid-template-columns: 55px 150px 1fr 90px; gap: 14px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.roadmap li b { letter-spacing: .09em; }
+.roadmap li strong { text-align: right; font-weight: 400; }
+.roadmap .active { color: var(--accent); }
+.reviews article { margin-top: 32px; padding: 22px 0; border-block: 1px solid var(--line); }
+.reviews article header { display: flex; justify-content: space-between; align-items: baseline; }
+.reviews h3, .reviews time { margin: 0; }
+.empty { color: var(--muted); font-style: italic; }
+.reference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 50px; margin-top: 34px; }
+.reference-grid article { border-top: 1px solid var(--line); }
+.reference-grid h3 { font-size: .88rem; }
+.reference-grid p { margin: 8px 0; }
+.green { color: #417343; }.amber { color: #9b6b12; }.red { color: var(--accent); }
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.course { position: fixed; top: 0; left: max(18px, calc(50vw - 510px)); width: 82px; height: 100vh; color: #65635e; font: .68rem/1.35 "Nimbus Sans Narrow", sans-serif; }
+.coordinate { position: absolute; left: 0; letter-spacing: .08em; }.north { top: 34px; }.south { bottom: 34px; }
+.course-line { position: absolute; top: 98px; bottom: 92px; left: 30px; width: 1px; background: var(--ink); }
+.course-line span { position: absolute; top: calc(var(--p) * 1%); left: 0; display: flex; align-items: center; gap: 9px; transform: translate(-4px, -50%); }
+.course-line span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); flex: none; }
+.course-line small { display: block; font-size: .58rem; }
+
+@media (max-width: 960px) {
+  .course { display: none; }
+}
+
+@media (max-width: 620px) {
+  main { width: min(100% - 34px, var(--page)); padding-top: 44px; }
+  h1 { font-size: clamp(3rem, 17vw, 5rem); }
+  h2 { font-size: clamp(2.7rem, 15vw, 4rem); }
+  .campaign-header { padding-bottom: 48px; }
+  .race-facts { gap: 9px; font-size: .9rem; }
+  .campaign-progress { margin-top: 40px; }
+  .campaign-progress li span { font-size: .62rem; }
+  section { padding: 48px 0; }
+  .week-summary div { grid-template-columns: 82px 1fr; }
+  .schedule { font-size: 1rem; }
+  .schedule th { width: 66px; }
+  .schedule th, .schedule td { padding: 14px 4px; }
+  .roadmap li { grid-template-columns: 42px 1fr auto; gap: 8px; }
+  .roadmap li span:nth-of-type(2) { grid-column: 2 / 4; color: var(--muted); font-size: .85rem; }
+  .roadmap li strong { grid-column: 3; grid-row: 1; }
+  .reference-grid { grid-template-columns: 1fr; gap: 28px; }
+  footer { flex-direction: column; }
+}
+
+@media print {
+  body { background: #fff; }
+  main { width: 100%; padding: 24px 30px; }
+  .course { display: none; }
+  section { break-inside: avoid; }
+}
