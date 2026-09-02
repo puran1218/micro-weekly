@@ -3,10 +3,10 @@ import { resolve } from "node:path";
 import { marked } from "marked";
 
 const CAMPAIGN_SECTIONS = [
-  { prefix: "this week", key: "current", display: "This Week" },
-  { prefix: "8-week roadmap", key: "roadmap", display: "8-Week Roadmap" },
-  { prefix: "weekly reviews", key: "reviews", display: "Weekly Reviews" },
-  { prefix: "reference", key: "reference", display: "Reference" },
+  { pattern: /^this week/i, key: "current" },
+  { pattern: /^\d+-week roadmap/i, key: "roadmap" },
+  { pattern: /^weekly reviews/i, key: "reviews" },
+  { pattern: /^reference/i, key: "reference" },
 ];
 
 const SECTION_KICKERS = {
@@ -232,7 +232,7 @@ function extractSections(body, campaign) {
     const heading = line.match(/^##\s+(.+?)\s*$/);
 
     if (heading) {
-      const recognized = CAMPAIGN_SECTIONS.find((entry) => heading[1].toLowerCase().startsWith(entry.prefix));
+      const recognized = CAMPAIGN_SECTIONS.find((entry) => entry.pattern.test(heading[1]));
 
       if (!recognized) {
         ignored.push(heading[1]);
@@ -571,17 +571,21 @@ function buildFaviconMarkup(relativeAssetsPath) {
 }
 
 function renderSectionHeading(title) {
-  const lowered = title.toLowerCase();
-  const recognized = CAMPAIGN_SECTIONS.find((entry) => lowered.startsWith(entry.prefix));
+  for (const entry of CAMPAIGN_SECTIONS) {
+    const match = title.match(entry.pattern);
 
-  if (!recognized) {
-    return `<h2>${escapeHtml(title)}</h2>`;
+    if (!match) {
+      continue;
+    }
+
+    const heading = title.slice(0, match[0].length);
+    const rest = title.slice(match[0].length).trim();
+    return rest
+      ? `<h2>${escapeHtml(heading)} <em>${escapeHtml(rest)}</em></h2>`
+      : `<h2>${escapeHtml(heading)}</h2>`;
   }
 
-  const rest = title.slice(recognized.display.length).trim();
-  return rest
-    ? `<h2>${recognized.display} <em>${escapeHtml(rest)}</em></h2>`
-    : `<h2>${recognized.display}</h2>`;
+  return `<h2>${escapeHtml(title)}</h2>`;
 }
 
 function capitalize(value) {

@@ -204,6 +204,25 @@ function assertFailure(result, label, expectedPattern) {
 }
 
 // ---------------------------------------------------------------------------
+// Variable-length campaigns (N-week roadmap heading)
+// ---------------------------------------------------------------------------
+{
+  const { fixtureRoot, siteRoot } = makeFixtureWorkspace("six-week", {
+    "six-2026.md": campaignMarkdown({ slug: "six-2026", title: "Six Week Race 2026", weeks: 6, current_week: 2 }).replace(
+      "## 8-Week Roadmap",
+      "## 6-Week Roadmap",
+    ),
+  });
+  assertSuccess(runGenerator(["--all", "--site-root", siteRoot], fixtureRoot), "six-week fixture build");
+
+  const pageHtml = readFileSync(resolve(siteRoot, "campaigns", "six-2026", "index.html"), "utf8");
+  assert.match(pageHtml, /class="[^"]*campaign-roadmap/, "a 6-Week Roadmap heading should still be recognized as the roadmap section");
+  assert.match(pageHtml, /<h2>6-Week Roadmap<\/h2>/, "the roadmap heading should render exactly as authored");
+  assert.match(pageHtml, /<span>W6<\/span>/, "a 6-week campaign should end its progress route at W6");
+  assert.doesNotMatch(pageHtml, /<span>W7<\/span>/, "a 6-week campaign should not render a W7 step");
+}
+
+// ---------------------------------------------------------------------------
 // Campaign index generation, status grouping, and date ordering
 // ---------------------------------------------------------------------------
 {
