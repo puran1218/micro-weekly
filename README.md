@@ -157,11 +157,13 @@ Rules enforced by the generator:
 Below the front matter, use these H2 section headings (rendered Markdown only — no HTML or CSS in the source):
 
 - `This Week` — the current week plan; the most prominent section on the page.
-- `8-Week Roadmap` — the phase-by-phase plan table.
+- `N-Week Roadmap` (for example `8-Week Roadmap`, `6-Week Roadmap`, `10-Week Roadmap`) — the phase-by-phase plan table; keep the number in sync with the `weeks` front-matter field.
 - `Weekly Reviews` — append one H3 block per finished week.
 - `Reference` — effort levels, strength routines, checklists, pain rules.
 
-Content before the first recognized H2 (for example the H1 title and a tagline) is for readers of the Markdown file; the page header is generated from the front matter. The race title, date, distance, countdown, current-week marker, and the W1…W8…Race progress route are all generated automatically. The countdown is computed at build time and kept fresh with a small progressive-enhancement script in the browser.
+Campaigns of any length work the same way: `weeks: 6` in the front matter makes the progress route run W1…W6…Race, and a `6-Week Roadmap` heading is recognized exactly like an 8-week one. Content before the first recognized H2 (the H1 and tagline) is only for readers of the Markdown file — the page header is generated from the front matter, so that text does not appear on the page. Write plain Markdown; no HTML or CSS in the source.
+
+Content before the first recognized H2 (for example the H1 title and a tagline) is for readers of the Markdown file; the page header is generated from the front matter. The race title, date, distance, countdown, current-week marker, and the W1…WN…Race progress route are all generated automatically. The countdown is computed at build time and kept fresh with a small progressive-enhancement script in the browser.
 
 ### Build Campaigns
 
@@ -177,9 +179,10 @@ A single-file build rebuilds that page plus the campaign index. `--all` rebuilds
 At the end of each training week:
 
 1. Fill in the finished week under `Weekly Reviews` in `campaigns/tj-2026.md`.
-2. Adjust the next week's plan inside `This Week`.
-3. Bump `current_week:` in the front matter and update the `This Week · W#` heading.
-4. Rebuild and commit the source and the generated output together:
+2. Backfill the finished week as a `### WN · Phase` detail block under the roadmap, so its full plan stays on the page after `This Week` moves on.
+3. Adjust the next week's plan inside `This Week`.
+4. Bump `current_week:` in the front matter and update the `This Week · W#` heading.
+5. Rebuild and commit the source and the generated output together:
 
 ```bash
 node scripts/import_campaign_md.mjs campaigns/tj-2026.md
