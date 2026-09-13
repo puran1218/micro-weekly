@@ -335,6 +335,30 @@ function assertFailure(result, label, expectedPattern) {
 }
 
 // ---------------------------------------------------------------------------
+// Optional front-matter note
+// ---------------------------------------------------------------------------
+{
+  const { fixtureRoot, siteRoot } = makeFixtureWorkspace("note", {
+    "noted.md": campaignMarkdown({ slug: "noted", note: "Not selected in the lottery — training anyway" }),
+    "plain.md": campaignMarkdown({ slug: "plain" }),
+  });
+  assertSuccess(runGenerator(["--all", "--site-root", siteRoot], fixtureRoot), "note fixture build");
+
+  const notedPage = readFileSync(resolve(siteRoot, "campaigns", "noted", "index.html"), "utf8");
+  assert.match(
+    notedPage,
+    /<p class="campaign-note">Not selected in the lottery — training anyway<\/p>/,
+    "campaign page should render the optional note as a quiet line",
+  );
+
+  const plainPage = readFileSync(resolve(siteRoot, "campaigns", "plain", "index.html"), "utf8");
+  assert.doesNotMatch(plainPage, /<p class="campaign-note"/, "campaigns without a note should not render an empty note element");
+
+  const indexHtml = readFileSync(resolve(siteRoot, "campaigns", "index.html"), "utf8");
+  assert.match(indexHtml, /class="row-note">Not selected in the lottery/, "campaign index should show the note");
+}
+
+// ---------------------------------------------------------------------------
 // Required navigation and favicon metadata on the campaign page
 // ---------------------------------------------------------------------------
 {

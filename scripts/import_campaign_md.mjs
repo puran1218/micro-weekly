@@ -214,6 +214,7 @@ function validateCampaign(meta) {
     currentWeek,
     weeks,
     summary: meta.summary,
+    note: "note" in meta ? meta.note : null,
   };
 }
 
@@ -440,6 +441,7 @@ ${buildDistanceRail(campaign.distance)}  <main>
       <div class="race-facts" aria-label="Race information">
         ${buildRaceFacts(campaign)}
       </div>
+      ${campaign.note ? `<p class="campaign-note">${escapeHtml(campaign.note)}</p>` : ""}
       <ol class="campaign-progress" aria-label="Campaign progress">
         ${buildProgressRoute(campaign)}
       </ol>
@@ -491,7 +493,7 @@ function writeCampaignIndex(records, campaignsOutputRoot) {
           <a href="./${campaign.slug}/">
             <h2>${escapeHtml(campaign.title)}</h2>
             <p class="row-facts">${facts.join(" · ")}</p>
-            <p class="row-summary">${escapeHtml(campaign.summary)}</p>
+            <p class="row-summary">${escapeHtml(campaign.summary)}</p>${campaign.note ? `\n            <p class="row-note">${escapeHtml(campaign.note)}</p>` : ""}
           </a>
         </li>`;
         })
@@ -644,6 +646,7 @@ a { color: inherit; }
 .race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
 .race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
 .race-facts strong { color: var(--accent); font-weight: 600; }
+.campaign-note { margin: 14px 0 0; color: var(--muted); font-style: italic; font-size: .95rem; letter-spacing: .02em; }
 
 .campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
 .campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
@@ -693,6 +696,7 @@ section { padding: 64px 0; border-top: 1px solid var(--ink); }
 .campaign-row a:hover h2, .campaign-row a:focus-visible h2 { color: var(--accent); }
 .row-facts { margin: 0; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
 .row-summary { margin: 10px 0 0; max-width: 560px; color: #45433f; }
+.row-note { margin: 8px 0 0; color: var(--muted); font-style: italic; font-size: .9rem; }
 
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 
