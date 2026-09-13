@@ -52,6 +52,7 @@ a { color: inherit; }
 .race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
 .race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
 .race-facts strong { color: var(--accent); font-weight: 600; }
+.campaign-note { margin: 14px 0 0; color: var(--muted); font-style: italic; font-size: .95rem; letter-spacing: .02em; }
 
 .campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
 .campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
@@ -101,6 +102,7 @@ section { padding: 64px 0; border-top: 1px solid var(--ink); }
 .campaign-row a:hover h2, .campaign-row a:focus-visible h2 { color: var(--accent); }
 .row-facts { margin: 0; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
 .row-summary { margin: 10px 0 0; max-width: 560px; color: #45433f; }
+.row-note { margin: 8px 0 0; color: var(--muted); font-style: italic; font-size: .9rem; }
 
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 
@@ -158,18 +160,19 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
       <p class="eyebrow">Training Campaign</p>
       <h1>Tianjin Marathon 2026</h1>
       <div class="race-facts" aria-label="Race information">
-        <span>Oct 25, 2026</span><i></i><span>42.195 km</span><i></i><span>Week 1 of 8</span><i></i><strong id="countdown" data-race-date="2026-10-25">53 days</strong>
+        <span>Oct 25, 2026</span><i></i><span>42.195 km</span><i></i><span>Week 3 of 8</span><i></i><strong id="countdown" data-race-date="2026-10-25">42 days</strong>
       </div>
+      <p class="campaign-note">很遗憾没有中签 — 但依旧照着计划训练。</p>
       <ol class="campaign-progress" aria-label="Campaign progress">
-        <li class="active"><span>W1</span></li><li><span>W2</span></li><li><span>W3</span></li><li><span>W4</span></li><li><span>W5</span></li><li><span>W6</span></li><li><span>W7</span></li><li><span>W8</span></li><li class="race"><span>Race</span></li>
+        <li class="done"><span>W1</span></li><li class="done"><span>W2</span></li><li class="active"><span>W3</span></li><li><span>W4</span></li><li><span>W5</span></li><li><span>W6</span></li><li><span>W7</span></li><li><span>W8</span></li><li class="race"><span>Race</span></li>
       </ol>
     </header>
     <section class="campaign-current" id="this-week">
       <p class="section-kicker">Current plan</p>
-      <h2>This Week <em>· W1</em></h2>
+      <h2>This Week <em>· W3</em></h2>
       <div class="section-body">
-      <p>Aug 31 – Sep 6, 2026</p>
-<p>Target: 30–35 km<br>Focus: Run easy. Observe the left arch.</p>
+      <p>Sep 14 – Sep 20, 2026</p>
+<p>Target: 37–40 km + 20 km LDR<br>Focus: 恢复正常跑步频率 + 稳定完成 20 km。</p>
 <table>
 <thead>
 <tr>
@@ -179,23 +182,23 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
 </thead>
 <tbody><tr>
 <td>Mon</td>
-<td>Rest</td>
+<td>Rest + 足弓/轻核心</td>
 </tr>
 <tr>
 <td>Tue</td>
-<td>7–8 km Easy + 4 × 20s strides</td>
+<td>6–7 km Easy，RPE 3–4</td>
 </tr>
 <tr>
 <td>Wed</td>
-<td>6 km Easy + Strength A</td>
+<td>5–6 km Easy + 主力量</td>
 </tr>
 <tr>
 <td>Thu</td>
-<td>Rest / 5 km Recovery</td>
+<td>Rest / 足弓维护</td>
 </tr>
 <tr>
 <td>Fri</td>
-<td>8 km Easy</td>
+<td>质量 6–7 km：2 km Easy → 3×6 min Tempo → Easy</td>
 </tr>
 <tr>
 <td>Sat</td>
@@ -203,9 +206,11 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
 </tr>
 <tr>
 <td>Sun</td>
-<td>14–16 km LDR Easy</td>
+<td>20 km LDR · Easy</td>
 </tr>
 </tbody></table>
+<p>动态条件：如果周五右股四头肌仍 &gt;3/10，或者睡眠连续很差，Tempo 直接改成 Easy。</p>
+<p>这周真正必须完成的不是质量课，而是：恢复正常跑步频率 + 稳定完成 20 km。这周真正希望看到的是：20 km 稳定完成 + 周跑量回到 30 km+ + 睡眠有所改善，而不是急着追 40 km。</p>
 
       </div>
     </section>
@@ -222,7 +227,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
 <th>Target</th>
 </tr>
 </thead>
-<tbody><tr class="is-active">
+<tbody><tr>
 <td>W1</td>
 <td>Aug 31 – Sep 6</td>
 <td>Foundation</td>
@@ -234,7 +239,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
 <td>Build</td>
 <td>35–40 km</td>
 </tr>
-<tr>
+<tr class="is-active">
 <td>W3</td>
 <td>Sep 14 – Sep 20</td>
 <td>Endurance</td>
@@ -272,34 +277,132 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
 </tr>
 </tbody></table>
 <h3>W1 · Foundation</h3>
-<ul>
-<li>Mon: Rest</li>
-<li>Tue: 7–8 km Easy + 4 × 20s strides</li>
-<li>Wed: 6 km Easy + Strength A</li>
-<li>Thu: Rest / 5 km Recovery</li>
-<li>Fri: 8 km Easy</li>
-<li>Sat: Rest</li>
-<li>Sun: 14–16 km LDR Easy</li>
-<li>Focus: run easy. Observe the left arch.</li>
-</ul>
+<p>重新进入训练状态。目标跑量：约 30–35 km。</p>
+<table>
+<thead>
+<tr>
+<th align="center">Day</th>
+<th align="center">Training</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Mon 8/31</td>
+<td align="center">REST</td>
+</tr>
+<tr>
+<td align="center">Tue 9/1</td>
+<td align="center">7–8 km Easy + 4 × 20s Strides</td>
+</tr>
+<tr>
+<td align="center">Wed 9/2</td>
+<td align="center">6 km Easy；中午主力量</td>
+</tr>
+<tr>
+<td align="center">Thu 9/3</td>
+<td align="center">REST / 5 km Recovery</td>
+</tr>
+<tr>
+<td align="center">Fri 9/4</td>
+<td align="center">8 km Easy；中午足弓维护</td>
+</tr>
+<tr>
+<td align="center">Sat 9/5</td>
+<td align="center">REST</td>
+</tr>
+<tr>
+<td align="center">Sun 9/6</td>
+<td align="center">14–16 km LDR Easy</td>
+</tr>
+</tbody></table>
+<p>本周不要追速度。LDR 的目的只是回答：16 km 跑下来，我的左足弓有没有反应？</p>
 <h3>W2 · Build</h3>
-<ul>
-<li>Tempo: 2 km warm-up + 3 × 8 min tempo / 3 min jog + 1–2 km cool-down</li>
-<li>Easy: 6–8 km + main strength</li>
-<li>Recovery: 5–6 km</li>
-<li>Easy: 8–10 km</li>
-<li>LDR: 18 km Easy</li>
-<li>Begin fueling every 30–40 minutes</li>
-</ul>
+<p>目标 37–40 km，LDR 17–18 km。把新增的负荷主要给 LDR，而不是所有地方一起加。</p>
+<table>
+<thead>
+<tr>
+<th align="center">日</th>
+<th align="center">训练</th>
+<th align="center">重点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Mon</td>
+<td align="center">Rest</td>
+<td align="center">真正休息；轻柔活动即可</td>
+</tr>
+<tr>
+<td align="center">Tue</td>
+<td align="center">7–8 km Quality</td>
+<td align="center">2 km Easy → 3×6 min Tempo RPE 6–7，组间慢跑 3 min → Easy 收尾</td>
+</tr>
+<tr>
+<td align="center">Wed</td>
+<td align="center">6 km Easy</td>
+<td align="center">RPE 3–4；中午主力量</td>
+</tr>
+<tr>
+<td align="center">Thu</td>
+<td align="center">Rest</td>
+<td align="center">足弓/脚踝 15–20 min，可加轻核心</td>
+</tr>
+<tr>
+<td align="center">Fri</td>
+<td align="center">7 km Easy</td>
+<td align="center">全程轻松，不追配速</td>
+</tr>
+<tr>
+<td align="center">Sat</td>
+<td align="center">Rest / 上肢</td>
+<td align="center">肩背可以；腿不做高负荷</td>
+</tr>
+<tr>
+<td align="center">Sun</td>
+<td align="center">17–18 km LDR</td>
+<td align="center">全程 Easy，重点练耐久和补给</td>
+</tr>
+</tbody></table>
+<p>W2 重点：① 总跑量不加 ② 把 LDR 提到 17–18 km ③ 保证一次质量跑 + 一次主力量 ④ 尽量保证 7h 左右睡眠 ⑤ 腰部不适不恶化。</p>
+<p>周二前提：起床以后先检查腰。如果腰基本恢复、走路和简单活动都没感觉，就正常做 Tempo；如果仍然明显不舒服，直接把 Quality 改成 6–7 km Easy。</p>
 <h3>W3 · Endurance</h3>
-<ul>
-<li>Quality: 5 × 1 km controlled-fast / 2 min jog</li>
-<li>Easy: 6–8 km + main strength</li>
-<li>Easy: 6 km</li>
-<li>Easy: 10 km</li>
-<li>LDR: 20–22 km</li>
-<li>Check left arch, left calf and right quad at 10 / 15 / 20 km</li>
-</ul>
+<p>这周目标：37–40 km + 20 km LDR。</p>
+<table>
+<thead>
+<tr>
+<th align="center">日期</th>
+<th align="center">训练</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Mon</td>
+<td align="center">Rest + 足弓/轻核心</td>
+</tr>
+<tr>
+<td align="center">Tue</td>
+<td align="center">6–7 km Easy，RPE 3–4</td>
+</tr>
+<tr>
+<td align="center">Wed</td>
+<td align="center">5–6 km Easy + 主力量</td>
+</tr>
+<tr>
+<td align="center">Thu</td>
+<td align="center">Rest / 足弓维护</td>
+</tr>
+<tr>
+<td align="center">Fri</td>
+<td align="center">质量 6–7 km：2 km Easy → 3×6 min Tempo → Easy</td>
+</tr>
+<tr>
+<td align="center">Sat</td>
+<td align="center">Rest</td>
+</tr>
+<tr>
+<td align="center">Sun</td>
+<td align="center">20 km LDR · Easy</td>
+</tr>
+</tbody></table>
+<p>动态条件：如果周五右股四头肌仍 &gt;3/10，或者睡眠连续很差，Tempo 直接改成 Easy。</p>
+<p>这周真正必须完成的不是质量课，而是：恢复正常跑步频率 + 稳定完成 20 km。真正希望看到的是：20 km 稳定完成 + 周跑量回到 30 km+ + 睡眠有所改善，而不是急着追 40 km。</p>
 <h3>W4 · Mid-Autumn Key Week</h3>
 <ul>
 <li>Tempo: 20–25 min, 8–10 km total</li>
@@ -349,17 +452,104 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
       <div class="section-body">
       <article>
 <h3>Week 1 · Aug 31 – Sep 6</h3>
+<p><strong>日志</strong></p>
 <ul>
-<li>Actual distance:</li>
-<li>LDR:</li>
-<li>Quality: ✓ / ✗</li>
-<li>Strength sessions:</li>
-<li>Left arch / 10:</li>
-<li>Left calf / 10:</li>
-<li>Right quad / 10:</li>
-<li>Overall: Fresh / Normal / Tired / Very tired</li>
-<li>Review:</li>
-<li>Next adjustment: increase / hold / reduce</li>
+<li>周二，sep 1 - 6.43km，47min，avg cadence 167 spm，avg pace 7min25s。</li>
+<li>周三，sep 2 - 6.27km，40min，avg cadence 170 spm，avg pace 6min24s。感觉左右大腿前侧（或前内侧）有一丢丢酸痛，但问题不大。中午按计划在健身房做主力量训练。</li>
+<li>周四，sep 3 - 2.59km，19min，avg cadence 164spm，avg pace 7min19s。起的晚，跑的少。中午做了一些足弓的训练。</li>
+<li>周五，sep 4 - 7.8km，53min，avg cadence 171 spm，avg pace 6min45s。刚开始跑好像感觉有点累，但是整体跑起来还是很轻松，比前两天跑起来要轻松很多。跑到 5.5 公里到 6 公里之间的时候，左边的屁股稍微感觉有点点不太舒服，伴随着左侧腰部稍微有一些不适的感觉。然后在 7 公里左右，发现这种不舒服好像又没有了，感觉力量好像又可以给到右边的臀部。但腰部的一点点不适感跑完一直还在。</li>
+<li>周六，sep 5 - 健身房训练了一下，是为薄肌、塑形，肩膀为主。</li>
+<li>周日，sep 6 - 15km，1h47min，avg cadence 169 spm，avg pace 7min09s。步幅比较小，前面整体偏轻松，到12km时，感觉有点跑不太想去，一直想着什么时候能结束。跑完后，感觉比较累，困。跑完两边大腿有点点酸痛，左脚弓和右腿股四头肌都感觉还好的状态，但是腰感觉有点不舒服。</li>
+</ul>
+<p><strong>总结</strong></p>
+<ul>
+<li>① 周跑量：38.09 km</li>
+<li>② LDR：15 km</li>
+<li>③ 质量训练：✓</li>
+<li>④ 力量：10 次</li>
+<li>⑤ 左足弓：3/10</li>
+<li>⑥ 左小腿：3/10</li>
+<li>⑦ 右股四头肌：3/10</li>
+<li>⑧ 本周整体感觉：Tired</li>
+<li>新观察：左臀 / 腰部轻微不适</li>
+<li>决策：→ 保持。跑量已经足够，15 km LDR 整体稳定，旧问题没有明显出现。主要问题是睡眠不足和累积疲劳，因此 W2 不继续提高总跑量，而是把训练结构做得更完整。目标：总量保持 · LDR 小幅增加 · 恢复优先。</li>
+</ul>
+</article>
+<article>
+<h3>Week 2 · Sep 7 – Sep 13</h3>
+<p><strong>日志</strong></p>
+<ul>
+<li>Sep 7，周一，休息</li>
+<li>Sep 8，周二，跑了 20 分钟左右，先是 900m 的 easy run，然后开始 2–4 分钟的 tempo，大概 3 次。共 2.5 公里。</li>
+<li>Sep 9，周三，没有跑步，傍晚打了 1 个半小时羽毛球，有双打和单打。</li>
+<li>Sep 10，周四，健身房主力量训练。</li>
+<li>Sep 11，周五，没有跑步，晚上打羽毛球比赛，共 3 场 21 分制的单打比赛。</li>
+<li>Sep 12，周六，做了一些薄肌训练。</li>
+<li>Sep 13，周日，早上 8 点半开始跑，18 公里。2h15min，avg cadence 168 spm，avg pace 7min29s。整体速度慢，第 4–5 公里稍有点累，慢慢的平静下来，最后 2 公里感觉还能继续跑。今天尝试了只鼻子呼吸。</li>
+</ul>
+<p><strong>力量（Sep 10）</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">动作</th>
+<th align="center">重量 × 次数</th>
+<th align="center">RIR</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Incline DB Press</td>
+<td align="center">30lb × 15 / 12</td>
+<td align="center">1–2 ✓</td>
+</tr>
+<tr>
+<td align="center">DB Bench Press</td>
+<td align="center">30lb × 15 / 15</td>
+<td align="center">1–2 ✓</td>
+</tr>
+<tr>
+<td align="center">Barbell Shoulder Press</td>
+<td align="center">7.5kg × 8 / 8</td>
+<td align="center">1，?</td>
+</tr>
+<tr>
+<td align="center">Lateral Raise</td>
+<td align="center">15lb × 15 / 15*</td>
+<td align="center">1–2，?</td>
+</tr>
+<tr>
+<td align="center">Triceps Pushdown</td>
+<td align="center">35lb × 15 / 15</td>
+<td align="center">2 ✓</td>
+</tr>
+</tbody></table>
+<p>下一组：35lb 上斜、35lb 卧推；7.5kg 肩推继续进 reps；15lb 侧平举把动作做干净；40lb 三头下压。</p>
+<p>这一周的工作比较忙碌，睡眠整体偏少，跑量整体偏少。</p>
+<p><strong>总结</strong></p>
+<ul>
+<li>① 周跑量：20.5 km</li>
+<li>② LDR：18 km</li>
+<li>③ 质量训练：✗</li>
+<li>④ 力量：1 次</li>
+<li>⑤ 左足弓：2/10</li>
+<li>⑥ 左小腿：2/10</li>
+<li>⑦ 右股四头肌：6/10（感觉是力量训练时练到的，不是跑步导致的）</li>
+<li>⑧ 本周整体感觉：Normal 和 Tired 之间</li>
+<li>其他：羽毛球 2 次，其中 3 场单打比赛；睡眠偏少</li>
+<li>决策：↑ 有条件加量（条件见 W3 计划：周五右股四头肌仍 &gt;3/10 或睡眠连续很差，Tempo 直接改 Easy）</li>
+</ul>
+</article>
+<article>
+<h3>Week 3 · Sep 14 – Sep 20</h3>
+<ul>
+<li>① 周跑量：</li>
+<li>② LDR：</li>
+<li>③ 质量训练：✓ / ✗</li>
+<li>④ 力量：</li>
+<li>⑤ 左足弓：/10</li>
+<li>⑥ 左小腿：/10</li>
+<li>⑦ 右股四头肌：/10</li>
+<li>⑧ 本周整体感觉：Fresh / Normal / Tired / Very tired</li>
+<li>决策：↑ 加量 / → 保持 / ↓ 减量</li>
 </ul>
 </article>
       </div>

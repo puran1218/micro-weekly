@@ -79,7 +79,8 @@ assert.match(campaignIndex, /Tianjin Marathon 2026/i, "Campaign index should lis
 assert.match(campaignIndex, /href="\.\/tj-2026\/"/i, "Campaign index should link to the tj-2026 campaign page");
 assert.match(campaignIndex, /Oct 25, 2026/i, "Campaign index should show the race date");
 assert.match(campaignIndex, /42\.195 km/i, "Campaign index should show the race distance");
-assert.match(campaignIndex, /Week 1 of 8/i, "Campaign index should show current progress");
+assert.match(campaignIndex, /Week \d+ of \d+/i, "Campaign index should show current progress");
+assert.match(campaignIndex, /class="row-note">[^<]*中签/, "Campaign index should show the quiet lottery note");
 assert.match(campaignIndex, /href="\.\.\/index\.html"/i, "Campaign index should link back to /plans/");
 assert.match(campaignIndex, /rel="icon"/i, "Campaign index should include favicon metadata");
 assert.match(campaignIndex, /<meta name="viewport" content="width=device-width, initial-scale=1">/i, "Campaign index should include viewport metadata");
@@ -94,15 +95,16 @@ assert.match(campaignPage, /class="[^"]*campaign-current/, "tj-2026 page should 
 assert.match(campaignPage, /class="[^"]*campaign-roadmap/, "tj-2026 page should wrap the roadmap in its semantic section");
 assert.match(campaignPage, /class="[^"]*campaign-reviews/, "tj-2026 page should wrap reviews in their semantic section");
 assert.match(campaignPage, /class="[^"]*campaign-reference/, "tj-2026 page should wrap the reference in its semantic section");
-assert.match(campaignPage, /This Week <em>· W1<\/em>/, "tj-2026 page should highlight the current week marker");
+assert.match(campaignPage, /This Week <em>· W\d+<\/em>/, "tj-2026 page should highlight the current week marker");
 assert.match(campaignPage, /<table>/i, "tj-2026 page should render markdown tables");
-assert.match(campaignPage, /W1/, "tj-2026 page should mark week 1 on the W1-W8-Race progress route");
+assert.match(campaignPage, /class="active"><span>W\d+<\/span>/, "tj-2026 page should mark the current week on the W1-W8-Race progress route");
 assert.match(campaignPage, /Weekly Reviews/, "tj-2026 page should include weekly reviews");
 assert.match(campaignPage, /8-Week Roadmap/, "tj-2026 page should include the roadmap");
 assert.match(campaignPage, /Pain Signal/, "tj-2026 page should include the training reference");
 assert.match(campaignPage, /href="\.\.\/index\.html"/, "tj-2026 page should link back to /plans/campaigns/");
 assert.match(campaignPage, /href="\.\.\/\.\.\/index\.html"/, "tj-2026 page should link back to /plans/");
 assert.match(campaignPage, /rel="icon"/, "tj-2026 page should include favicon metadata");
+assert.match(campaignPage, /<p class="campaign-note">[^<]*中签[^<]*<\/p>/, "tj-2026 page should carry the quiet lottery note");
 assert.match(campaignPage, /<meta name="viewport" content="width=device-width, initial-scale=1">/, "tj-2026 page should include viewport metadata");
 
 console.log("Plans site structure looks good.");

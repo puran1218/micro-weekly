@@ -154,6 +154,8 @@ Rules enforced by the generator:
 - `status` is one of `upcoming`, `active`, `completed`.
 - `current_week` must be a positive integer between `1` and `weeks`.
 
+One optional field: `note:` renders as a quiet italic line under the race facts on the campaign page and on the campaign index row — use it for small personal context such as a lottery result.
+
 Below the front matter, use these H2 section headings (rendered Markdown only — no HTML or CSS in the source):
 
 - `This Week` — the current week plan; the most prominent section on the page.
@@ -243,5 +245,5 @@ The repository currently includes:
 - training reference guide attachment
 - archived Week 14-22 plan pages
 - a generator for future weekly imports
-- the Tianjin Marathon 2026 training campaign (`tj-2026`) with a Markdown-first generator
+- the Tianjin Marathon 2026 training campaign (`tj-2026`) with a Markdown-first generator (很遗憾没有中签，仍照着计划训练)
 - a mobile-friendly homepage, current template pages, per-week archive pages, campaign pages, and latest compatibility links for public sharing
