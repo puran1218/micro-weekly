@@ -80,7 +80,7 @@ assert.match(campaignIndex, /href="\.\/tj-2026\/"/i, "Campaign index should link
 assert.match(campaignIndex, /Oct 25, 2026/i, "Campaign index should show the race date");
 assert.match(campaignIndex, /42\.195 km/i, "Campaign index should show the race distance");
 assert.match(campaignIndex, /Week \d+ of \d+/i, "Campaign index should show current progress");
-assert.match(campaignIndex, /class="row-note">[^<]*中签/, "Campaign index should show the quiet lottery note");
+assert.match(campaignIndex, /class="row-note">[^<]*二次补录/, "Campaign index should show the quiet lottery note");
 assert.match(campaignIndex, /href="\.\.\/index\.html"/i, "Campaign index should link back to /plans/");
 assert.match(campaignIndex, /rel="icon"/i, "Campaign index should include favicon metadata");
 assert.match(campaignIndex, /<meta name="viewport" content="width=device-width, initial-scale=1">/i, "Campaign index should include viewport metadata");
@@ -104,7 +104,7 @@ assert.match(campaignPage, /Pain Signal/, "tj-2026 page should include the train
 assert.match(campaignPage, /href="\.\.\/index\.html"/, "tj-2026 page should link back to /plans/campaigns/");
 assert.match(campaignPage, /href="\.\.\/\.\.\/index\.html"/, "tj-2026 page should link back to /plans/");
 assert.match(campaignPage, /rel="icon"/, "tj-2026 page should include favicon metadata");
-assert.match(campaignPage, /<p class="campaign-note">[^<]*中签[^<]*<\/p>/, "tj-2026 page should carry the quiet lottery note");
+assert.match(campaignPage, /<p class="campaign-note">[^<]*二次补录[^<]*<\/p>/, "tj-2026 page should carry the quiet lottery note");
 assert.match(campaignPage, /<meta name="viewport" content="width=device-width, initial-scale=1">/, "tj-2026 page should include viewport metadata");
 
 console.log("Plans site structure looks good.");

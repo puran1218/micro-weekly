@@ -245,5 +245,5 @@ The repository currently includes:
 - training reference guide attachment
 - archived Week 14-22 plan pages
 - a generator for future weekly imports
-- the Tianjin Marathon 2026 training campaign (`tj-2026`) with a Markdown-first generator (很遗憾没有中签，仍照着计划训练)
+- the Tianjin Marathon 2026 training campaign (`tj-2026`) with a Markdown-first generator (二次补录报名成功，2026-10-25 正式参赛)
 - a mobile-friendly homepage, current template pages, per-week archive pages, campaign pages, and latest compatibility links for public sharing
