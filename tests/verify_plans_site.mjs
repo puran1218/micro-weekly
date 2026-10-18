@@ -96,6 +96,11 @@ assert.match(campaignPage, /class="[^"]*campaign-roadmap/, "tj-2026 page should 
 assert.match(campaignPage, /class="[^"]*campaign-reviews/, "tj-2026 page should wrap reviews in their semantic section");
 assert.match(campaignPage, /class="[^"]*campaign-reference/, "tj-2026 page should wrap the reference in its semantic section");
 assert.match(campaignPage, /This Week <em>· W\d+<\/em>/, "tj-2026 page should highlight the current week marker");
+assert.match(campaignPage, /This Week <em>· W8<\/em>/, "Tianjin campaign should show race week");
+assert.match(campaignPage, /Week 7 · Oct 12 – Oct 18/, "Campaign should include W7 taper review");
+assert.match(campaignPage, /4\.40 km/, "W7 review should retain verified running mileage");
+assert.match(campaignPage, /7h02/, "W7 review should include the weekly sleep summary");
+assert.match(campaignPage, /40–60 g/, "Race-week plan should describe carbohydrate fueling");
 assert.match(campaignPage, /<table>/i, "tj-2026 page should render markdown tables");
 assert.match(campaignPage, /class="active"><span>W\d+<\/span>/, "tj-2026 page should mark the current week on the W1-W8-Race progress route");
 assert.match(campaignPage, /Weekly Reviews/, "tj-2026 page should include weekly reviews");
