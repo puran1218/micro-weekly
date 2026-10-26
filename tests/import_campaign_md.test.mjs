@@ -263,6 +263,24 @@ function assertFailure(result, label, expectedPattern) {
 }
 
 // ---------------------------------------------------------------------------
+// Completed campaign progress
+// ---------------------------------------------------------------------------
+{
+  const { fixtureRoot, siteRoot } = makeFixtureWorkspace("completed-progress", {
+    "tj-2026.md": campaignMarkdown({ slug: "tj-2026", title: "Tianjin Marathon 2026", status: "completed", current_week: 8 }),
+  });
+  assertSuccess(runGenerator(["--all", "--site-root", siteRoot], fixtureRoot), "completed campaign build");
+
+  const pageHtml = readFileSync(resolve(siteRoot, "campaigns", "tj-2026", "index.html"), "utf8");
+  const indexHtml = readFileSync(resolve(siteRoot, "campaigns", "index.html"), "utf8");
+  assert.match(pageHtml, /<strong>Completed<\/strong>/, "Completed campaign should show status");
+  assert.doesNotMatch(pageHtml, /id="countdown"/, "Completed campaign should hide the countdown");
+  assert.match(pageHtml, /class="done"><span>W8<\/span>/, "Final training week should be done");
+  assert.match(pageHtml, /class="race active"><span>Race<\/span>/, "Race milestone should be highlighted");
+  assert.match(indexHtml, /<p class="section-kicker">Completed<\/p>/, "Index should group completed campaigns");
+}
+
+// ---------------------------------------------------------------------------
 // Validation failures
 // ---------------------------------------------------------------------------
 {
