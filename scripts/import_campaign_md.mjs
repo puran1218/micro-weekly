@@ -348,7 +348,7 @@ function buildProgressRoute(campaign) {
   const items = [];
 
   for (let week = 1; week <= campaign.weeks; week += 1) {
-    const state = week < campaign.currentWeek ? "done" : week === campaign.currentWeek ? "active" : "";
+    const state = campaign.status === "completed" || week < campaign.currentWeek ? "done" : week === campaign.currentWeek ? "active" : "";
     items.push(`<li${state ? ` class="${state}"` : ""}><span>W${week}</span></li>`);
   }
 
