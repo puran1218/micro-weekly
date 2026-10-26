@@ -192,6 +192,10 @@ git add campaigns/tj-2026.md static/plans/campaigns
 git commit -m "docs(training): review week 1 and plan week 2"
 ```
 
+### Finish a Campaign
+
+After the race, keep `weeks` and `current_week` at the final training week, set `status: completed`, and replace `This Week` with a post-race recovery plan. Append the race-week actuals and finish reflection to `Weekly Reviews`, distinguishing Apple Watch Workout time/distance from official race results. The index moves the campaign under Completed, while the progress rail marks every training week done and highlights Race.
+
 ### Start a New Campaign
 
 Copy `campaigns/tj-2026.md` to `campaigns/<new-slug>.md`, rewrite the front matter and sections for the new race, then run a single-file build. No other configuration is needed.
@@ -245,5 +249,5 @@ The repository currently includes:
 - training reference guide attachment
 - archived Week 14-22 plan pages
 - a generator for future weekly imports
-- the Tianjin Marathon 2026 training campaign (`tj-2026`) with a Markdown-first generator (二次补录报名成功，2026-10-25 正式参赛)
+- the **completed** Tianjin Marathon 2026 campaign (`tj-2026`) with its race recap (Apple Watch 4:45:46), post-race recovery and a Markdown-first generator
 - a mobile-friendly homepage, current template pages, per-week archive pages, campaign pages, and latest compatibility links for public sharing
