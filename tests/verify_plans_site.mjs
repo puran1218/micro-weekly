@@ -141,6 +141,9 @@ assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival
 assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
 assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
 assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
+assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/life\.css"/, "Seoul campaign should resolve its shared CSS within /plans/");
+assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/puran_blog_avator\.jpg"/, "Seoul campaign should resolve its favicon within /plans/");
+assert.match(campaignIndex, /href="\.\.\/assets\/life\.css"/, "Campaign index should resolve shared CSS within /plans/");
 assert.match(seoulPage, /lean-strength-seoul\.svg/, "Seoul campaign should link to a visual strength guide");
 assert.match(seoulPage, /one-exercise-per-muscle-group-guide\.png/, "Seoul campaign should reuse the existing training illustration");
 assert.match(seoulPage, /Sejong Korean Introduction/, "Seoul campaign should name the introduction course");

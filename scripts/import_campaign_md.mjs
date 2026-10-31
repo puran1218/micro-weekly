@@ -426,7 +426,7 @@ function writeCampaignPage(record, campaignsOutputRoot) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(campaign.title)}</title>
   <meta name="description" content="${escapeAttribute(campaign.summary)}">
-  ${buildFaviconMarkup("../../../assets")}
+  ${buildFaviconMarkup("../assets")}
   <style>
 ${CAMPAIGN_CSS}
   </style>
@@ -518,7 +518,7 @@ ${rows}
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Training Campaigns</title>
   <meta name="description" content="Long-term race preparation pages: current week, roadmap, weekly reviews, and reference.">
-  ${buildFaviconMarkup("../../assets")}
+  ${buildFaviconMarkup("../assets")}
   <style>
 ${CAMPAIGN_CSS}
   </style>

@@ -63,6 +63,7 @@ try {
 
   const campaignOnce = readFileSync(resolve(target, "index.html"), "utf8");
   assert.match(campaignOnce, /life-campaign-jumps/);
+  assert.match(campaignOnce, /href="\.\.\/\.\.\/assets\/life\.css"/, "Campaign detail theme should use the correct relative path");
   const trainingOnce = readFileSync(resolve(current, "training.html"), "utf8");
   assert.match(trainingOnce, /历史固定训练参考/);
   assert.match(trainingOnce, /life-navigation/);

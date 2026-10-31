@@ -213,8 +213,8 @@ export function buildLifeSite(siteRoot, contentRoot = process.cwd()) {
   writeFileSync(resolve(siteRoot,"journal","index.html"),journalPage(records,weeks));
   const campaignsRoot=resolve(siteRoot,"campaigns");
   if (existsSync(campaignsRoot)) {
-    decoratePage(resolve(campaignsRoot,"index.html"),"../../","campaign");
-    for (const c of records) decoratePage(resolve(campaignsRoot,c.slug,"index.html"),"../../../","campaign");
+    decoratePage(resolve(campaignsRoot,"index.html"),"../","campaign");
+    for (const c of records) decoratePage(resolve(campaignsRoot,c.slug,"index.html"),"../../","campaign");
   }
   const currentRoot=resolve(siteRoot,"current");
   for (const kind of ["dinner","training","training-reference"]) {
