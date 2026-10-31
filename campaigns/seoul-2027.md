@@ -38,6 +38,7 @@ Nov 2, 2026 – Mar 21, 2027 · Running + Strength + Korean
 - **如果仍有明显肌肉酸痛、单侧足弓/小腿疼痛、步态改变或疲劳：** 全部跑步改为恢复活动，力量暂缓。疼痛影响走路、持续加重或异常症状需就医评估。
 - **薄肌/塑形的正确含义：** 追求精瘦、结实、有线条的全身肌肉与耐跑能力，不是训练解剖学的“股薄肌”。本周不启动正式下肢力量；以后按 Reference 的 Strength A/B 练全身。
 - **本周韩语检查：** 能认出 ㅏ ㅓ ㅗ ㅜ ㅡ ㅣ；拼读不求完美，先练习从字母到音节。
+- **本周韩语教材：** 从 [Online King Sejong Institute](https://www.iksi.or.kr/) 的 **Sejong Korean Introduction** 自学课程开始；先练字母、听读，再配合本周赛场词语。查看 [官方课程介绍](https://www.iksi.or.kr/lms/main/curriculum.do)。
 - **周日复盘：** 跑步次数及距离、足弓/小腿/股四头肌0–10分、睡眠与疲劳、韩语练习天数；再决定W2是否恢复2–3次轻松跑。
 
 ## 20-Week Roadmap
@@ -68,6 +69,8 @@ Nov 2, 2026 – Mar 21, 2027 · Running + Strength + Korean
 | W20 | 2027-03-15–2027-03-21 | Race week | 8–14 + race | 42.195 race | 赛日生存韩语与听力复习 | 赛前轻跑，3月21日比赛，不计入赛前跑量 |
 
 **常规周模板（基础期后逐步达到，不适用于赛后恢复/春节/减量周）：**
+
+**韩语主教材节奏：** W1–W4以 [Sejong Korean Introduction](https://www.iksi.or.kr/lms/main/curriculum.do) 为主；具备基础拼读能力后，从W5左右开始 [King Sejong Institute Korean 1](https://www.iksi.or.kr/lms/main/curriculum.do)。两阶段学习进度均可顺延；每周赛场词汇只是补充，不另找第二套主课程。
 
 | Day | Morning | Lunch |
 | --- | --- | --- |
@@ -111,6 +114,8 @@ Nov 2, 2026 – Mar 21, 2027 · Running + Strength + Korean
 
 目标是**精瘦、有适度肌肉线条、跑步稳定**，不是“只做轻重量”或特殊的肌肉类型。保留渐进负重，常规每组留2–3次余力（RIR 2–3），动作标准优先。每次先热身5分钟：轻走/单车、徒手髋铰链、肩关节和踝活动。工作日中午进行；力量不是消耗越多越好。
 
+**动作速查（原创汇总）：** [打开 Seoul Strength A/B 训练动作速览图](../../assets/lean-strength-seoul.svg)；仓库现有的 [One Exercise per Muscle Group 肌群动作参考图](../../assets/one-exercise-per-muscle-group-guide.png) 也可以继续查看。速览图总结当前计划动作与组数，并非从分享对话复制的原图。
+
 **Strength A · Wednesday lunch · 30–40 min（全身主力量）**
 
 | Exercise | Sets × reps | Focus |
@@ -147,6 +152,8 @@ Nov 2, 2026 – Mar 21, 2027 · Running + Strength + Korean
 ### Korean · 15–25 minutes on 5 days
 
 固定节奏：5分钟复习、10分钟新知识、5分钟跟读/读标识；每周选3–5个能读出来的词，周日小测。前4周以韩文字母和音节为主，之后把实用韩语融入通勤、领物、赛道和赛后恢复。
+
+**唯一主课程：** [Online King Sejong Institute（在线世宗学堂）](https://www.iksi.or.kr/)，免费在线学习。先选 **Sejong Korean Introduction**（入门，优先熟悉韩文字母/音节），再学 **King Sejong Institute Korean 1**（初级1）。[官方课程列表与学习形式](https://www.iksi.or.kr/lms/main/curriculum.do)。选择 **Self-learning Type（自学型）** 更适合工作日每天约20分钟的弹性学习；如登录或课程入口变化，从官网首页的 Self-learning Korean Courses 进入即可。W1–W4主要跟入门课程；W5起根据实际掌握情况进入 Korean 1，不强求赶进度。每周3–5个马拉松场景词和1句实用口语是旁路练习，不取代主课程。
 
 | Korean | English | 中文 |
 | --- | --- | --- |

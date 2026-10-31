@@ -30,6 +30,7 @@ const requiredFiles = [
   "campaigns/index.html",
   "campaigns/tj-2026/index.html",
   "campaigns/seoul-2027/index.html",
+  "assets/lean-strength-seoul.svg",
 ];
 
 for (const file of requiredFiles) {
@@ -134,4 +135,9 @@ assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival
 assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
 assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
 assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
+assert.match(seoulPage, /lean-strength-seoul\.svg/, "Seoul campaign should link to a visual strength guide");
+assert.match(seoulPage, /one-exercise-per-muscle-group-guide\.png/, "Seoul campaign should reuse the existing training illustration");
+assert.match(seoulPage, /Sejong Korean Introduction/, "Seoul campaign should name the introduction course");
+assert.match(seoulPage, /King Sejong Institute Korean 1/, "Seoul campaign should name the follow-up beginner course");
+assert.match(seoulPage, /https:\/\/www\.iksi\.or\.kr\//, "Seoul campaign should link to the official Korean learning platform");
 console.log("Plans site structure looks good.");
