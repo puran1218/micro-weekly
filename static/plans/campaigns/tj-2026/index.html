@@ -140,8 +140,10 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
   section { break-inside: avoid; }
 }
   </style>
+<link rel="stylesheet" href="../../../assets/life.css" data-life-theme="1">
 </head>
 <body>
+<div class="life-nav-shell"><!-- life-navigation --><a class="life-skip" href="#life-main">跳转到正文</a><nav class="life-nav" aria-label="Life in Motion 主导航"><a class="life-brand" href="../../../index.html">Life in Motion<span aria-hidden="true"> ·</span></a><div class="life-nav-links"><a href="../../../index.html#this-week">本周</a><a class="life-link-current" aria-current="page" href="../../../index.html#goals">目标</a><a href="../../../library/index.html">参考</a><a href="../../../journal/index.html">经历</a></div></nav></div>
 <div class="course" aria-hidden="true">
   <div class="course-line">
       <span style="--p:0">0<small>KM</small></span>
@@ -151,7 +153,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
       <span style="--p:94.8">40<small>KM</small></span>
   </div>
 </div>
-  <main>
+  <a id="life-main"></a><main>
     <nav class="campaign-nav" aria-label="Site navigation">
       <a href="../../index.html">← Plans</a>
       <a href="../index.html">All campaigns</a>
@@ -167,7 +169,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
         <li class="done"><span>W1</span></li><li class="done"><span>W2</span></li><li class="done"><span>W3</span></li><li class="done"><span>W4</span></li><li class="done"><span>W5</span></li><li class="done"><span>W6</span></li><li class="done"><span>W7</span></li><li class="done"><span>W8</span></li><li class="race active"><span>Race</span></li>
       </ol>
     </header>
-    <section class="campaign-current" id="this-week">
+    <nav class="life-campaign-jumps" aria-label="Campaign sections"><a href="#this-week">本周</a><a href="#roadmap">路线图</a><a href="#reviews">每周复盘</a><a href="#reference">知识参考</a></nav><section class="campaign-current" id="this-week">
       <p class="section-kicker">Current plan</p>
       <h2>This Week <em>· Recovery</em></h2>
       <div class="section-body">

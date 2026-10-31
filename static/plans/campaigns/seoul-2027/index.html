@@ -140,8 +140,10 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
   section { break-inside: avoid; }
 }
   </style>
+<link rel="stylesheet" href="../../../assets/life.css" data-life-theme="1">
 </head>
 <body>
+<div class="life-nav-shell"><!-- life-navigation --><a class="life-skip" href="#life-main">跳转到正文</a><nav class="life-nav" aria-label="Life in Motion 主导航"><a class="life-brand" href="../../../index.html">Life in Motion<span aria-hidden="true"> ·</span></a><div class="life-nav-links"><a href="../../../index.html#this-week">本周</a><a class="life-link-current" aria-current="page" href="../../../index.html#goals">目标</a><a href="../../../library/index.html">参考</a><a href="../../../journal/index.html">经历</a></div></nav></div>
 <div class="course" aria-hidden="true">
   <div class="course-line">
       <span style="--p:0">0<small>KM</small></span>
@@ -151,7 +153,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
       <span style="--p:94.8">40<small>KM</small></span>
   </div>
 </div>
-  <main>
+  <a id="life-main"></a><main>
     <nav class="campaign-nav" aria-label="Site navigation">
       <a href="../../index.html">← Plans</a>
       <a href="../index.html">All campaigns</a>
@@ -167,7 +169,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
         <li class="active"><span>W1</span></li><li><span>W2</span></li><li><span>W3</span></li><li><span>W4</span></li><li><span>W5</span></li><li><span>W6</span></li><li><span>W7</span></li><li><span>W8</span></li><li><span>W9</span></li><li><span>W10</span></li><li><span>W11</span></li><li><span>W12</span></li><li><span>W13</span></li><li><span>W14</span></li><li><span>W15</span></li><li><span>W16</span></li><li><span>W17</span></li><li><span>W18</span></li><li><span>W19</span></li><li><span>W20</span></li><li class="race"><span>Race</span></li>
       </ol>
     </header>
-    <section class="campaign-current" id="this-week">
+    <nav class="life-campaign-jumps" aria-label="Campaign sections"><a href="#this-week">本周</a><a href="#roadmap">路线图</a><a href="#reviews">每周复盘</a><a href="#reference">知识参考</a></nav><section class="campaign-current" id="this-week">
       <p class="section-kicker">Current plan</p>
       <h2>This Week <em>· W1 Recovery + Hangul</em></h2>
       <div class="section-body">
@@ -236,7 +238,7 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px
       <p class="section-kicker">Review & adapt</p>
       <h2>Weekly Reviews</h2>
       <div class="section-body">
-      <p>尚无已完成的首尔训练周。<strong>不要将路线图中的计划量记作已完成。</strong></p>
+      <p>尚无已完成的首尔训练周。<strong>不要将路线图中的计划量记作已完成。</strong></p><p><strong>每周复盘建议采用 Plan / Actual / Learn / Adapt 四段：</strong></p><ul><li><strong>Plan:</strong> 原计划跑量、LDR、力量与韩语目标</li><li><strong>Actual:</strong> 真实训练与学习记录；缺失保持未知</li><li><strong>Learn:</strong> 身体状态、生活安排和发现</li><li><strong>Adapt:</strong> 下一周的具体调整与原因</li></ul>
 <p>每周日按同一格式追加一个 <code>### WN · YYYY-MM-DD to YYYY-MM-DD</code>，再把该周实际执行内容存档在 Roadmap 下（可用一个W#三级标题），最后更新 <code>current_week</code> 和 <code>This Week</code>。</p>
 <ul><li><strong>Running：</strong> Apple Health已同步跑步Workout次数、距离、总时长、最长单次LDR、Quality是否完成；区分手表Workout与赛事官方成绩，缺数据即标记未知。</li><li><strong>Strength：</strong> Strength A / B各几次、使用重量/次数/RIR、肌肉酸痛及是否影响跑步；徒手也算完成。</li><li><strong>Lean physique：</strong> 肩背胸臀腿核心是否均衡、动作与力量有没有进步；不追体重骤降，也不按体型标签评价。</li><li><strong>Korean：</strong> 实际学习天数/分钟、能够不看翻译认出的3–5个词、一句可用表达、下周复习点。</li><li><strong>Recovery：</strong> 睡眠时长、晨起疲劳、左足弓/左小腿/右股四头肌和腰臀的0–10疼痛、其他运动与旅行。</li><li><strong>Decision：</strong> ↑谨慎加量 / →维持 / ↓减量；明确下一周晨跑、午间力量、周末长跑与韩语的执行任务。</li></ul>
       </div>
