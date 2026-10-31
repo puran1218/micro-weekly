@@ -109,7 +109,7 @@ function home(records, weeks) {
     '<p>当前还没有已完成的首尔周复盘。记录实际完成情况后，再决定下一周的训练与学习安排。</p>';
   const historical = records.filter(r=>r.status==="completed").slice(0,2).map(r=>
     '<li><a href="./campaigns/'+encodeURIComponent(r.slug)+'/index.html"><strong>'+esc(r.title)+'</strong></a><small>已完成 · '+esc(r.raceDate)+'</small></li>').join("");
-  const weekLinks = weeks.length ? '<p class="life-day-note">另保留早期 Week '+esc(weeks[weeks.length-1])+'–'+esc(weeks[0])+' 的晚餐与训练记录。</p>' : '';
+  const weekLinks = weeks.length ? '<details><summary class="life-more">查看早期 Weekly Archive（Week '+esc(weeks[weeks.length-1])+'–'+esc(weeks[0])+ '）</summary><ul class="life-list">'+weeks.map(w=>'<li><a href="./weeks/week'+w+'/index.html">Week '+w+'</a></li>').join("")+'</ul></details>' : '';
   const body =
     '<header class="life-hero"><div class="life-eyebrow">Personal Life Playbook</div><h1>让每一周<br>都有方向。</h1>'+
     '<p class="life-lede">把值得坚持的生活，放进可以执行的一周。持续训练、不断学习、认真记录，也允许自己根据生活调整节奏。</p>'+
@@ -119,9 +119,9 @@ function home(records, weeks) {
     '<a href="./campaigns/index.html">Training Campaigns · 全部目标</a></div><div class="life-grid">'+
     (activeCards || '<div class="life-empty">暂时没有进行中的长期目标。</div>')+'</div></section>'+
     '<section class="life-section" id="references"><div class="life-section-head"><h2>生活中的常用参考</h2><a href="./library/index.html">查看资料库</a></div>'+
-    '<div class="life-grid"><article class="life-card"><div class="life-label">Strength & movement</div><h3>力量与身体维护</h3>'+
+    '<div class="life-grid"><article class="life-card"><div class="life-label">Current Training · Historical Reference</div><h3>力量与身体维护</h3>'+
     '<p>动作示意、精瘦塑形，以及足踝训练。训练时随手查阅。</p><a class="life-link life-outline" href="./library/index.html#movement">查看动作参考</a></article>'+
-    '<article class="life-card"><div class="life-label">Family & everyday</div><h3>晚餐菜池</h3>'+
+    '<article class="life-card"><div class="life-label">Current Dinner · Daily Tool</div><h3>晚餐菜池</h3>'+
     '<p>不需要每次重新制定菜单；保留简单好用的抽菜工具。</p><a class="life-link life-outline" href="./current/dinner.html">今晚吃什么</a></article></div></section>'+
     '<section class="life-section" id="review"><div class="life-section-head"><h2>每周复盘</h2>'+
     (active?'<a href="./campaigns/'+encodeURIComponent(active.slug)+'/index.html#reviews">进入复盘记录</a>':'')+'</div>'+
@@ -130,7 +130,7 @@ function home(records, weeks) {
     '<div><h3>实际与调整</h3><p>真实完成了什么？哪里需要恢复、减量或改变？</p></div></div>'+
     '<p class="life-small">缺失数据保持未知，不把计划量当成实际完成。</p></div></section>'+
     '<section class="life-section" id="history"><div class="life-section-head"><h2>一路走过的经历</h2><a href="./journal/index.html">浏览全部经历</a></div>'+
-    '<ul class="life-list">'+historical+'</ul>'+weekLinks+'</section>';
+    '<ul class="life-list">'+historical+'</ul>'+weekLinks+'<p class="life-day-note">兼容旧链接：<a href="./latest/dinner.html">Latest dinner</a> · <a href="./latest/training.html">Latest training</a>（后者仅为历史固定训练模板）。</p></section>';
   return layout("本周与目标", body);
 }
 
@@ -176,7 +176,7 @@ function decoratePage(path, prefix, type) {
     html = html.replace("</head>", '<link rel="stylesheet" href="'+prefix+'assets/life.css" data-life-theme="1">\n</head>');
   }
   if (!html.includes("<!-- life-navigation -->")) {
-    const intro = '<!-- life-navigation -->'+nav(prefix,type==="campaign"?"goals":"library");
+    const intro = '<!-- life-navigation -->'+nav(prefix,type==="campaign"?"goals":type==="archive"?"journal":"library");
     html = html.replace(/<body[^>]*>/,match=>match+'\n'+
       (type==="campaign"?'<div class="life-nav-shell">':'<div class="life-legacy-shell">')+
       intro+'</div>');

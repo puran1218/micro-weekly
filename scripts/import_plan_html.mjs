@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
+import { buildLifeSite } from "./build_life_site.mjs";
 
 const SEARCH_PROVIDERS = {
   youtube: "https://www.youtube.com/results?search_query=",
@@ -100,7 +101,7 @@ writeLatestRedirect({ siteRoot, parsed });
 
 writeCurrentReferencePage(siteRoot);
 writeWeekIndexes(siteRoot);
-writeIndex(siteRoot);
+buildLifeSite(siteRoot);
 
 console.log(`Imported ${basename(sourcePath)} -> ${outputPath}`);
 

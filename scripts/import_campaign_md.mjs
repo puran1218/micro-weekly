@@ -1,6 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { marked } from "marked";
+import { buildLifeSite } from "./build_life_site.mjs";
 
 const CAMPAIGN_SECTIONS = [
   { pattern: /^this week/i, key: "current" },
@@ -80,6 +81,7 @@ function main(args) {
 
   writeCampaignIndex(records, campaignsOutputRoot);
   ensureFaviconAsset(siteRoot);
+  buildLifeSite(siteRoot);
 }
 
 function parseArgs(args) {
