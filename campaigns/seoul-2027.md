@@ -90,6 +90,14 @@ Nov 2, 2026 – Mar 21, 2027 · Running + Strength + Korean
 
 尚无已完成的首尔训练周。**不要将路线图中的计划量记作已完成。**
 
+**每周复盘建议采用 Plan / Actual / Learn / Adapt 四段：**
+- **Plan:** 本周原计划的跑步次数、参考跑量、LDR、力量 A/B 与韩语课程目标。
+- **Actual:** 真实跑步 Workout 与主观训练记录、力量次数/负重、韩语实际学习进度；没有记录的保持「未知」。
+- **Learn:** 身体状态、疲劳、足踝反应、影响训练的工作或家庭安排，以及一件值得记住的事。
+- **Adapt:** 下一周维持、加量还是减量，写出具体调整与原因。
+
+未来新增 `### W1 · Nov 2–8` 等完成记录，不预填任何「实际完成」数值。
+
 每周日按同一格式追加一个 `### WN · YYYY-MM-DD to YYYY-MM-DD`，再把该周实际执行内容存档在 Roadmap 下（可用一个W#三级标题），最后更新 `current_week` 和 `This Week`。
 
 - **Running：** Apple Health已同步跑步Workout次数、距离、总时长、最长单次LDR、Quality是否完成；区分手表Workout与赛事官方成绩，缺数据即标记未知。

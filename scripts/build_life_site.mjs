@@ -185,6 +185,10 @@ function decoratePage(path, prefix, type) {
     html = html.replace(/(<main(?:\s[^>]*)?>)/,'<a id="life-main"></a>$1');
     if (!html.includes('id="life-main"')) html=html.replace(/<div class="page">/,'<a id="life-main"></a><div class="page">');
   }
+  if (type==="campaign" && html.includes('id="this-week"') && !html.includes("life-campaign-jumps")) {
+    const links = '<nav class="life-campaign-jumps" aria-label="Campaign sections"><a href="#this-week">本周</a><a href="#roadmap">路线图</a><a href="#reviews">每周复盘</a><a href="#reference">知识参考</a></nav>';
+    html = html.replace('<section class="campaign-current"',links + '<section class="campaign-current"');
+  }
   if (type==="training" && !html.includes("life-legacy-note")) {
     html = html.replace('<main class="panel">',
       '<aside class="life-legacy-note">历史固定训练参考：这不是当前晨跑 / 午间力量的执行计划。请以<a href="'+prefix+'campaigns/index.html">活动中的 Campaign</a> 为准。</aside><main class="panel">');
@@ -225,4 +229,13 @@ export function buildLifeSite(siteRoot, contentRoot = process.cwd()) {
     }
   }
   return {active:records.find(c=>c.status==="active")?.slug ?? null, campaigns:records.length, archivedWeeks:weeks.length};
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const provided = process.argv.indexOf("--site-root");
+  const siteRoot = provided >= 0 && process.argv[provided + 1]
+    ? resolve(process.cwd(), process.argv[provided + 1])
+    : resolve(process.cwd(), "static", "plans");
+  const result = buildLifeSite(siteRoot);
+  console.log("Life in Motion site built:", result);
 }

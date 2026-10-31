@@ -89,3 +89,9 @@ body:has(.page) .life-legacy-note {margin:12px 0 18px}
 @media(max-width:420px){.life-site .life-day-list {grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 @media print{.life-nav,.life-site .life-link {display:none!important}.life-site{max-width:100%;padding:0}.life-site .life-card{break-inside:avoid}}
+
+.life-campaign-jumps {display:flex;flex-wrap:wrap;gap:10px 22px;margin:8px 0 28px;padding:14px 0;border-top:1px solid var(--life-line);border-bottom:1px solid var(--life-line);font:650 13px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.life-campaign-jumps a {color:var(--life-forest);text-decoration:none}
+.life-campaign-jumps a:hover,.life-campaign-jumps a:focus-visible {text-decoration:underline}
+body:has(.page) .life-legacy-shell .life-nav {max-width:980px;width:calc(100% - 32px)}
+body:has(.campaign-header) .life-nav-shell .life-nav {width:calc(100% - 34px)}

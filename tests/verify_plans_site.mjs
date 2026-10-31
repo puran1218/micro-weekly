@@ -51,6 +51,12 @@ assert.match(indexHtml, /weeks\/week17\/index\.html/i, "Plans index should expos
 assert.match(indexHtml, /latest\/dinner\.html/i, "Plans index should expose the latest dinner link");
 assert.match(indexHtml, /latest\/training\.html/i, "Plans index should expose the latest training link");
 assert.match(indexHtml, /Training Campaigns/i, "Plans index should keep a generic Training Campaigns entry");
+assert.match(indexHtml, /Life in Motion/i, "Home should use the unified playbook identity");
+assert.match(indexHtml, /本周行动/, "Home should prioritize current-week actions");
+assert.match(indexHtml, /W1 \/ 20/, "Home should reflect the active Seoul campaign week");
+assert.match(indexHtml, /Mon 11\/2/, "Home should draw day-by-day entries from the active campaign");
+assert.match(indexHtml, /href="\.\/library\/index\.html"/, "Home should link to the reference library");
+assert.match(indexHtml, /href="\.\/journal\/index\.html"/, "Home should link to the journal");
 assert.match(indexHtml, /href="\.\/campaigns\/index\.html"/i, "Plans index should link to the campaign index");
 assert.match(indexHtml, /rel="icon"/i, "Plans index should include favicon metadata");
 
@@ -140,4 +146,14 @@ assert.match(seoulPage, /one-exercise-per-muscle-group-guide\.png/, "Seoul campa
 assert.match(seoulPage, /Sejong Korean Introduction/, "Seoul campaign should name the introduction course");
 assert.match(seoulPage, /King Sejong Institute Korean 1/, "Seoul campaign should name the follow-up beginner course");
 assert.match(seoulPage, /https:\/\/www\.iksi\.or\.kr\//, "Seoul campaign should link to the official Korean learning platform");
+const libraryHtml = readFileSync(resolve(root, "library", "index.html"), "utf8");
+const journalHtml = readFileSync(resolve(root, "journal", "index.html"), "utf8");
+const themeCss = readFileSync(resolve(root, "assets", "life.css"), "utf8");
+assert.match(libraryHtml, /Online King Sejong Institute/, "Library should link to the chosen Korean course");
+assert.match(libraryHtml, /lean-strength-seoul\.svg/, "Library should link to strength reference");
+assert.match(journalHtml, /Tianjin Marathon 2026/, "Journal should preserve completed campaigns");
+assert.match(journalHtml, /Week 14/, "Journal should preserve old weekly pages");
+assert.match(currentTraining, /历史固定训练参考/, "Current training must be marked as historical reference");
+assert.match(campaignPage, /life-campaign-jumps/, "Campaign detail should expose section jump links");
+assert.match(themeCss, /life-day-list/, "Shared style should include responsive week cards");
 console.log("Plans site structure looks good.");
