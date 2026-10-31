@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Static publishing workflow for dinner, training, and race campaign pages.",
+  "description": "Personal Life Playbook: current week, goals, references, journal, and archival plans.",
   "scripts": {
     "build:campaigns": "node scripts/import_campaign_md.mjs --all",
-    "test": "node tests/import_campaign_md.test.mjs && node tests/import_plan_html.test.mjs && node tests/repo_layout.test.mjs && node tests/verify_plans_site.mjs"
+    "test": "node tests/import_campaign_md.test.mjs && node tests/import_plan_html.test.mjs && node tests/build_life_site.test.mjs && node tests/repo_layout.test.mjs && node tests/verify_plans_site.mjs",
+    "build:playbook": "node scripts/build_life_site.mjs",
+    "build:site": "npm run build:campaigns && node scripts/import_plan_html.mjs source-html/current_dinner_template.html && node scripts/import_plan_html.mjs source-html/current_training_template.html && npm run build:playbook"
   },
   "dependencies": {
     "marked": "^18.0.11"

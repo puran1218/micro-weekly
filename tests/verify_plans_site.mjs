@@ -31,6 +31,8 @@ const requiredFiles = [
   "campaigns/tj-2026/index.html",
   "campaigns/seoul-2027/index.html",
   "assets/lean-strength-seoul.svg",
+  "library/breakfast/index.html",
+  "library/dinner/index.html",
 ];
 
 for (const file of requiredFiles) {
@@ -51,6 +53,12 @@ assert.match(indexHtml, /weeks\/week17\/index\.html/i, "Plans index should expos
 assert.match(indexHtml, /latest\/dinner\.html/i, "Plans index should expose the latest dinner link");
 assert.match(indexHtml, /latest\/training\.html/i, "Plans index should expose the latest training link");
 assert.match(indexHtml, /Training Campaigns/i, "Plans index should keep a generic Training Campaigns entry");
+assert.match(indexHtml, /Life in Motion/i, "Home should use the unified playbook identity");
+assert.match(indexHtml, /本周行动/, "Home should prioritize current-week actions");
+assert.match(indexHtml, /W1 \/ 20/, "Home should reflect the active Seoul campaign week");
+assert.match(indexHtml, /Mon 11\/2/, "Home should draw day-by-day entries from the active campaign");
+assert.match(indexHtml, /href="\.\/library\/index\.html"/, "Home should link to the reference library");
+assert.match(indexHtml, /href="\.\/journal\/index\.html"/, "Home should link to the journal");
 assert.match(indexHtml, /href="\.\/campaigns\/index\.html"/i, "Plans index should link to the campaign index");
 assert.match(indexHtml, /rel="icon"/i, "Plans index should include favicon metadata");
 
@@ -135,9 +143,34 @@ assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival
 assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
 assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
 assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
+assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/life\.css"/, "Seoul campaign should resolve its shared CSS within /plans/");
+assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/puran_blog_avator\.jpg"/, "Seoul campaign should resolve its favicon within /plans/");
+assert.match(campaignIndex, /href="\.\.\/assets\/life\.css"/, "Campaign index should resolve shared CSS within /plans/");
 assert.match(seoulPage, /lean-strength-seoul\.svg/, "Seoul campaign should link to a visual strength guide");
 assert.match(seoulPage, /one-exercise-per-muscle-group-guide\.png/, "Seoul campaign should reuse the existing training illustration");
 assert.match(seoulPage, /Sejong Korean Introduction/, "Seoul campaign should name the introduction course");
 assert.match(seoulPage, /King Sejong Institute Korean 1/, "Seoul campaign should name the follow-up beginner course");
 assert.match(seoulPage, /https:\/\/www\.iksi\.or\.kr\//, "Seoul campaign should link to the official Korean learning platform");
+const libraryHtml = readFileSync(resolve(root, "library", "index.html"), "utf8");
+const journalHtml = readFileSync(resolve(root, "journal", "index.html"), "utf8");
+const themeCss = readFileSync(resolve(root, "assets", "life.css"), "utf8");
+assert.match(libraryHtml, /Online King Sejong Institute/, "Library should link to the chosen Korean course");
+assert.match(libraryHtml, /lean-strength-seoul\.svg/, "Library should link to strength reference");
+assert.match(journalHtml, /Tianjin Marathon 2026/, "Journal should preserve completed campaigns");
+assert.match(journalHtml, /Week 14/, "Journal should preserve old weekly pages");
+assert.match(currentTraining, /历史固定训练参考/, "Current training must be marked as historical reference");
+assert.match(campaignPage, /life-campaign-jumps/, "Campaign detail should expose section jump links");
+assert.match(themeCss, /life-day-list/, "Shared style should include responsive week cards");
+const breakfastPage = readFileSync(resolve(root, "library", "breakfast", "index.html"), "utf8");
+const dinnerReference = readFileSync(resolve(root, "library", "dinner", "index.html"), "utf8");
+const dinnerPicker = readFileSync(resolve(root, "current", "dinner.html"), "utf8");
+assert.match(breakfastPage, /七日早餐参考/, "Breakfast guide should include a seven-day rotation");
+assert.match(breakfastPage, /玉米/, "Breakfast should retain familiar staples");
+assert.match(dinnerReference, /五种晚餐搭配参考/, "Dinner guide should add the five complete pairings");
+assert.match(dinnerReference, /28道/, "Dinner guide should link back to the original picker");
+assert.match(libraryHtml, /\.\/breakfast\/index\.html/, "Library should link to breakfast");
+assert.match(libraryHtml, /\.\/dinner\/index\.html/, "Library should link to dinner guide");
+assert.match(dinnerPicker, /library\/dinner\/index\.html/, "Original dinner tool should link to supplementary guidance");
+assert.match(dinnerPicker, /btn-pick/, "Original dinner picker remains interactive");
+assert.doesNotMatch(breakfastPage + dinnerReference, /13\.01|47\.5|OGTT|BMI/, "Published food guides should exclude private clinical details");
 console.log("Plans site structure looks good.");

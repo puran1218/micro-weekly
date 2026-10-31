@@ -1,6 +1,24 @@
-# home-plans
+# Life in Motion · Personal Life Playbook
 
-`home-plans` is a small static publishing workflow for shareable dinner and training templates.
+A lightweight personal site for **this week's actions, long-term goals, reference materials, and reflection**. The repository remains `micro-weekly`; the public site at `/plans/` evolves from dinner/training templates into an ongoing life playbook.
+
+The Library includes **a seven-day breakfast reference and five balanced dinner pairings**, alongside the unchanged 28-dish dinner picker. Food-guide content is stored in `site/food-guides.mjs` and rebuilt into `/plans/library/breakfast/` and `/plans/library/dinner/`; no individual health measurements or diagnosis is published.
+
+The **active Campaign owns the current weekly training plan**. Historical `Current Training` and `weeks/weekXX` HTML are preserved for reference, not treated as competing instructions. Dinner remains an independent everyday tool.
+
+## Build the Playbook
+
+```bash
+npm ci
+npm run build:site
+npm test
+```
+
+`build:site` builds all campaigns, regenerates the current dinner/training pages, and produces the shared homepage, Library and Journal plus the common page chrome. If you edit a campaign, `npm run build:campaigns` also refreshes the homepage. The site theme lives at `site/life.css`, published to `static/plans/assets/life.css`.
+
+The public navigation is **This Week → Goals → Library → Journal**. Every legacy URL stays valid; old weeks are linked from the Journal, not the primary homepage.
+
+See [the information architecture and weekly review contract](docs/LIFE_PLAYBOOK.md) for migration boundaries and next steps.
 
 The repository keeps these kinds of files:
 
