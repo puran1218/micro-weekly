@@ -95,3 +95,16 @@ body:has(.page) .life-legacy-note {margin:12px 0 18px}
 .life-campaign-jumps a:hover,.life-campaign-jumps a:focus-visible {text-decoration:underline}
 body:has(.page) .life-legacy-shell .life-nav {max-width:980px;width:calc(100% - 32px)}
 body:has(.campaign-header) .life-nav-shell .life-nav {width:calc(100% - 34px)}
+
+/* Food references: lightweight reading pages, not a restrictive meal tracker. */
+.life-site .life-meal-list {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.life-site .life-meal-card {padding:22px 24px;border:1px solid var(--life-line);background:var(--life-white);border-radius:var(--life-radius)}
+.life-site .life-meal-head {display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.life-site .life-meal-card h3 {font-size:20px;line-height:1.4}
+.life-site .life-meal-card p {margin:10px 0 0;font-size:14px;color:#526057}
+.life-site .life-meal-adapt {border-top:1px solid var(--life-line);padding-top:10px}
+.life-site .life-food-foundation {background:var(--life-sage)}
+.life-site .life-food-sources {font-size:13px;color:var(--life-muted)}
+.life-food-note {max-width:980px;margin:8px auto 16px;padding:13px 17px;background:#e7eee6;color:#244c3f;border-left:3px solid #2b6455;border-radius:8px;font-size:13px;line-height:1.65}
+.life-food-note a {color:inherit;font-weight:700}
+@media(max-width:790px){.life-site .life-meal-list {grid-template-columns:1fr}.life-site .life-meal-card{padding:18px}}
