@@ -23,7 +23,8 @@ Training campaigns are a separate, parallel publishing chain: `campaigns/*.md` i
 │   ├── import_campaign_md.mjs
 │   └── import_plan_html.mjs
 ├── campaigns/
-│   └── tj-2026.md
+│   ├── tj-2026.md
+  └── seoul-2027.md
 ├── source-html/
 │   ├── current_dinner_template.html
 │   ├── current_training_template.html
@@ -249,5 +250,6 @@ The repository currently includes:
 - training reference guide attachment
 - archived Week 14-22 plan pages
 - a generator for future weekly imports
+- the **active** Seoul Marathon 2027 campaign (20-week running, lean strength, and Korean learning plan)
 - the **completed** Tianjin Marathon 2026 campaign (`tj-2026`) with its race recap (Apple Watch 4:45:46), post-race recovery and a Markdown-first generator
 - a mobile-friendly homepage, current template pages, per-week archive pages, campaign pages, and latest compatibility links for public sharing

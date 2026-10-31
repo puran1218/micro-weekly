@@ -29,6 +29,8 @@ const requiredFiles = [
   "latest/training.html",
   "campaigns/index.html",
   "campaigns/tj-2026/index.html",
+  "campaigns/seoul-2027/index.html",
+  "assets/lean-strength-seoul.svg",
 ];
 
 for (const file of requiredFiles) {
@@ -119,4 +121,23 @@ assert.match(campaignPage, /rel="icon"/, "tj-2026 page should include favicon me
 assert.match(campaignPage, /<p class="campaign-note">[^<]*二次补录[^<]*<\/p>/, "tj-2026 page should carry the quiet lottery note");
 assert.match(campaignPage, /<meta name="viewport" content="width=device-width, initial-scale=1">/, "tj-2026 page should include viewport metadata");
 
+const seoulPage = readFileSync(resolve(root, "campaigns", "seoul-2027", "index.html"), "utf8");
+assert.match(campaignIndex, /Seoul Marathon 2027/i, "Campaign index should list active Seoul campaign");
+assert.match(campaignIndex, /href="\.\/seoul-2027\/"/, "Campaign index should link to Seoul");
+assert.match(campaignIndex, /<p class="section-kicker">Active<\/p>/, "Seoul should be in the active group");
+assert.match(seoulPage, /Seoul Marathon 2027/, "Seoul campaign page should show title");
+assert.match(seoulPage, /Mar 21, 2027/, "Seoul campaign should show race date");
+assert.match(seoulPage, /Week 1 of 20/, "Seoul campaign should have 20-week progress");
+assert.match(seoulPage, /20-Week Roadmap/, "Seoul campaign should show roadmap");
+assert.match(seoulPage, /Strength A/, "Seoul campaign should include strength routines");
+assert.match(seoulPage, /Korean/, "Seoul campaign should include Korean learning");
+assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival flexibility");
+assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
+assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
+assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
+assert.match(seoulPage, /lean-strength-seoul\.svg/, "Seoul campaign should link to a visual strength guide");
+assert.match(seoulPage, /one-exercise-per-muscle-group-guide\.png/, "Seoul campaign should reuse the existing training illustration");
+assert.match(seoulPage, /Sejong Korean Introduction/, "Seoul campaign should name the introduction course");
+assert.match(seoulPage, /King Sejong Institute Korean 1/, "Seoul campaign should name the follow-up beginner course");
+assert.match(seoulPage, /https:\/\/www\.iksi\.or\.kr\//, "Seoul campaign should link to the official Korean learning platform");
 console.log("Plans site structure looks good.");

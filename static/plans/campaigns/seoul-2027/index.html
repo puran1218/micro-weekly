@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seoul Marathon 2027</title>
+  <meta name="description" content="Road to Seoul · 4:15–4:30 aspiration · consistent running, lean strength and survival Korean.">
+  <link rel="icon" type="image/jpeg" href="../../../assets/puran_blog_avator.jpg">
+  <link rel="apple-touch-icon" href="../../../assets/puran_blog_avator.jpg">
+  <style>
+:root {
+  --paper: #f6f3ed;
+  --ink: #171717;
+  --muted: #72706b;
+  --line: #b9b5ad;
+  --accent: #c43b2e;
+  --page: 760px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    linear-gradient(rgba(25, 25, 25, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(25, 25, 25, .035) 1px, transparent 1px),
+    var(--paper);
+  background-size: 24px 24px;
+  font-family: "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif;
+  line-height: 1.45;
+}
+
+main { width: min(var(--page), calc(100% - 80px)); margin: 0 auto; padding: 40px 0 56px; }
+
+h1, h2 { font-family: "Nimbus Roman", "Times New Roman", serif; font-weight: 400; text-transform: uppercase; letter-spacing: -.045em; }
+h1 { margin: 14px 0 22px; font-size: clamp(3.35rem, 8.5vw, 6.6rem); line-height: .88; max-width: 700px; }
+h2 { margin: 2px 0 4px; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .95; }
+h2 em { color: var(--accent); font-style: normal; }
+h3 { text-transform: uppercase; letter-spacing: .08em; }
+p { margin: 10px 0; }
+ul, ol { margin: 10px 0; padding-left: 1.2em; }
+li { margin: 5px 0; }
+a { color: inherit; }
+
+.eyebrow, .section-kicker { margin: 0; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+
+.campaign-nav { display: flex; gap: 22px; margin: 0 0 34px; }
+.campaign-nav a { color: var(--muted); text-decoration: none; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-nav a:hover, .campaign-nav a:focus-visible { color: var(--accent); }
+
+.campaign-header { padding-bottom: 70px; }
+.race-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; }
+.race-facts i { width: 3px; height: 3px; border-radius: 50%; background: var(--ink); }
+.race-facts strong { color: var(--accent); font-weight: 600; }
+.campaign-note { margin: 14px 0 0; color: var(--muted); font-style: italic; font-size: .95rem; letter-spacing: .02em; }
+
+.campaign-progress { display: flex; margin: 54px 0 0; padding: 0; list-style: none; }
+.campaign-progress li { position: relative; flex: 1; padding-top: 23px; color: var(--muted); font-size: .76rem; text-align: center; text-transform: uppercase; }
+.campaign-progress li::before { content: ""; position: absolute; z-index: 2; top: 0; left: 50%; width: 10px; height: 10px; transform: translateX(-50%); border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); }
+.campaign-progress li::after { content: ""; position: absolute; top: 5px; left: -50%; width: 100%; border-top: 1px solid var(--ink); }
+.campaign-progress li:first-child::after { display: none; }
+.campaign-progress .done::before { background: var(--ink); }
+.campaign-progress .active { color: var(--accent); }
+.campaign-progress .active::before { border-color: var(--accent); background: var(--accent); }
+.campaign-progress .race { flex: .75; color: var(--ink); }
+.campaign-progress .race::before { border-radius: 0; }
+
+section { padding: 64px 0; border-top: 1px solid var(--ink); }
+
+.campaign-current .section-body > p:first-of-type { margin: 12px 0 20px; font-size: 1.25rem; letter-spacing: .08em; text-transform: uppercase; }
+.campaign-current .section-body > p:nth-of-type(2) { margin: 0 0 26px; padding: 15px 6px; border-block: 1px solid var(--line); font-size: 1.12rem; }
+.campaign-current table { width: 100%; border-collapse: collapse; font-size: 1.15rem; }
+.campaign-current th, .campaign-current td { padding: 15px 8px; text-align: left; }
+.campaign-current thead th { border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.campaign-current tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-current tbody td:first-child { width: 120px; font-size: .88rem; letter-spacing: .12em; text-transform: uppercase; }
+.campaign-current tbody tr:last-child { border-bottom: 1px solid var(--ink); color: var(--accent); }
+
+.campaign-roadmap table { width: 100%; border-collapse: collapse; margin-top: 30px; font-size: 1.02rem; }
+.campaign-roadmap thead th { padding: 10px 6px; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-align: left; }
+.campaign-roadmap tbody tr { border-bottom: 1px solid var(--line); }
+.campaign-roadmap tbody td { padding: 13px 6px; text-align: left; vertical-align: baseline; }
+.campaign-roadmap tbody td:first-child { letter-spacing: .09em; }
+.campaign-roadmap tbody td:last-child { text-align: right; }
+.campaign-roadmap tr.is-active { color: var(--accent); }
+.campaign-roadmap h3 { margin: 42px 0 4px; }
+
+.campaign-reviews article { margin-top: 32px; padding: 22px 0; border-block: 1px solid var(--line); }
+.campaign-reviews article h3 { margin: 0; }
+
+.reference-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 50px; margin-top: 34px; }
+.reference-grid article { border-top: 1px solid var(--line); }
+.reference-grid h3 { margin: 0; font-size: .88rem; }
+.reference-grid ul { margin: 8px 0; padding-left: 1.1em; }
+.reference-grid li { margin: 7px 0; }
+
+.campaign-group { padding-top: 54px; border-top: 1px solid var(--ink); }
+.campaign-list { margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--ink); }
+.campaign-row { border-top: 1px solid var(--line); }
+.campaign-row a { display: block; padding: 26px 0; text-decoration: none; }
+.campaign-row h2 { margin: 0 0 8px; font-size: clamp(1.9rem, 4.5vw, 2.7rem); line-height: 1; }
+.campaign-row a:hover h2, .campaign-row a:focus-visible h2 { color: var(--accent); }
+.row-facts { margin: 0; font-size: .95rem; letter-spacing: .08em; text-transform: uppercase; }
+.row-summary { margin: 10px 0 0; max-width: 560px; color: #45433f; }
+.row-note { margin: 8px 0 0; color: var(--muted); font-style: italic; font-size: .9rem; }
+
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 70px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+
+.course { position: fixed; top: 0; left: max(18px, calc(50vw - 510px)); width: 82px; height: 100vh; color: #65635e; font: .68rem/1.35 "Nimbus Sans Narrow", "Arial Narrow", Arial, sans-serif; }
+.course-line { position: absolute; top: 98px; bottom: 92px; left: 30px; width: 1px; background: var(--ink); }
+.course-line span { position: absolute; top: calc(var(--p) * 1%); left: 0; display: flex; align-items: center; gap: 9px; transform: translate(-4px, -50%); }
+.course-line span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); flex: none; }
+.course-line small { display: block; font-size: .58rem; }
+
+@media (max-width: 960px) {
+  .course { display: none; }
+}
+
+@media (max-width: 620px) {
+  main { width: min(100% - 34px, var(--page)); padding-top: 24px; }
+  h1 { font-size: clamp(3rem, 17vw, 5rem); }
+  h2 { font-size: clamp(2.7rem, 15vw, 4rem); }
+  .campaign-header { padding-bottom: 48px; }
+  .race-facts { gap: 9px; font-size: .9rem; }
+  .campaign-progress { margin-top: 40px; }
+  .campaign-progress li span { font-size: .62rem; }
+  section { padding: 48px 0; }
+  .campaign-current table { font-size: 1rem; }
+  .campaign-current tbody td:first-child { width: 66px; }
+  .campaign-current th, .campaign-current td { padding: 14px 4px; }
+  .campaign-roadmap tbody td { padding: 11px 4px; }
+  .reference-grid { grid-template-columns: 1fr; gap: 28px; }
+  footer { flex-direction: column; }
+}
+
+@media print {
+  body { background: #fff; }
+  main { width: 100%; padding: 24px 30px; }
+  .course { display: none; }
+  section { break-inside: avoid; }
+}
+  </style>
+</head>
+<body>
+<div class="course" aria-hidden="true">
+  <div class="course-line">
+      <span style="--p:0">0<small>KM</small></span>
+      <span style="--p:23.7">10<small>KM</small></span>
+      <span style="--p:47.4">20<small>KM</small></span>
+      <span style="--p:71.1">30<small>KM</small></span>
+      <span style="--p:94.8">40<small>KM</small></span>
+  </div>
+</div>
+  <main>
+    <nav class="campaign-nav" aria-label="Site navigation">
+      <a href="../../index.html">← Plans</a>
+      <a href="../index.html">All campaigns</a>
+    </nav>
+    <header class="campaign-header">
+      <p class="eyebrow">Training Campaign</p>
+      <h1>Seoul Marathon 2027</h1>
+      <div class="race-facts" aria-label="Race information">
+        <span>Mar 21, 2027</span><i></i><span>42.195 km</span><i></i><span>Week 1 of 20</span><i></i><strong id="countdown" data-race-date="2027-03-21">141 days</strong>
+      </div>
+      <p class="campaign-note">2026 天津已完赛（官方 4:45:16）；2027 首尔已报名。晨跑 + 午间力量 + 每天少量韩语。</p>
+      <ol class="campaign-progress" aria-label="Campaign progress">
+        <li class="active"><span>W1</span></li><li><span>W2</span></li><li><span>W3</span></li><li><span>W4</span></li><li><span>W5</span></li><li><span>W6</span></li><li><span>W7</span></li><li><span>W8</span></li><li><span>W9</span></li><li><span>W10</span></li><li><span>W11</span></li><li><span>W12</span></li><li><span>W13</span></li><li><span>W14</span></li><li><span>W15</span></li><li><span>W16</span></li><li><span>W17</span></li><li><span>W18</span></li><li><span>W19</span></li><li><span>W20</span></li><li class="race"><span>Race</span></li>
+      </ol>
+    </header>
+    <section class="campaign-current" id="this-week">
+      <p class="section-kicker">Current plan</p>
+      <h2>This Week <em>· W1 Recovery + Hangul</em></h2>
+      <div class="section-body">
+      <p><strong>Nov 2 – Nov 8, 2026 · 天津马拉松后第2周 · 参考跑量 0–8 km（允许0）。</strong></p>
+<p><strong>本周的成功标准：</strong> 走路、上下楼、晨起足弓和小腿基本无不适；轻松恢复活动，不追配速；认识6个韩文元音。不做 Tempo、Interval、长跑或重下肢力量。</p>
+<table>
+<thead><tr><th>Day</th><th>Morning · Run / recovery</th><th>Lunch · Strength / mobility</th><th>Korean · 15–25 min</th></tr></thead>
+<tbody>
+<tr><td>Mon 11/2</td><td>Rest；按舒服程度走路</td><td>5–10 min 温和活动度</td><td>ㅏ、ㅓ</td></tr>
+<tr><td>Tue 11/3</td><td>轻松走 15–25 min；不测试速度</td><td>Rest</td><td>ㅗ、ㅜ</td></tr>
+<tr><td>Wed 11/4</td><td>Rest / 轻松走动</td><td>轻上肢激活可选；不练腿</td><td>ㅡ、ㅣ</td></tr>
+<tr><td>Thu 11/5</td><td>若无痛且上下楼正常：15–20 min Easy；否则步行</td><td>Rest</td><td>6个元音跟读</td></tr>
+<tr><td>Fri 11/6</td><td>Rest</td><td>足踝轻度活动度 5–10 min，可选</td><td>ㄱ、ㄴ、ㄷ 初识</td></tr>
+<tr><td>Sat 11/7</td><td>Rest / 轻松散步</td><td>无正式力量</td><td>认识 서울（首尔）</td></tr>
+<tr><td>Sun 11/8</td><td>若本周恢复顺利：20–30 min Easy，可跳过</td><td>观察跑后及次日反应</td><td>认识 마라톤（马拉松）+ 复习</td></tr>
+</tbody></table>
+<ul><li><strong>Easy 判定：</strong> RPE 2–4/10；能完整说话，宁慢勿快。以上跑量是候选，不是必须完成的KPI。</li><li><strong>如果仍有明显肌肉酸痛、单侧足弓/小腿疼痛、步态改变或疲劳：</strong> 全部跑步改为恢复活动，力量暂缓。疼痛影响走路、持续加重或异常症状需就医评估。</li><li><strong>薄肌/塑形的正确含义：</strong> 追求精瘦、结实、有线条的全身肌肉与耐跑能力，不是训练解剖学的“股薄肌”。本周不启动正式下肢力量；以后按 Reference 的 Strength A/B 练全身。</li><li><strong>本周韩语检查：</strong> 能认出 ㅏ ㅓ ㅗ ㅜ ㅡ ㅣ；拼读不求完美，先练习从字母到音节。<br><strong>本周主教材：</strong> 从 <a href="https://www.iksi.or.kr/">Online King Sejong Institute</a> 的 <strong>Sejong Korean Introduction</strong> 开始，查看 <a href="https://www.iksi.or.kr/lms/main/curriculum.do">官方课程说明</a>。</li><li><strong>周日复盘：</strong> 跑步次数及距离、足弓/小腿/股四头肌0–10分、睡眠与疲劳、韩语练习天数；再决定W2是否恢复2–3次轻松跑。</li></ul>
+      </div>
+    </section>
+    <section class="campaign-roadmap" id="roadmap">
+      <p class="section-kicker">The road ahead</p>
+      <h2>20-Week Roadmap</h2>
+      <div class="section-body">
+      <p><strong>使用方式：</strong> 参考跑量是按周预期范围，并非硬指标。只有连续2–3周无痛、睡眠与疲劳允许，才向上推进。缺课不补；长跑优先控制在约3–3.25小时以内。比赛周的8–14km不包含42.195km赛事。</p>
+<table>
+<thead><tr><th>Week</th><th>Dates</th><th>Phase</th><th>Target km</th><th>Long run km</th><th>Korean theme</th><th>Training emphasis</th></tr></thead>
+<tbody>
+<tr class="is-active"><td>W1</td><td>2026-11-02–2026-11-08</td><td>Recovery</td><td>0–8</td><td>—</td><td>韩文元音 ㅏ ㅓ ㅗ ㅜ ㅡ ㅣ</td><td>赛后恢复；可0km，不做强度</td></tr>
+<tr><td>W2</td><td>2026-11-09–2026-11-15</td><td>Return</td><td>8–16</td><td>5–8</td><td>基本辅音 ㄱ ㄴ ㄷ ㄹ ㅁ ㅂ ㅅ ㅇ</td><td>按疼痛和疲劳恢复2–3次短跑</td></tr>
+<tr><td>W3</td><td>2026-11-16–2026-11-22</td><td>Base</td><td>18–25</td><td>10</td><td>认识音节：서울、마라톤</td><td>跑步规律优先，开始低量力量</td></tr>
+<tr><td>W4</td><td>2026-11-23–2026-11-29</td><td>Base</td><td>22–30</td><td>12</td><td>收音初识；城市与方向</td><td>保持轻松，逐步4次跑步</td></tr>
+<tr><td>W5</td><td>2026-11-30–2026-12-06</td><td>Base</td><td>26–34</td><td>14</td><td>数字、时间、距离 km</td><td>固定周三 A / 周五 B</td></tr>
+<tr><td>W6</td><td>2026-12-07–2026-12-13</td><td>Base</td><td>30–38</td><td>16</td><td>问候、感谢、基本礼貌</td><td>第一轮稳定性检查</td></tr>
+<tr><td>W7</td><td>2026-12-14–2026-12-20</td><td>Recovery</td><td>24–30</td><td>12</td><td>地铁、车站、换乘</td><td>主动减量，不补课</td></tr>
+<tr><td>W8</td><td>2026-12-21–2026-12-27</td><td>Base</td><td>32–40</td><td>18</td><td>入口、出口、左与右</td><td>第一次18km补给尝试</td></tr>
+<tr><td>W9</td><td>2026-12-28–2027-01-03</td><td>Endurance</td><td>34–42</td><td>20</td><td>餐厅、食物、点餐</td><td>长跑后恢复优先</td></tr>
+<tr><td>W10</td><td>2027-01-04–2027-01-10</td><td>Build</td><td>38–45</td><td>22</td><td>早餐与饮水表达</td><td>轻量节奏段仅在恢复充分时</td></tr>
+<tr><td>W11</td><td>2027-01-11–2027-01-17</td><td>Recovery</td><td>30–36</td><td>16</td><td>购物与支付</td><td>减量，检查疲劳和睡眠</td></tr>
+<tr><td>W12</td><td>2027-01-18–2027-01-24</td><td>Build</td><td>40–46</td><td>24</td><td>报名、确认、号码布</td><td>计划长跑补给及第二天反应</td></tr>
+<tr><td>W13</td><td>2027-01-25–2027-01-31</td><td>Pre-holiday key week</td><td>42–48</td><td>26–28</td><td>领物、Expo、寄存</td><td>春节前关键长跑；不超过约3–3.25h</td></tr>
+<tr><td>W14</td><td>2027-02-01–2027-02-07</td><td>Spring Festival · flexible</td><td>16–30</td><td>0–12</td><td>春节复习：地铁与基础口语</td><td>家庭优先，2–3次短跑；允许更低</td></tr>
+<tr><td>W15</td><td>2027-02-08–2027-02-14</td><td>Spring Festival · flexible</td><td>16–28</td><td>0–12</td><td>补给站、厕所、医疗</td><td>旅行维持，不补错过的长跑</td></tr>
+<tr><td>W16</td><td>2027-02-15–2027-02-21</td><td>Rebuild</td><td>30–40</td><td>18–22</td><td>公里牌与赛道指令</td><td>依据春节实际完成量逐步恢复</td></tr>
+<tr><td>W17</td><td>2027-02-22–2027-02-28</td><td>Race specific</td><td>38–46</td><td>24–28</td><td>问路与赛事工作人员对话</td><td>最后关键长跑；若训练断档则缩短</td></tr>
+<tr><td>W18</td><td>2027-03-01–2027-03-07</td><td>Taper</td><td>32–40</td><td>18–22</td><td>从地铁到起点情景演练</td><td>减量20%左右，停止高酸痛负荷</td></tr>
+<tr><td>W19</td><td>2027-03-08–2027-03-14</td><td>Taper</td><td>22–30</td><td>12–16</td><td>领物、安检、寄存、补给复习</td><td>恢复睡眠，核对装备和交通</td></tr>
+<tr><td>W20</td><td>2027-03-15–2027-03-21</td><td>Race week</td><td>8–14 + race</td><td>42.195 race</td><td>赛日生存韩语与听力复习</td><td>赛前轻跑，3月21日比赛，不计入赛前跑量</td></tr>
+</tbody></table>
+<p><strong>常规周模板（基础期后逐步达到，不适用于赛后恢复/春节/减量周）：</strong></p><p><strong>主教材节奏：</strong> W1–W4 Sejong Korean Introduction；能拼读基础音节后，W5左右进入 King Sejong Institute Korean 1。进度可顺延；赛事词汇只作为补充。 <a href="https://www.iksi.or.kr/lms/main/curriculum.do">官方课程说明</a></p>
+<table>
+<thead><tr><th>Day</th><th>Morning</th><th>Lunch</th></tr></thead>
+<tbody>
+<tr><td>Monday</td><td>Rest</td><td>10 min mobility / Rest</td></tr>
+<tr><td>Tuesday</td><td>Easy Run · 6–10 km（按本周总量缩放）</td><td>Rest</td></tr>
+<tr><td>Wednesday</td><td>Rest / 轻松活动</td><td><strong>Strength A · 30–40 min</strong></td></tr>
+<tr><td>Thursday</td><td>Quality Run · 7–12 km；基础期可全程Easy</td><td>5–10 min mobility</td></tr>
+<tr><td>Friday</td><td>Rest</td><td><strong>Strength B · 20–30 min</strong>（长跑前减轻腿部负荷）</td></tr>
+<tr><td>Saturday</td><td>Easy Run · 5–8 km（或Rest）</td><td>Rest</td></tr>
+<tr><td>Sunday</td><td>LDR · 本周表格目标；不超过时间上限</td><td>食物、休息、症状观察</td></tr>
+</tbody></table>
+<p><strong>春节缓冲：</strong> 2027-02-06是春节。W14（2/1–2/7）和W15（2/8–2/14）为弹性周，家庭与出行优先；允许缩减到短跑和简化力量。W16依实际完成量恢复，W17只在有连续训练基础时尝试专项长跑。春节假期具体放假安排以正式通知和家庭行程为准。</p>
+<p><strong>三个目标校准点：</strong> W8检查规律执行与18km恢复情况；W12–13根据10km/半马测试、近6周训练与恢复评估4:30可行性；W17根据最后关键长跑、补给与后程疲劳决定是否挑战4:15。任何节点都允许把成绩目标调保守。</p>
+      </div>
+    </section>
+    <section class="campaign-reviews" id="reviews">
+      <p class="section-kicker">Review & adapt</p>
+      <h2>Weekly Reviews</h2>
+      <div class="section-body">
+      <p>尚无已完成的首尔训练周。<strong>不要将路线图中的计划量记作已完成。</strong></p>
+<p>每周日按同一格式追加一个 <code>### WN · YYYY-MM-DD to YYYY-MM-DD</code>，再把该周实际执行内容存档在 Roadmap 下（可用一个W#三级标题），最后更新 <code>current_week</code> 和 <code>This Week</code>。</p>
+<ul><li><strong>Running：</strong> Apple Health已同步跑步Workout次数、距离、总时长、最长单次LDR、Quality是否完成；区分手表Workout与赛事官方成绩，缺数据即标记未知。</li><li><strong>Strength：</strong> Strength A / B各几次、使用重量/次数/RIR、肌肉酸痛及是否影响跑步；徒手也算完成。</li><li><strong>Lean physique：</strong> 肩背胸臀腿核心是否均衡、动作与力量有没有进步；不追体重骤降，也不按体型标签评价。</li><li><strong>Korean：</strong> 实际学习天数/分钟、能够不看翻译认出的3–5个词、一句可用表达、下周复习点。</li><li><strong>Recovery：</strong> 睡眠时长、晨起疲劳、左足弓/左小腿/右股四头肌和腰臀的0–10疼痛、其他运动与旅行。</li><li><strong>Decision：</strong> ↑谨慎加量 / →维持 / ↓减量；明确下一周晨跑、午间力量、周末长跑与韩语的执行任务。</li></ul>
+      </div>
+    </section>
+    <section class="campaign-reference" id="reference">
+      <p class="section-kicker">Keep close</p>
+      <h2>Reference</h2>
+      <div class="section-body">
+      <div class="reference-grid">
+<article>
+<h3>Training load &amp; efforts</h3>
+<ul><li>Recovery / Easy / LDR：RPE 2–4，能连续讲话；轻松跑不以固定配速强推。</li><li>Tempo：RPE 6–7；从短时间段开始，必要时改 Easy。每周至多一次真正质量课。</li><li>MP：目标马拉松配速只是待验证的专项强度，不是每次训练都要跑。4:30约6:24/km；4:15约6:03/km。</li><li>Strides：4–6×20秒轻快加速，充分恢复，仅在状态良好时安排。</li><li>如果周日长跑较重，周五B只做上肢、核心与轻足踝，取消会导致腿部DOMS的动作。</li><li>运动时长、疲劳与疼痛高于公里数字；漏掉的训练不补做。</li></ul>
+</article>
+<article>
+<h3>Lean Strength · 全身力量而非单独股薄肌</h3>
+<p>目标是<strong>精瘦、有适度肌肉线条、跑步稳定</strong>，不是“只做轻重量”或特殊的肌肉类型。保留渐进负重，常规每组留2–3次余力（RIR 2–3），动作标准优先。每次先热身5分钟：轻走/单车、徒手髋铰链、肩关节和踝活动。工作日中午进行；力量不是消耗越多越好。</p><p><strong>动作速查：</strong> <a href="../../assets/lean-strength-seoul.svg">Seoul Strength A/B 动作速览图（SVG）</a> · <a href="../../assets/one-exercise-per-muscle-group-guide.png">原有肌群动作图（PNG）</a>。SVG为基于当前计划的原创动作速览，并非分享对话里的原图。</p>
+<p><strong>Strength A · Wednesday lunch · 30–40 min（全身主力量）</strong></p>
+<table>
+<thead><tr><th>Exercise</th><th>Sets × reps</th><th>Focus</th></tr></thead>
+<tbody>
+<tr><td>Bulgarian split squat / goblet squat</td><td>2×6–10 /侧</td><td>股四头肌、臀、单腿稳定</td></tr>
+<tr><td>DB Romanian deadlift</td><td>2×8–10</td><td>臀、腘绳肌</td></tr>
+<tr><td>Standing calf raise</td><td>2–3×10–15</td><td>小腿与足踝负荷适应</td></tr>
+<tr><td>Incline DB press / push-up</td><td>2×8–12</td><td>胸、肩、三头</td></tr>
+<tr><td>Cable row / DB row</td><td>2×8–12</td><td>背部和姿态</td></tr>
+<tr><td>Dead bug / plank</td><td>2×8/侧 或30秒</td><td>核心控制</td></tr>
+</tbody></table>
+<p><strong>Strength B · Friday lunch · 20–30 min（肩背塑形 + 轻稳定）</strong></p>
+<table>
+<thead><tr><th>Exercise</th><th>Sets × reps</th><th>Focus</th></tr></thead>
+<tbody>
+<tr><td>Lat pulldown / assisted pull-up</td><td>2×8–12</td><td>背阔肌、上背</td></tr>
+<tr><td>DB lateral raise</td><td>2×12–15</td><td>肩部线条</td></tr>
+<tr><td>Glute bridge / light step-up</td><td>2×8–12</td><td>臀和单腿控制；周末长跑前可跳过</td></tr>
+<tr><td>Bent-knee calf raise</td><td>2×10–15</td><td>比目鱼肌；长跑前从轻</td></tr>
+<tr><td>Side plank + band lateral walk</td><td>各2组</td><td>核心、臀中肌</td></tr>
+<tr><td>Short-foot + single-leg balance</td><td>2×30秒/侧</td><td>足弓与平衡</td></tr>
+</tbody></table>
+<ul><li><strong>Progression：</strong> W1–W2不做会引发新酸痛的腿部力量；W3–W4从每动作1–2组开始。后续若两次训练都控制良好、次日无明显影响，再每次仅增加少量次数或重量。优先持续，非追求大肌肉量。</li><li><strong>Physical outcome：</strong> 力量进步和肌肉外观不是同一指标；增肌与否受总训练量、饮食和个人因素影响。备赛期不要通过激进节食追求“薄”，足够能量、碳水和蛋白质支持恢复。</li><li><strong>Optional sports：</strong> 羽毛球/足球计入训练负荷；高强度比赛周降低质量跑和腿部力量。</li><li><strong>Pain rules：</strong> 0–2/10可观察，3–4/10或持续加重则减量/替换，5+/10、影响跑姿/行走则停止并考虑专业评估。仅作为自我管理提示，不是医疗诊断。</li></ul>
+</article>
+<article>
+<h3>Long-run fueling &amp; recovery</h3>
+<ul><li>先从熟悉早餐、规律补水和容易耐受的碳水开始；在长跑中逐步练习每小时约40–60g碳水，耐受良好后个体化调整。</li><li>饮水按气温、出汗与口渴情况安排，不强迫大量喝水。电解质饮料不能自动视为足量碳水。</li><li>赛后留意左足弓、小腿、右股四头肌、腰臀，记录24–48小时反应；不要因为单次跑得快就直接调高全马目标。</li></ul>
+</article>
+<article>
+<h3>Korean · 15–25 minutes on 5 days</h3>
+<p>固定节奏：5分钟复习、10分钟新知识、5分钟跟读/读标识；每周选3–5个能读出来的词，周日小测。前4周以韩文字母和音节为主，之后把实用韩语融入通勤、领物、赛道和赛后恢复。</p><p><strong>唯一主课程：</strong> <a href="https://www.iksi.or.kr/">Online King Sejong Institute</a>（免费在线学习），先完成 <strong>Sejong Korean Introduction</strong>，再进入 <strong>King Sejong Institute Korean 1</strong>。选择 <strong>Self-learning Type（自学型）</strong>；<a href="https://www.iksi.or.kr/lms/main/curriculum.do">官方课程说明</a>。W1–W4以入门为主，W5后视实际掌握水平进入 Korean 1；每日15–25分钟，赛事标识只是补充练习。</p>
+<table>
+<thead><tr><th>Korean</th><th>English</th><th>中文</th></tr></thead>
+<tbody>
+<tr><td>서울</td><td>Seoul</td><td>首尔</td></tr>
+<tr><td>마라톤</td><td>Marathon</td><td>马拉松</td></tr>
+<tr><td>출발</td><td>Start / departure</td><td>起点、出发</td></tr>
+<tr><td>도착</td><td>Arrival / finish</td><td>到达、终点（依语境）</td></tr>
+<tr><td>화장실</td><td>Toilet</td><td>卫生间</td></tr>
+<tr><td>급수대</td><td>Water station</td><td>补水站</td></tr>
+<tr><td>물품보관소</td><td>Baggage storage</td><td>物品寄存</td></tr>
+<tr><td>지하철</td><td>Subway</td><td>地铁</td></tr>
+<tr><td>출구 / 입구</td><td>Exit / entrance</td><td>出口 / 入口</td></tr>
+<tr><td>감사합니다</td><td>Thank you</td><td>谢谢</td></tr>
+</tbody></table>
+<p>正式赛场标识以主办方实际布置为准，不假设所有告示只使用这些词。</p>
+</article>
+<article>
+<h3>Race logistics</h3>
+<ul><li><a href="https://en.seoul-marathon.com/83">2027 Seoul Marathon official site</a>：2027-03-21，光化门广场（광화문광장）为暂定全马集合地点，赛前复核。</li><li><a href="https://en.seoul-marathon.com/60/?bmode=view&amp;idx=173536131">Overseas registration notice</a>：海外选手须在赛前亲自领取参赛包；以最新Expo通知为准。</li><li>2月检查装备与航班住宿；赛前两周确认领物、起点交通、寄存、补给方案。比赛周保留韩语轻复习，优先睡眠和调整时差。</li></ul>
+</article>
+</div>
+      </div>
+    </section>
+    <footer><span>Plan → Train → Review → Adapt → Race</span><span>Race day · Mar 21, 2027</span></footer>
+  </main>
+  <script>
+  (function () {
+    var el = document.getElementById("countdown");
+    if (!el) return;
+    var parts = (el.getAttribute("data-race-date") || "").split("-");
+    if (parts.length !== 3) return;
+    var race = new Date(+parts[0], +parts[1] - 1, +parts[2]);
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var days = Math.round((race.getTime() - today.getTime()) / 864e5);
+    el.textContent = days > 1 ? days + " days" : days === 1 ? "1 day" : days === 0 ? "Race day" : "Finished";
+  })();
+</script>
+</body>
+</html>
