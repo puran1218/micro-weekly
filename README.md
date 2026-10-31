@@ -2,6 +2,8 @@
 
 A lightweight personal site for **this week's actions, long-term goals, reference materials, and reflection**. The repository remains `micro-weekly`; the public site at `/plans/` evolves from dinner/training templates into an ongoing life playbook.
 
+The Library includes **a seven-day breakfast reference and five balanced dinner pairings**, alongside the unchanged 28-dish dinner picker. Food-guide content is stored in `site/food-guides.mjs` and rebuilt into `/plans/library/breakfast/` and `/plans/library/dinner/`; no individual health measurements or diagnosis is published.
+
 The **active Campaign owns the current weekly training plan**. Historical `Current Training` and `weeks/weekXX` HTML are preserved for reference, not treated as competing instructions. Dinner remains an independent everyday tool.
 
 ## Build the Playbook

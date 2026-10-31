@@ -53,6 +53,18 @@ try {
   assert.equal(first.active, "seoul-2027");
   assert.equal(first.archivedWeeks, 1);
   assert.ok(existsSync(resolve(site, "assets", "life.css")));
+  const breakfast = readFileSync(resolve(site, "library", "breakfast", "index.html"), "utf8");
+  const dinnerGuide = readFileSync(resolve(site, "library", "dinner", "index.html"), "utf8");
+  const library = readFileSync(resolve(site, "library", "index.html"), "utf8");
+  assert.match(breakfast, /七日早餐参考/);
+  assert.match(breakfast, /玉米/);
+  assert.match(breakfast, /原味燕麦/);
+  assert.match(dinnerGuide, /五种晚餐搭配参考/);
+  assert.match(dinnerGuide, /清蒸鱼/);
+  assert.match(dinnerGuide, /current\/dinner\.html/);
+  assert.match(library, /\.\/breakfast\/index\.html/);
+  assert.match(library, /\.\/dinner\/index\.html/);
+  assert.doesNotMatch(breakfast, /13\.01|47\.5|BMI|OGTT/);
   const homeOne = readFileSync(resolve(site, "index.html"), "utf8");
   assert.match(homeOne, /W1 \/ 20/);
   assert.match(homeOne, /Easy Run/);

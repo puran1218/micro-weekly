@@ -1,6 +1,7 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { breakfastDays, dinnerPairings, foodPools } from "../site/food-guides.mjs";
 
 const THEME_SOURCE = fileURLToPath(new URL("../site/life.css", import.meta.url));
 
@@ -122,7 +123,7 @@ function home(records, weeks) {
     '<div class="life-grid"><article class="life-card"><div class="life-label">Current Training · Historical Reference</div><h3>力量与身体维护</h3>'+
     '<p>动作示意、精瘦塑形，以及足踝训练。训练时随手查阅。</p><a class="life-link life-outline" href="./library/index.html#movement">查看动作参考</a></article>'+
     '<article class="life-card"><div class="life-label">Current Dinner · Daily Tool</div><h3>晚餐菜池</h3>'+
-    '<p>不需要每次重新制定菜单；保留简单好用的抽菜工具。</p><a class="life-link life-outline" href="./current/dinner.html">今晚吃什么</a></article></div></section>'+
+    '<p>晚餐菜池继续使用，也可以按早餐／晚餐参考补齐一餐的搭配。</p><a class="life-link life-outline" href="./current/dinner.html">今晚吃什么</a> <a class="life-more" href="./library/breakfast/index.html">早餐参考</a></article></div></section>'+
     '<section class="life-section" id="review"><div class="life-section-head"><h2>每周复盘</h2>'+
     (active?'<a href="./campaigns/'+encodeURIComponent(active.slug)+'/index.html#reviews">进入复盘记录</a>':'')+'</div>'+
     '<div class="life-card"><div class="life-label">Review → Adapt</div>'+latest+
@@ -132,6 +133,65 @@ function home(records, weeks) {
     '<section class="life-section" id="history"><div class="life-section-head"><h2>一路走过的经历</h2><a href="./journal/index.html">浏览全部经历</a></div>'+
     '<ul class="life-list">'+historical+'</ul>'+weekLinks+'<p class="life-day-note">兼容旧链接：<a href="./latest/dinner.html">Latest dinner</a> · <a href="./latest/training.html">Latest training</a>（后者仅为历史固定训练模板）。</p></section>';
   return layout("本周与目标", body);
+}
+
+
+function mealCards(days) {
+  return '<div class="life-meal-list">'+days.map(item=>
+    '<article class="life-meal-card"><div class="life-meal-head"><span class="life-label">'+esc(item.day)+'</span>'+
+    '<span class="life-tag">'+esc(item.tag)+'</span></div><h3>'+esc(item.title)+'</h3>'+
+    '<p><strong>怎么准备：</strong>'+esc(item.prep)+'</p><p class="life-meal-adapt"><strong>可以调整：</strong>'+esc(item.adapt)+'</p></article>'
+  ).join("")+'</div>';
+}
+
+function foodSources() {
+  return '<p class="life-food-sources">延伸阅读：<a href="https://www.cdc.gov/diabetes/healthy-eating/diabetes-meal-planning.html" target="_blank" rel="noopener noreferrer">CDC · Diabetes Meal Planning</a> · '+
+    '<a href="https://diabetesjournals.org/care/article/49/Supplement_1/S50/163924/3-Prevention-or-Delay-of-Diabetes-and-Associated" target="_blank" rel="noopener noreferrer">ADA · 2026 Standards of Care</a>。'+
+    '这些是一般饮食参考，不代替针对具体疾病、药物或营养需求的个体化建议。</p>';
+}
+
+function breakfastPage() {
+  const body='<header class="life-hero"><div class="life-eyebrow">Everyday food · Breakfast</div>'+
+    '<h1>从熟悉的早餐，<br>慢慢多一点变化。</h1>'+
+    '<p class="life-lede">玉米、鸡蛋、黄瓜已经是一套很好的起点。在不增加太多早晨负担的情况下，逐渐加入奶类、豆制品、蔬菜和不同口味。</p>'+
+    '<div class="life-meta"><span>7天轮换示例</span><span>从已接受食物开始</span><span>不追求零碳水</span></div>'+
+    '<a class="life-more" href="../index.html#food">← 返回 Library 的家庭饮食</a></header>'+
+    '<section class="life-section"><div class="life-section-head"><h2>一个最容易坚持的基础组合</h2></div>'+
+    '<div class="life-card life-food-foundation"><div class="life-label">Start simple</div>'+
+    '<h3>玉米 ＋ 鸡蛋 ＋ 黄瓜或番茄 ＋ 牛奶／无糖豆浆</h3>'+
+    '<p>依食欲和实际份量，可加少量坚果或其他食物。不需要一次增加所有新食材，更不必因为担心升糖而把主食完全去掉。</p>'+
+    '<p class="life-small">玉米本身算主食；牛奶、酸奶、完整水果和豆类也含不同程度的碳水。</p></div></section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>七日早餐参考</h2><span class="life-label">可交换 · 非必须照表吃</span></div>'+
+    mealCards(breakfastDays)+'</section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>买菜与准备的简单方法</h2></div>'+
+    '<div class="life-grid"><article class="life-card"><h3>前一晚 10 分钟</h3><p>洗好黄瓜、小番茄；把玉米和鸡蛋准备好，冷藏需注意食品安全。常备冷冻虾仁、豆腐和青菜。</p></article>'+
+    '<article class="life-card"><h3>新食物只试一点</h3><p>燕麦、酸奶、香菇豆腐蛋羹等都属于可选变化。如果不喜欢，直接换回玉米鸡蛋组合。</p></article></div></section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>搭配原则</h2></div>'+
+    '<p>主食、蛋白质、蔬菜与适量脂肪轮换搭配，尽量选择少添加糖、加工较少的食物。分量依据成年人或孩子的年龄、活动量、食欲及个人需要调整，不设统一的食物上限。</p>'+
+    '<p>如果发现经常吃不饱、体重持续下降或不断排除主食，应重新审视总能量与营养是否足够；有相关健康顾虑时可咨询医生或注册营养师。</p>'+foodSources()+'</section>';
+  return layout("早餐参考",body,"../../","library");
+}
+
+function dinnerReferencePage() {
+  const body='<header class="life-hero"><div class="life-eyebrow">Everyday food · Dinner</div>'+
+    '<h1>晚餐不只选一道菜，<br>更是一次完整搭配。</h1>'+
+    '<p class="life-lede">已有的28道家常菜随机池负责决定今晚做什么。这份参考则帮你在选好主菜后，补齐蔬菜、主食和蛋白质。</p>'+
+    '<div class="life-meta"><span>5种家庭晚餐组合</span><span>适合轮换与备餐</span></div>'+
+    '<a class="life-more" href="../index.html#food">← 返回 Library 的家庭饮食</a></header>'+
+    '<section class="life-section"><div class="life-section-head"><h2>先抽主菜，再补全这一餐</h2></div>'+
+    '<div class="life-card life-food-foundation"><div class="life-label">Practical workflow</div>'+
+    '<h3>主菜 → 一种或多种蔬菜 → 适量主食</h3>'+
+    '<p>搭配可按一家人的食欲、活动量和喜好调整；玉米可以作为主食之一。不需要专门做一桌严格的“控糖餐”。</p>'+
+    '<a class="life-link life-outline" href="../../current/dinner.html">前往现有的28道晚餐菜池</a></div></section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>五种晚餐搭配参考</h2><span class="life-label">轮换，不是排班</span></div>'+
+    mealCards(dinnerPairings)+'</section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>按食物库自由替换</h2></div>'+
+    '<div class="life-grid">'+foodPools.map(item=>'<article class="life-card"><div class="life-label">'+esc(item.name)+'</div>'+
+      '<h3>'+esc(item.known)+'</h3><p>'+esc(item.try)+'</p></article>').join("")+'</div></section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>不用把碳水当成敌人</h2></div>'+
+    '<p>含碳水的食物不只有米饭和面食。玉米、燕麦、豆类、牛奶、酸奶和水果也可以提供碳水与其他营养。食物的份量、加工方式和整顿饭的搭配，都会影响餐后反应。</p>'+
+    '<p>优先考虑长期愿意吃、能吃饱、营养足够的家庭饮食；如果需要具体的血糖和营养目标，应根据完整健康情况另行个体化评估。</p>'+foodSources()+'</section>';
+  return layout("晚餐搭配参考",body,"../../","library");
 }
 
 function libraryPage() {
@@ -147,9 +207,16 @@ function libraryPage() {
     '<div class="life-card"><div class="life-label">Primary course</div><h3>Online King Sejong Institute</h3>'+
     '<p>先学习 Sejong Korean Introduction，再根据掌握情况进入 King Sejong Institute Korean 1。每周马拉松词汇只是补充。</p>'+
     '<a class="life-link life-outline" href="https://www.iksi.or.kr/" target="_blank" rel="noopener noreferrer">进入在线世宗学堂</a></div></section>'+
-    '<section class="life-section"><div class="life-section-head"><h2>日常生活</h2></div><div class="life-grid">'+
-    '<article class="life-card"><div class="life-label">Dinner</div><h3>28道家常菜随机池</h3><p>晚餐选择器是一个实用工具，不必硬塞进马拉松计划。</p><a class="life-link life-outline" href="../current/dinner.html">抽一道菜</a></article>'+
-    '<article class="life-card"><div class="life-label">Past template</div><h3>早期固定力量模板</h3><p>保留周一到周五的历史方案，供动作参考。当前安排以活动 Campaign 为准。</p>'+
+    '<section class="life-section" id="food"><div class="life-section-head"><h2>家庭饮食</h2></div><div class="life-grid">'+
+    '<article class="life-card"><div class="life-label">Breakfast · Reference</div><h3>一周早餐搭配</h3>'+
+    '<p>从玉米、鸡蛋、黄瓜开始，逐渐尝试其他食材。七种可轮换、可替换的早餐组合。</p>'+
+    '<a class="life-link life-outline" href="./breakfast/index.html">查看早餐参考</a></article>'+
+    '<article class="life-card"><div class="life-label">Dinner · Reference</div><h3>五种晚餐组合</h3>'+
+    '<p>选好主菜，再配蔬菜与主食；不另做一套需要严格执行的菜单。</p>'+
+    '<a class="life-link life-outline" href="./dinner/index.html">查看晚餐搭配</a></article>'+
+    '<article class="life-card"><div class="life-label">Dinner · Daily tool</div><h3>28道家常菜随机池</h3>'+
+    '<p>原有的交互式晚餐选择器保持不变。</p><a class="life-link life-outline" href="../current/dinner.html">今晚抽一道菜</a></article>'+
+    '<article class="life-card"><div class="life-label">Past training template</div><h3>早期固定力量模板</h3><p>保留早期五日训练作为动作参考，当前安排以活动 Campaign 为准。</p>'+
     '<a class="life-link life-outline" href="../current/training.html">查看历史参考</a></article></div></section>';
   return layout("知识与工具",body,"../","library");
 }
@@ -189,6 +256,10 @@ function decoratePage(path, prefix, type) {
     const links = '<nav class="life-campaign-jumps" aria-label="Campaign sections"><a href="#this-week">本周</a><a href="#roadmap">路线图</a><a href="#reviews">每周复盘</a><a href="#reference">知识参考</a></nav>';
     html = html.replace('<section class="campaign-current"',links + '<section class="campaign-current"');
   }
+  if (type==="dinner" && !html.includes("life-food-note")) {
+    html = html.replace('<main class="panel">',
+      '<aside class="life-food-note">想让晚餐搭配得更完整？<a href="../library/dinner/index.html">查看五种家庭晚餐组合</a>，或去 <a href="../library/breakfast/index.html">早餐参考</a>。</aside><main class="panel">');
+  }
   if (type==="training" && !html.includes("life-legacy-note")) {
     html = html.replace('<main class="panel">',
       '<aside class="life-legacy-note">历史固定训练参考：这不是当前晨跑 / 午间力量的执行计划。请以<a href="'+prefix+'campaigns/index.html">活动中的 Campaign</a> 为准。</aside><main class="panel">');
@@ -208,8 +279,12 @@ export function buildLifeSite(siteRoot, contentRoot = process.cwd()) {
   const weeks=existsSync(weeksDir)?readdirSync(weeksDir).filter(v=>/^week\d+$/i.test(v) && existsSync(resolve(weeksDir,v,"index.html"))).map(v=>Number(v.replace(/week/i,""))).sort((a,b)=>b-a):[];
   mkdirSync(resolve(siteRoot,"library"),{recursive:true});
   mkdirSync(resolve(siteRoot,"journal"),{recursive:true});
+  mkdirSync(resolve(siteRoot,"library","breakfast"),{recursive:true});
+  mkdirSync(resolve(siteRoot,"library","dinner"),{recursive:true});
   writeFileSync(resolve(siteRoot,"index.html"),home(records,weeks));
   writeFileSync(resolve(siteRoot,"library","index.html"),libraryPage());
+  writeFileSync(resolve(siteRoot,"library","breakfast","index.html"),breakfastPage());
+  writeFileSync(resolve(siteRoot,"library","dinner","index.html"),dinnerReferencePage());
   writeFileSync(resolve(siteRoot,"journal","index.html"),journalPage(records,weeks));
   const campaignsRoot=resolve(siteRoot,"campaigns");
   if (existsSync(campaignsRoot)) {
@@ -218,7 +293,7 @@ export function buildLifeSite(siteRoot, contentRoot = process.cwd()) {
   }
   const currentRoot=resolve(siteRoot,"current");
   for (const kind of ["dinner","training","training-reference"]) {
-    decoratePage(resolve(currentRoot,kind+".html"),"../",kind==="training"?"training":"reference");
+    decoratePage(resolve(currentRoot,kind+".html"),"../",kind==="training"?"training":kind==="dinner"?"dinner":"reference");
   }
   if (existsSync(weeksDir)) {
     for (const w of weeks) {
