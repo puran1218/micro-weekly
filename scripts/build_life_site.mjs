@@ -24,7 +24,7 @@ function readCampaigns(root) {
       const m = line.match(/^([a-z_]+):\s*(.*)$/);
       if (m) meta[m[1]] = m[2].trim().replace(/^['"]|['"]$/g, "");
     }
-    if (!meta.slug || !meta.title || !["active", "upcoming", "completed"].includes(meta.status)) return null;
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(meta.slug ?? "") || !meta.title || !["active", "upcoming", "completed"].includes(meta.status)) return null;
     const weekMatch = parts[2].match(/^## This Week([^\n]*)\n([\s\S]*?)(?=^## |$(?![\s\S]))/m);
     const reviewsMatch = parts[2].match(/^## Weekly Reviews[^\n]*\n([\s\S]*?)(?=^## |$(?![\s\S]))/m);
     const currentBody = weekMatch?.[2] ?? "";
