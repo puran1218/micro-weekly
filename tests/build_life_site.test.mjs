@@ -59,6 +59,7 @@ try {
   assert.match(breakfast, /七日早餐参考/);
   assert.match(breakfast, /玉米/);
   assert.match(breakfast, /原味燕麦/);
+  assert.match(breakfast, /按食材自由搭配/);
   assert.match(dinnerGuide, /五种晚餐搭配参考/);
   assert.match(dinnerGuide, /清蒸鱼/);
   assert.match(dinnerGuide, /current\/dinner\.html/);

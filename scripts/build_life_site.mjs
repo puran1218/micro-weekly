@@ -163,6 +163,9 @@ function breakfastPage() {
     '<p class="life-small">玉米本身算主食；牛奶、酸奶、完整水果和豆类也含不同程度的碳水。</p></div></section>'+
     '<section class="life-section"><div class="life-section-head"><h2>七日早餐参考</h2><span class="life-label">可交换 · 非必须照表吃</span></div>'+
     mealCards(breakfastDays)+'</section>'+
+    '<section class="life-section"><div class="life-section-head"><h2>按食材自由搭配</h2><span class="life-label">不必每天重做食谱</span></div>'+
+    '<div class="life-grid">'+foodPools.map(item=>'<article class="life-card"><div class="life-label">'+esc(item.name)+'</div>'+
+    '<h3>'+esc(item.known)+'</h3><p>'+esc(item.try)+'</p></article>').join("")+'</div></section>'+
     '<section class="life-section"><div class="life-section-head"><h2>买菜与准备的简单方法</h2></div>'+
     '<div class="life-grid"><article class="life-card"><h3>前一晚 10 分钟</h3><p>洗好黄瓜、小番茄；把玉米和鸡蛋准备好，冷藏需注意食品安全。常备冷冻虾仁、豆腐和青菜。</p></article>'+
     '<article class="life-card"><h3>新食物只试一点</h3><p>燕麦、酸奶、香菇豆腐蛋羹等都属于可选变化。如果不喜欢，直接换回玉米鸡蛋组合。</p></article></div></section>'+
