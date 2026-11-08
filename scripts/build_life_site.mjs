@@ -45,7 +45,7 @@ function readCampaigns(root) {
     return {
       title: meta.title, slug: meta.slug, raceDate: meta.race_date ?? "", status: meta.status,
       summary: meta.summary ?? "", week: Number(meta.current_week) || 1, weeks: Number(meta.weeks) || 1,
-      currentHeading: cleanMarkdown(weekMatch?.[1] ?? ""), weekTable, reviewCount: reviewTitles.length,
+      currentHeading: cleanMarkdown(weekMatch?.[1] ?? "").replace(/^·?\s*W\d+\s*/, ""), weekTable, reviewCount: reviewTitles.length,
       lastReviewTitle: reviewTitles.length ? reviewTitles[reviewTitles.length-1][0].replace(/^### /,"") : "",
       currentBody
     };
