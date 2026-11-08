@@ -55,8 +55,8 @@ assert.match(indexHtml, /latest\/training\.html/i, "Plans index should expose th
 assert.match(indexHtml, /Training Campaigns/i, "Plans index should keep a generic Training Campaigns entry");
 assert.match(indexHtml, /Life in Motion/i, "Home should use the unified playbook identity");
 assert.match(indexHtml, /本周行动/, "Home should prioritize current-week actions");
-assert.match(indexHtml, /W1 \/ 20/, "Home should reflect the active Seoul campaign week");
-assert.match(indexHtml, /Mon 11\/2/, "Home should draw day-by-day entries from the active campaign");
+assert.match(indexHtml, /W2 \/ 20/, "Home should reflect the active Seoul campaign week");
+assert.match(indexHtml, /Mon 11\/9/, "Home should draw day-by-day entries from the active campaign");
 assert.match(indexHtml, /href="\.\/library\/index\.html"/, "Home should link to the reference library");
 assert.match(indexHtml, /href="\.\/journal\/index\.html"/, "Home should link to the journal");
 assert.match(indexHtml, /href="\.\/campaigns\/index\.html"/i, "Plans index should link to the campaign index");
@@ -135,13 +135,13 @@ assert.match(campaignIndex, /href="\.\/seoul-2027\/"/, "Campaign index should li
 assert.match(campaignIndex, /<p class="section-kicker">Active<\/p>/, "Seoul should be in the active group");
 assert.match(seoulPage, /Seoul Marathon 2027/, "Seoul campaign page should show title");
 assert.match(seoulPage, /Mar 21, 2027/, "Seoul campaign should show race date");
-assert.match(seoulPage, /Week 1 of 20/, "Seoul campaign should have 20-week progress");
+assert.match(seoulPage, /Week 2 of 20/, "Seoul campaign should have 20-week progress");
 assert.match(seoulPage, /20-Week Roadmap/, "Seoul campaign should show roadmap");
 assert.match(seoulPage, /Strength A/, "Seoul campaign should include strength routines");
 assert.match(seoulPage, /Korean/, "Seoul campaign should include Korean learning");
 assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival flexibility");
 assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
-assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
+assert.match(seoulPage, /<tr class="is-active"><td>W2<\/td>/, "Seoul roadmap should mark active W2");
 assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
 assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/life\.css"/, "Seoul campaign should resolve its shared CSS within /plans/");
 assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/puran_blog_avator\.jpg"/, "Seoul campaign should resolve its favicon within /plans/");
@@ -173,4 +173,7 @@ assert.match(libraryHtml, /\.\/dinner\/index\.html/, "Library should link to din
 assert.match(dinnerPicker, /library\/dinner\/index\.html/, "Original dinner tool should link to supplementary guidance");
 assert.match(dinnerPicker, /btn-pick/, "Original dinner picker remains interactive");
 assert.doesNotMatch(breakfastPage + dinnerReference, /13\.01|47\.5|OGTT|BMI/, "Published food guides should exclude private clinical details");
+assert.match(seoulPage, /11\.05 km/, "W1 actual running distance should appear in Seoul reviews");
+assert.match(seoulPage, /Week 1 · Nov 2/, "W1 completed review should be present");
+assert.match(indexHtml, /Sun 11\/15/, "New homepage should show W2 Sunday");
 console.log("Plans site structure looks good.");
