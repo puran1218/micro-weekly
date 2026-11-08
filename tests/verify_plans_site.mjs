@@ -41,6 +41,12 @@ for (const file of requiredFiles) {
 }
 
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
+const seoulSource = readFileSync(resolve(process.cwd(), "campaigns", "seoul-2027.md"), "utf8");
+const currentWeek = Number(seoulSource.match(/^current_week:\s*(\d+)\s*$/m)?.[1]);
+const currentSection = seoulSource.match(/^## This Week[^\n]*\n([\s\S]*?)(?=^## |$(?![\s\S]))/m)?.[1] ?? "";
+const mondayLabel = currentSection.match(/^\|\s*(Mon \d+\/\d+)\s*\|/m)?.[1];
+assert.ok(Number.isInteger(currentWeek) && currentWeek > 0, "Seoul campaign must declare a positive current_week");
+assert.ok(mondayLabel, "Seoul current week must include a Monday table row");
 assert.match(indexHtml, /Week 14/i, "Plans index should link to Week 14");
 assert.match(indexHtml, /Week 15/i, "Plans index should link to Week 15");
 assert.match(indexHtml, /Week 16/i, "Plans index should link to Week 16");
@@ -55,8 +61,8 @@ assert.match(indexHtml, /latest\/training\.html/i, "Plans index should expose th
 assert.match(indexHtml, /Training Campaigns/i, "Plans index should keep a generic Training Campaigns entry");
 assert.match(indexHtml, /Life in Motion/i, "Home should use the unified playbook identity");
 assert.match(indexHtml, /本周行动/, "Home should prioritize current-week actions");
-assert.match(indexHtml, /W1 \/ 20/, "Home should reflect the active Seoul campaign week");
-assert.match(indexHtml, /Mon 11\/2/, "Home should draw day-by-day entries from the active campaign");
+assert.ok(indexHtml.includes(`W${currentWeek} / 20`), "Home should reflect the current Seoul campaign week");
+assert.ok(indexHtml.includes(mondayLabel), "Home should draw the active campaign Monday from Markdown");
 assert.match(indexHtml, /href="\.\/library\/index\.html"/, "Home should link to the reference library");
 assert.match(indexHtml, /href="\.\/journal\/index\.html"/, "Home should link to the journal");
 assert.match(indexHtml, /href="\.\/campaigns\/index\.html"/i, "Plans index should link to the campaign index");
@@ -135,13 +141,13 @@ assert.match(campaignIndex, /href="\.\/seoul-2027\/"/, "Campaign index should li
 assert.match(campaignIndex, /<p class="section-kicker">Active<\/p>/, "Seoul should be in the active group");
 assert.match(seoulPage, /Seoul Marathon 2027/, "Seoul campaign page should show title");
 assert.match(seoulPage, /Mar 21, 2027/, "Seoul campaign should show race date");
-assert.match(seoulPage, /Week 1 of 20/, "Seoul campaign should have 20-week progress");
+assert.ok(seoulPage.includes(`Week ${currentWeek} of 20`), "Seoul page should reflect current week");
 assert.match(seoulPage, /20-Week Roadmap/, "Seoul campaign should show roadmap");
 assert.match(seoulPage, /Strength A/, "Seoul campaign should include strength routines");
 assert.match(seoulPage, /Korean/, "Seoul campaign should include Korean learning");
 assert.match(seoulPage, /春节/, "Seoul campaign should include Spring Festival flexibility");
 assert.match(seoulPage, /Weekly Reviews/, "Seoul campaign should include weekly review section");
-assert.match(seoulPage, /class="is-active"/, "Seoul roadmap should mark active W1");
+assert.ok(seoulPage.includes(`<tr class="is-active"><td>W${currentWeek}</td>`), "Seoul roadmap should mark the current week");
 assert.match(seoulPage, /id="countdown"/, "Active Seoul campaign should show countdown");
 assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/life\.css"/, "Seoul campaign should resolve its shared CSS within /plans/");
 assert.match(seoulPage, /href="\.\.\/\.\.\/assets\/puran_blog_avator\.jpg"/, "Seoul campaign should resolve its favicon within /plans/");
@@ -173,4 +179,7 @@ assert.match(libraryHtml, /\.\/dinner\/index\.html/, "Library should link to din
 assert.match(dinnerPicker, /library\/dinner\/index\.html/, "Original dinner tool should link to supplementary guidance");
 assert.match(dinnerPicker, /btn-pick/, "Original dinner picker remains interactive");
 assert.doesNotMatch(breakfastPage + dinnerReference, /13\.01|47\.5|OGTT|BMI/, "Published food guides should exclude private clinical details");
+assert.match(seoulPage, /11\.05 km/, "W1 actual running distance should appear in Seoul reviews");
+assert.match(seoulPage, /Week 1 · Nov 2/, "W1 completed review should be present");
+assert.match(indexHtml, /<strong>Sun \d+\/\d+<\/strong>/, "New homepage should show the current Sunday");
 console.log("Plans site structure looks good.");
