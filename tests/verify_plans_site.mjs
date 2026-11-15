@@ -180,6 +180,9 @@ assert.match(dinnerPicker, /library\/dinner\/index\.html/, "Original dinner tool
 assert.match(dinnerPicker, /btn-pick/, "Original dinner picker remains interactive");
 assert.doesNotMatch(breakfastPage + dinnerReference, /13\.01|47\.5|OGTT|BMI/, "Published food guides should exclude private clinical details");
 assert.match(seoulPage, /11\.05 km/, "W1 actual running distance should appear in Seoul reviews");
+assert.match(seoulPage, /12\.07km/, "W2 actual running distance should appear in Seoul reviews");
+assert.match(seoulPage, /Week 2 · Nov 9/, "Seoul Campaign should include W2 review");
+assert.match(indexHtml, /最近记录：Week 2/, "Playbook home should show the latest W2 review");
 assert.match(seoulPage, /Week 1 · Nov 2/, "W1 completed review should be present");
 assert.match(indexHtml, /<strong>Sun \d+\/\d+<\/strong>/, "New homepage should show the current Sunday");
 console.log("Plans site structure looks good.");
